@@ -12,7 +12,7 @@ export default function FooterLanding() {
   const { t } = useTranslation();
   return (
     <div className="footerLanding">
-      <div className="d-flex flex-column flex-lg-row ">
+      <div className="d-flex flex-column flex-lg-row justify-content-between ">
         <div>
           {process.env.REACT_APP_NAME}
           <p>{t("Footer:owner_and_manager")}</p>

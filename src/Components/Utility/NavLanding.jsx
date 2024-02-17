@@ -8,13 +8,11 @@ import ApplyModal from "./ApplyModal";
 import "./style.css";
 // Contains the value and text for the options
 const languages = [
-  { value: "en", text: "Options" },
   { value: "en", text: "English" },
   { value: "fr", text: "French" },
-  { value: "bn", text: "Bengali" },
 ];
 
-function NavLanding() {
+function NavLanding({ color }) {
   // It is a hook imported from 'react-i18next'
   const { t } = useTranslation();
 
@@ -34,7 +32,7 @@ function NavLanding() {
   const handleScroll = () => {
     const scrollPosition = window.scrollY;
     if (scrollPosition > 0) {
-      setNavbarBackground("rgba(165, 42, 42, 0.5)"); // Brown background with opacity 0.5
+      setNavbarBackground("rgb(28, 35, 49, 0.5)"); // Brown background with opacity 0.5
     } else {
       setNavbarBackground("transparent"); // Transparent background
     }
@@ -64,11 +62,14 @@ function NavLanding() {
           width: "100%",
           zIndex: "100",
           fontWeight: "500",
-          color: "white",
+          color: color ? "white" : "black",
         }}
       >
         <Container>
-          <Navbar.Brand href="/" className="mr-auto text-light">
+          <Navbar.Brand
+            href="/"
+            className={color ? "text-light mr-auto" : " mr-auto text-black "}
+          >
             {process.env.REACT_APP_NAME}
           </Navbar.Brand>
           <Navbar.Toggle
@@ -80,18 +81,28 @@ function NavLanding() {
             className="justify-content-end"
           >
             <Nav>
-              <Nav.Link className="text-light" href="/how">
+              <Nav.Link
+                className={color ? "text-light " : "text-black"}
+                href="/how"
+              >
                 {t("how_it_works")}
               </Nav.Link>
               <Nav.Link
-                className="text-light text-bg-primary"
+                className={
+                  color
+                    ? "text-light text-bg-primary"
+                    : "text-dark text-bg-primary"
+                }
                 href="#"
                 onClick={handleShowModal}
                 type="button"
               >
                 {t("apply")}
               </Nav.Link>
-              <Nav.Link className="text-light" href="/faq">
+              <Nav.Link
+                className={color ? "text-light " : "text-black"}
+                href="/faq"
+              >
                 {t("faq")}
               </Nav.Link>
               <label>
@@ -100,6 +111,7 @@ function NavLanding() {
                   aria-label="choose perferred languague"
                   value={lang}
                   onChange={handleChange}
+                  className={color ? "text-light " : "text-black"}
                 >
                   {languages.map((item, index) => {
                     return (

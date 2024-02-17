@@ -11,20 +11,24 @@ import NavLanding from "./Components/Utility/NavLanding";
 import How from "./landingPage/How";
 import FAQ from "./landingPage/FAQ";
 import FooterLanding from "./Components/Utility/FooterLanding";
+import { useState } from "react";
+
 function App() {
   //auth user
+
+  const [navcolor, setNavColor] = useState(true);
   return (
     <div>
       {/* auth.user for NavDashboard else NavLanding */}
-      <NavLanding />
+      <NavLanding color={navcolor} />
       <Routes>
-        <Route path="/" index element={<Homepage />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/reset_password" element={<ResetPassword />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/verify" element={<Verify />} />
-        <Route path="/how" element={<How />} />
-        <Route path="/faq" element={<FAQ />} />
+        <Route path="/" index element={<Homepage setNavColor={setNavColor} />} />
+        <Route path="/signin" element={<SignIn setNavColor={setNavColor} />} />
+        <Route path="/reset_password" element={<ResetPassword setNavColor={setNavColor} />} />
+        <Route path="/signup" element={<Signup setNavColor={setNavColor} />} />
+        <Route path="/verify" element={<Verify setNavColor={setNavColor} />} />
+        <Route path="/how" element={<How setNavColor={setNavColor} />} />
+        <Route path="/faq" element={<FAQ setNavColor={setNavColor} />} />
         <Route
           path="/dashboard/*"
           element={

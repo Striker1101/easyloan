@@ -4,11 +4,18 @@
 
 import React from "react";
 import { Helmet } from "react-helmet";
-import { useTranslation } from "react-i18next";
-import Calculate from "../Components/HomepageLanding/Calculate";
-export default function Homepage() {
+import Calculate from "../Components/LandingPages/HomepageLanding/Calculate";
+import Info from "../Components/LandingPages/HomepageLanding/Info";
+import Loan from "../Components/LandingPages/HomepageLanding/Loan";
+import AddFeatures from "../Components/LandingPages/HomepageLanding/AddFeatures";
+import Apply from "../Components/LandingPages/HomepageLanding/Apply";
+import "../Components/Styles/Landing/Homepage.css";
+import Reviews from "../Components/LandingPages/HomepageLanding/Reviews";
+import Advert from "../Components/LandingPages/HomepageLanding/Advert";
+import Intro from "../Components/LandingPages/HomepageLanding/Intro";
+export default function Homepage({ setNavColor }) {
+  setNavColor(true);
   const title = process.env.REACT_APP_NAME || "Default Title"; // Use the value from .env or a default value
-  const { t } = useTranslation();
 
   return (
     <div>
@@ -28,7 +35,14 @@ export default function Homepage() {
         <meta name="twitter:card" content="summary_large_image" />
         {/* Add more metadata tags as needed */}
       </Helmet>
+      <Intro />
       <Calculate />
+      <Info />
+      <Loan />
+      <AddFeatures />
+      <Apply></Apply>
+      <Advert></Advert>
+      <Reviews />
     </div>
   );
 }

@@ -1,0 +1,169 @@
+.homepageCalculator {
+  background-image: url("/public/landing/Homepage/slider-1.jpg");
+  min-height: 140vh;
+  background-position: center;
+  background-size: cover;
+}
+
+.homepageInfo {
+  background-image: url("/public/landing/Homepage/background_home_how.png");
+  min-height: 80vh;
+  background-position: center;
+  background-size: cover;
+  background-position-x: right;
+  background-position-y: center;
+  background-size: initial;
+  background-repeat: no-repeat;
+  background-attachment: initial;
+  background-origin: initial;
+  background-clip: initial;
+  background-color: initial;
+}
+
+.infoBackground {
+  background-color: rgb(28, 35, 49) !important;
+  width: 100%;
+  height: 80vh;
+}
+.addfeature {
+  background-color: rgb(196, 229, 241);
+}
+
+.apply_num {
+  min-height: 80px;
+  min-width: 100px;
+  background-color: aliceblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  margin: 5px;
+  margin-right: 10px;
+}
+
+.button_apply {
+  text-decoration: underline;
+  background-color: transparent;
+}
+.row {
+  width: fit-content;
+}
+
+.require {
+  border-bottom: 2px solid blue;
+}
+
+.dub_advert {
+  background-color: aliceblue;
+}
+.advert {
+  background-image: url("/public/landing/Homepage/advert_bg.avif");
+  color: aliceblue;
+}
+
+.advert_circle {
+  width: 230px;
+  height: 230px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px;
+  justify-content: center;
+  position: relative;
+}
+
+.advert_circle > h1 {
+  padding: 0;
+  margin: 0;
+  font-weight: 800;
+  font-variant: small-caps;
+}
+
+.advert_circle > p {
+  padding: 10px;
+  font-size: larger;
+}
+
+.circle_one {
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -10%);
+  background-color: rgb(125, 196, 196);
+}
+.circle_two {
+  top: 5%;
+  left: 55%;
+  background-color: rgb(91, 91, 224);
+  transform: translate(-25%, -30%);
+}
+
+@media only screen and (max-width: 600px) {
+  .circle_holder {
+    height: 450px;
+  }
+
+  .circle_one {
+    top: 30%;
+    left: 50%;
+    transform: translate(-70%, -50%);
+    background-color: rgb(125, 196, 196);
+  }
+  .circle_two {
+    top: 5%;
+    left: 65%;
+    background-color: rgb(91, 91, 224);
+    transform: translate(-45%, -30%);
+  }
+}
+
+.circle_line {
+  width: 3px;
+  height: 90px;
+  margin: 3px;
+  background-color: white;
+}
+
+/* Show one carousel item on mobile */
+@media (max-width: 576px) {
+  .carousel-inner .carousel-item {
+    display: block;
+  }
+}
+
+/* Show two carousel items on tablet */
+@media (min-width: 576px) and (max-width: 992px) {
+  .card_content {
+    max-width: 35vw;
+  }
+}
+
+/* Show three carousel items on laptop */
+@media (min-width: 992px) {
+  .carousel-inner .carousel-item {
+    display: flex;
+  }
+}
+
+.container_review {
+  background-color: #e7e7e7;
+}
+
+.cards {
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.card_content {
+  overflow: hidden;
+  width: 55vw;
+  display: flex;
+  gap: 5px;
+}
+
+.card_content > div {
+  min-width: 200px !important;
+  padding: 3px;
+}

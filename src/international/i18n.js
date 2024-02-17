@@ -13,10 +13,12 @@ i18next
   .init({
     fallbackLng: "en",
 
-    ns: ["Nav", "Footer"],
+    ns: ["Nav", "Footer", "Homepage"],
     defaultNS: "Nav",
 
     supportedLngs: ["en", "fr"],
+
+    debug: true,
 
     backend: {
       loadPath: loadPath,
