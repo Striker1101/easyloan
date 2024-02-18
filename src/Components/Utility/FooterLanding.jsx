@@ -8,6 +8,7 @@ import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 export default function FooterLanding() {
   const { t } = useTranslation();
   return (
@@ -86,7 +87,9 @@ export default function FooterLanding() {
           <p>
             2024 © {process.env.REACT_APP_NAME}™. {t("Footer:rights")}
           </p>
-          <p>{t("Footer:policy")}</p>
+          <Link to={"/policy"}>
+            <strong>{t("Footer:policy")}</strong>
+          </Link>
         </div>
       </div>
     </div>

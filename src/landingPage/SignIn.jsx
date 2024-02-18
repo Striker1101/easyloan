@@ -45,13 +45,9 @@ const SignIn = ({ setNavColor }) => {
   }
 
   return (
-    <Container className="p-3 m-3">
-      <h2 className="pt-5 mt-5">RESGISTER WITH US TODAY </h2>
+    <Container className="p-3 ">
+      <h2 className="pt-5 mt-5 text-primary">LOGIN YOUR ACCOUNT </h2>
       <div className="pt-3 mt-3">
-        <div>
-          {/* ArrowLeft */}
-          <h4>Cancel</h4>
-        </div>
         <div className="d-flex flex-column  align-items-center justify-content-center gap-4 ">
           <img src="./loanlogo.jpg" alt="loanlogo" />
           {/* Email Verification Step */}

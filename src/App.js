@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Homepage from "./landingPage/Homepage";
 import SignIn from "./landingPage/SignIn";
 import Signup from "./landingPage/Signup";
+import Policy from "./landingPage/Policy";
 import ResetPassword from "./landingPage/ResetPassword";
 import Protected from "./Protected";
 import DashboardApp from "./Dashboard/App";
@@ -38,6 +39,7 @@ function App() {
           element={<ResetPassword setNavColor={setNavColor} />}
         />
         <Route path="/signup" element={<Signup setNavColor={setNavColor} />} />
+        <Route path="/policy" element={<Policy setNavColor={setNavColor} />} />
         <Route path="/how" element={<How setNavColor={setNavColor} />} />
         <Route path="/faq" element={<FAQ setNavColor={setNavColor} />} />
         <Route
