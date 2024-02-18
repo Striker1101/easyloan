@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 const ApplyModal = ({ show, handleClose }) => {
   const { t } = useTranslation();
 
@@ -28,7 +29,9 @@ const ApplyModal = ({ show, handleClose }) => {
             {t("new_user")}
             <p style={{ fontSize: "1rem" }}>{t("first_timer")}</p>
             <hr />
-            <Button variant="primary">{t("apply_for_loan")}</Button>
+            <Link to={"/signup"}>
+              <Button variant="primary">{t("apply_for_loan")}</Button>
+            </Link>
           </div>
           <div className="shadow-lg  d-flex p-4  flex-column justify-content-center align-items-center nav_apply_section">
             <FontAwesomeIcon
@@ -38,7 +41,9 @@ const ApplyModal = ({ show, handleClose }) => {
             {t("existing_user")}
             <p style={{ fontSize: "1rem" }}>{t("old_user")}</p>
             <hr />
-            <Button variant="primary">{t("apply_for_loan")}</Button>
+            <Link to={"/signin"}>
+              <Button variant="primary">{t("apply_for_loan")}</Button>
+            </Link>
           </div>
         </div>
         <div className="shadow  d-flex p-4  flex-column justify-content-center align-items-center text-bg-secondary">

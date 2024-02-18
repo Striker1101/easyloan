@@ -115,7 +115,11 @@ function NavLanding({ color }) {
                 >
                   {languages.map((item, index) => {
                     return (
-                      <option key={index} value={item.value}>
+                      <option
+                        key={index}
+                        className={color ? "text-light " : "text-black"}
+                        value={item.value}
+                      >
                         {item.text}
                       </option>
                     );

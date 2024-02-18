@@ -1,5 +1,5 @@
 import React from "react";
 
-export default function Verify() {
+export default function CustomerCare() {
   return <div></div>;
 }
