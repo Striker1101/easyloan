@@ -11,13 +11,40 @@ import NavLanding from "./Components/Utility/NavLanding";
 import How from "./landingPage/How";
 import FAQ from "./landingPage/FAQ";
 import FooterLanding from "./Components/Utility/FooterLanding";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomerCare from "./landingPage/CustomerCare";
+import FirebaseAuth from "./Firebase/FirebaseAuth";
+import AuthCard from "./Components/LandingPages/AuthCard";
 
+import { checkAuth } from "./Firebase/Functions";
 function App() {
   //auth user
 
+  const [userDetails, setUserDetails] = useState({
+    status: "false",
+    user: "",
+  });
+
   const [navcolor, setNavColor] = useState(true);
+  const [onDash, setOnDash] = useState(false);
+
+  useEffect(() => {
+    const checkStatus = async () => {
+      try {
+        const { status, user } = await checkAuth();
+        console.log(status);
+        if (status) {
+          setUserDetails({ user, status });
+        } else {
+          setUserDetails({ user: "", status: false });
+        }
+      } catch (error) {
+        console.error("Error checking user status:", error.message);
+      }
+    };
+
+    checkStatus();
+  }, []);
   // name, username, ssn, setpin, pintoken, type of Loan(personal, SALAD->salary advance Loan, education loan
 
   //     breeze(personla loan) Employee Group Loan
@@ -26,38 +53,64 @@ function App() {
   return (
     <div>
       {/* auth.user for NavDashboard else NavLanding */}
-      <NavLanding color={navcolor} />
+      <AuthCard auth={userDetails.status} />
+      {onDash ? "" : <NavLanding color={navcolor} />}
       <Routes>
         <Route
           path="/"
           index
-          element={<Homepage setNavColor={setNavColor} />}
+          element={<Homepage setOnDash={setOnDash} setNavColor={setNavColor} />}
         />
-        <Route path="/signin" element={<SignIn setNavColor={setNavColor} />} />
+        <Route
+          path="/signin"
+          element={<SignIn setOnDash={setOnDash} setNavColor={setNavColor} />}
+        />
         <Route
           path="/reset_password"
-          element={<ResetPassword setNavColor={setNavColor} />}
+          element={
+            <ResetPassword setOnDash={setOnDash} setNavColor={setNavColor} />
+          }
         />
-        <Route path="/signup" element={<Signup setNavColor={setNavColor} />} />
-        <Route path="/policy" element={<Policy setNavColor={setNavColor} />} />
-        <Route path="/how" element={<How setNavColor={setNavColor} />} />
-        <Route path="/faq" element={<FAQ setNavColor={setNavColor} />} />
+        <Route
+          path="/signup"
+          element={<Signup setOnDash={setOnDash} setNavColor={setNavColor} />}
+        />
+        <Route
+          path="/policy"
+          element={<Policy setOnDash={setOnDash} setNavColor={setNavColor} />}
+        />
+        <Route
+          path="/how"
+          element={<How setOnDash={setOnDash} setNavColor={setNavColor} />}
+        />
+        <Route
+          path="/faq"
+          element={<FAQ setOnDash={setOnDash} setNavColor={setNavColor} />}
+        />
+        <Route
+          path="/firebase_auth"
+          element={
+            <FirebaseAuth setOnDash={setOnDash} setNavColor={setNavColor} />
+          }
+        />
         <Route
           path="/customer_care"
-          element={<CustomerCare setNavColor={setNavColor} />}
+          element={
+            <CustomerCare setOnDash={setOnDash} setNavColor={setNavColor} />
+          }
         />
         <Route
           path="/dashboard/*"
           element={
             //check if user is logged in
-            <Protected isLoggedIn={true}>
-              <DashboardApp />
+            <Protected isLoggedIn={userDetails.status}>
+              <DashboardApp setOnDash={setOnDash} user={userDetails} />
             </Protected>
           }
         />
       </Routes>
       {/* auth.user for FooterDashboard else FooterLanding */}
-      <FooterLanding />
+      {onDash ? "" : <FooterLanding />}
     </div>
   );
 }

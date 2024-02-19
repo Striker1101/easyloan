@@ -6,7 +6,9 @@ import Email from "../Components/LandingPages/SignIn/Email";
 import Password from "../Components/LandingPages/SignIn/Password";
 import { Link } from "react-router-dom";
 
-const SignIn = ({ setNavColor }) => {
+const SignIn = ({ setNavColor, setOnDash }) => {
+  //set pros for on dash board and landing nav color
+  setOnDash(false);
   setNavColor(false);
 
   const [formData, setFormData] = useState({

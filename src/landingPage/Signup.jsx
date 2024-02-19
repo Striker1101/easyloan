@@ -9,7 +9,9 @@ import VerificaionCode from "../Components/LandingPages/Signup.jsx/VerificationC
 import Password from "../Components/LandingPages/Signup.jsx/Password";
 import { Link } from "react-router-dom";
 
-const Signup = ({ setNavColor }) => {
+const Signup = ({ setNavColor, setOnDash }) => {
+  //set pros for on dash board and landing nav color
+  setOnDash(false);
   setNavColor(false);
 
   const [email, setEmail] = useState({

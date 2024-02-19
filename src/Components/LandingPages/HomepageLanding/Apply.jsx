@@ -34,7 +34,7 @@ function Apply() {
             <strong className="apply_num fs-4">3</strong>
             <h2> Get your money as soon as today</h2>
           </div>
-          <Link to={"/signup"}>
+          <Link to={"/firebase_auth"}>
             <Button className="px-4 py-2 m-3" fw-semibold variant="primary">
               {" "}
               Apply Now

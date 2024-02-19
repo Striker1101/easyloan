@@ -3,7 +3,9 @@ import { Container } from "react-bootstrap";
 import Email from "../Components/LandingPages/ResetPassword/Email.jsx";
 import { Link } from "react-router-dom";
 
-const ResetPassword = ({ setNavColor }) => {
+const ResetPassword = ({ setNavColor, setOnDash }) => {
+  //set pros for on dash board and landing nav color
+  setOnDash(false);
   setNavColor(false);
 
   const [formData, setFormData] = useState({

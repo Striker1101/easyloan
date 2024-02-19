@@ -1,0 +1,30 @@
+.container_D {
+  max-height: auto;
+}
+
+.dashboard_D {
+  min-width: 500px;
+  min-height: 98vh;
+  overflow: hidden;
+}
+
+@media only screen and (max-width: 600px) {
+  /*Big smartphones [426px -> 600px]*/
+  .dashboard_D {
+    min-width: 500px;
+  }
+}
+
+@media only screen and (min-width: 425px) {
+  /*Small smartphones [325px -> 425px]*/
+  .dashboard_D {
+    min-width: 400px;
+  }
+}
+
+@media only screen and (min-width: 325px) {
+  /*Small smartphones [325px -> 425px]*/
+  .dashboard_D {
+    min-width: 390px;
+  }
+}

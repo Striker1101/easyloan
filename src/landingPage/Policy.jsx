@@ -1,8 +1,10 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import IndexPolicy from "../Components/LandingPages/Policy/Policy.jsx";
-export default function How({ setNavColor }) {
+export default function How({ setNavColor, setOnDash }) {
   const title = process.env.REACT_APP_NAME || "Default Title"; // Use the value from .env or a default value
+  //set pros for on dash board and landing nav color
+  setOnDash(false);
   setNavColor(false);
   return (
     <div>

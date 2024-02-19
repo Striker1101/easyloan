@@ -12,6 +12,7 @@ import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import CurrencyDisplay from "../../../international/CurrencyDisplay";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 export default function Calculate() {
   const [data, setData] = useState({
     amount: 0,
@@ -167,9 +168,12 @@ export default function Calculate() {
             <h6>{t("Homepage:cal_nb").toUpperCase()}</h6>
           </div>
         </div>
-        <Button className="px-5 m-2 ">
-          {t("apply_for_loan").toUpperCase()}
-        </Button>
+
+        <Link to={"/firebase_auth"}>
+          <Button className="px-5 m-2 ">
+            {t("apply_for_loan").toUpperCase()}
+          </Button>
+        </Link>
       </div>
     </>
   );

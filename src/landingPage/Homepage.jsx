@@ -13,7 +13,9 @@ import "../Components/Styles/Landing/Homepage.css";
 import Reviews from "../Components/LandingPages/HomepageLanding/Reviews";
 import Advert from "../Components/LandingPages/HomepageLanding/Advert";
 import Intro from "../Components/LandingPages/HomepageLanding/Intro";
-export default function Homepage({ setNavColor }) {
+export default function Homepage({ setOnDash, setNavColor }) {
+  //set pros for on dash board and landing nav color
+  setOnDash(false);
   setNavColor(true);
   const title = process.env.REACT_APP_NAME || "Default Title"; // Use the value from .env or a default value
 

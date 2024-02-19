@@ -3,8 +3,10 @@ import { Helmet } from "react-helmet";
 import IndexFAQ from "../Components/LandingPages/FAQ/IndexFAQ";
 import "../Components/Styles/Landing/FAQ.css";
 
-export default function FAQ({ setNavColor }) {
+export default function FAQ({ setNavColor, setOnDash }) {
   const title = process.env.REACT_APP_NAME || "Default Title"; // Use the value from .env or a default value
+  //set pros for on dash board and landing nav color
+  setOnDash(false);
   setNavColor(false);
   return (
     <div>

@@ -22,7 +22,7 @@ export default function CustomerCareButton() {
         </span>
       </div>
 
-      <Link className="p-3" to={"/customer_care"}>
+      <Link className="p-3" to={"/customer_care"} target="_blank">
         <Button className="p-3 m-3">Speak to Live Customer service 24/7</Button>
       </Link>
     </div>

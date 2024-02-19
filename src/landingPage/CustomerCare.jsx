@@ -4,7 +4,11 @@ import "../Components/Styles/Landing/CustomerCare.css"; // Import your CSS file 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faComments } from "@fortawesome/free-solid-svg-icons";
 
-const CustomerCare = () => {
+const CustomerCare = ({ setNavColor, setOnDash }) => {
+  //set pros for on dash board and landing nav color
+  setOnDash(false);
+  setNavColor(false);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
