@@ -15,7 +15,7 @@ const FirebaseAuth = ({ setNavColor, setOnDash }) => {
 
   //set pros for on dash board and landing nav color
   setOnDash(false);
-  setNavColor(false);
+  setNavColor(true);
 
   useEffect(() => {
     // Initialize Firebase
@@ -53,19 +53,28 @@ const FirebaseAuth = ({ setNavColor, setOnDash }) => {
   }, []);
 
   return (
-    <Container>
-      <div className="d-flex justify-content-center align-items-center vh-100">
-        <div className="content bg-light rounded-circle shadow-lg p-4">
-          <div id="firebaseui-auth-container"></div>
-        </div>
-        <div className="ml-4">
-          <FontAwesomeIcon
-            icon={faTimes}
-            className="text-bg-danger bg-brown rounded-circle p-2"
-          />
-        </div>
+    <div className="position-relative ">
+      <div className="background-video">
+        <video autoPlay loop muted>
+          <source src="/background.mp4" type="video/mp4" />
+          {/* Add additional <source> elements for other video formats if needed */}
+          Your browser does not support the video tag.
+        </video>
       </div>
-    </Container>
+      <Container>
+        <div className="d-flex justify-content-center align-items-center vh-100">
+          <div className="content bg-light rounded-circle shadow-lg p-4">
+            <div id="firebaseui-auth-container"></div>
+          </div>
+          <div className="ml-4">
+            <FontAwesomeIcon
+              icon={faTimes}
+              className="text-bg-danger bg-brown rounded-circle p-2"
+            />
+          </div>
+        </div>
+      </Container>
+    </div>
   );
 };
 

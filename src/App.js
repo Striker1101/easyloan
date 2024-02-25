@@ -15,13 +15,11 @@ import { useEffect, useState } from "react";
 import CustomerCare from "./landingPage/CustomerCare";
 import FirebaseAuth from "./Firebase/FirebaseAuth";
 import AuthCard from "./Components/LandingPages/AuthCard";
-
 import { checkAuth } from "./Firebase/Functions";
-function App() {
-  //auth user
 
+function App() {
   const [userDetails, setUserDetails] = useState({
-    status: "false",
+    status: false,
     user: "",
   });
 
@@ -32,7 +30,6 @@ function App() {
     const checkStatus = async () => {
       try {
         const { status, user } = await checkAuth();
-        console.log(status);
         if (status) {
           setUserDetails({ user, status });
         } else {
@@ -45,10 +42,6 @@ function App() {
 
     checkStatus();
   }, []);
-  // name, username, ssn, setpin, pintoken, type of Loan(personal, SALAD->salary advance Loan, education loan
-
-  //     breeze(personla loan) Employee Group Loan
-  // personal EDU Loan is an educational loan product designed to provide financial assistance to corporate employees and SME business owners who want to further their education abroad or sponsor their wards.
 
   return (
     <div>
@@ -104,7 +97,9 @@ function App() {
           element={
             //check if user is logged in
             <Protected isLoggedIn={userDetails.status}>
-              <DashboardApp setOnDash={setOnDash} user={userDetails} />
+              {userDetails.status && (
+                <DashboardApp setOnDash={setOnDash} user={userDetails} />
+              )}
             </Protected>
           }
         />

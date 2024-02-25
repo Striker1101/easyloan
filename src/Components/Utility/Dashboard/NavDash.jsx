@@ -6,84 +6,160 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useState } from "react";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
-
+import { Link } from "react-router-dom";
+import { logout } from "../../../Firebase/Functions";
 const NavDash = () => {
-  function logout() {
-    console.log("out");
-  }
+  const [expanded, setExpanded] = useState(false);
+
+  const handleNavItemClick = () => {
+    setExpanded(false); // Close the Navbar menu when a Nav.Link is clicked
+  };
+
+  const refresh = () => {
+    // Implement your refresh logic here
+  };
+
   return (
-    <Navbar className="position-relative " bg="light" expand={false}>
-      <Navbar.Brand href="/">
-        {/* Replace 'Your Logo' with your logo image */}
+    <Navbar
+      className="position-relative"
+      bg="dark"
+      variant="dark"
+      expand="lg"
+      expanded={expanded}
+    >
+      <Navbar.Brand href="/" className="d-flex align-items-center ">
         <img
-          src="your-logo.png"
-          width="30"
-          height="30"
-          className="d-inline-block align-top"
+          src="/loanlogo.jpg"
           alt="logo"
+          style={{ width: "50px", paddding: "5px", margin: "3px" }}
         />
-        {process.env.REACT_APP_NAME}
+        <h2>{process.env.REACT_APP_NAME}</h2>
       </Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" className="m-2" />
+      <Navbar.Toggle
+        aria-controls="basic-navbar-nav"
+        onClick={() => setExpanded(expanded ? false : true)}
+        className="m-2"
+      />
       <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="mr-auto">
+        <Nav className="ml-auto">
           <div className="d-flex gap-3 align-items-center m-1">
             <FontAwesomeIcon style={{ color: "blue" }} icon={faUser} />
             <NavDropdown title="Profile" id="basic-nav-dropdown">
-              <NavDropdown.Item href="/dashboard/personal_info">
+              <Link
+                to="/dashboard/profile/personal_info"
+                className="dropdown-item"
+                onClick={handleNavItemClick}
+              >
                 Personal Information
-              </NavDropdown.Item>
-              <NavDropdown.Item href="/dashboard/address">
-                Address
-              </NavDropdown.Item>
-              <NavDropdown.Item href="/dashboard/work_info">
+              </Link>
+              <Link
+                to="/dashboard/profile/address_info"
+                className="dropdown-item"
+                onClick={handleNavItemClick}
+              >
+                Address Information
+              </Link>
+              <Link
+                to="/dashboard/profile/work_info"
+                className="dropdown-item"
+                onClick={handleNavItemClick}
+              >
                 Work Information
-              </NavDropdown.Item>
-              <NavDropdown.Item href="/dashboard/education_info">
+              </Link>
+              <Link
+                to="/dashboard/profile/education_info"
+                className="dropdown-item"
+                onClick={handleNavItemClick}
+              >
                 Education Information
-              </NavDropdown.Item>
-
-              <NavDropdown.Item href="/dashboard/next_kin">
+              </Link>
+              <Link
+                to="/dashboard/profile/next_kin"
+                className="dropdown-item"
+                onClick={handleNavItemClick}
+              >
                 Next of Kin
-              </NavDropdown.Item>
-              <NavDropdown.Item href="/dashboard/expenses">
+              </Link>
+              <Link
+                to="/dashboard/profile/expenses"
+                className="dropdown-item"
+                onClick={handleNavItemClick}
+              >
                 Expenses
-              </NavDropdown.Item>
+              </Link>
             </NavDropdown>
           </div>
 
           <div className="d-flex gap-3 align-items-center m-1">
             <FontAwesomeIcon style={{ color: "blue" }} icon={faClock} />
-            <Nav.Link href="/dashboard/summary">Summary</Nav.Link>
+            <Link
+              to="/dashboard/summary"
+              className="nav-link"
+              onClick={handleNavItemClick}
+            >
+              Summary
+            </Link>
           </div>
 
           <div className="d-flex gap-3 align-items-center m-1">
             <FontAwesomeIcon style={{ color: "blue" }} icon={faTimes} />
-            <Nav.Link href="/dashboard/terminate">Terminate</Nav.Link>
+            <Link
+              to="/dashboard/terminate"
+              className="nav-link"
+              onClick={handleNavItemClick}
+            >
+              Terminate
+            </Link>
           </div>
 
           <div className="d-flex gap-3 align-items-center m-1">
             <FontAwesomeIcon style={{ color: "blue" }} icon={faFolder} />
-            <Nav.Link href="/dashboard/active_loan">Active Loans</Nav.Link>
+            <Link
+              to="/dashboard/active_loan"
+              className="nav-link"
+              onClick={handleNavItemClick}
+            >
+              Active Loans
+            </Link>
           </div>
 
           <div className="d-flex gap-3 align-items-center m-1">
             <FontAwesomeIcon style={{ color: "blue" }} icon={faBatteryCar} />
-            <Nav.Link href="/dashboard/attachment">Attachment</Nav.Link>
+            <Link
+              to="/dashboard/attachment"
+              className="nav-link"
+              onClick={handleNavItemClick}
+            >
+              Attachment
+            </Link>
           </div>
 
           <div className="d-flex gap-3 align-items-center m-1">
-            <FontAwesomeIcon style={{ color: "blue" }} icon={faRefresh} />
-            <Nav.Link href="/dashboard/refresh">Refresh</Nav.Link>
+            <FontAwesomeIcon style={{ color: "green" }} icon={faRefresh} />
+            <Link
+              to="#"
+              onClick={refresh}
+              className="nav-link"
+              onClick={handleNavItemClick}
+            >
+              Refresh
+            </Link>
           </div>
 
           <div className="d-flex gap-3 align-items-center m-1">
-            <FontAwesomeIcon style={{ color: "blue" }} icon={faSignOut} />
-            <Nav.Link href="#" onClick={logout}>
+            <FontAwesomeIcon style={{ color: "red" }} icon={faSignOut} />
+            <Link
+              to="#"
+              className="nav-link"
+              onClick={() => {
+                handleNavItemClick();
+                logout();
+              }}
+            >
               LogOut
-            </Nav.Link>
+            </Link>
           </div>
         </Nav>
       </Navbar.Collapse>

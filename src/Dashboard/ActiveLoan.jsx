@@ -1,76 +1,74 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDeleteLeft, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import Loader from "../Components/DashboardPages/Loader";
 import { Table } from "react-bootstrap";
-import { deleteRegion } from "../Firebase/Functions";
-const Terminate = ({ terminate }) => {
+import { Link } from "react-router-dom";
+const ActiveLoan = ({ loan }) => {
+  console.log(loan);
   const [showModal, setShowModal] = useState(false);
   const [selectedLoan, setSelectedLoan] = useState(null);
-  const [mapIndex, setMapIndex] = useState(0);
+
   const handleCloseModal = () => setShowModal(false);
 
-  const handleOpenModal = (terminate) => {
-    setSelectedLoan(terminate);
+  const handleOpenModal = (loan) => {
+    setSelectedLoan(loan);
     setShowModal(true);
-  };
-
-  const handleDelete = () => {
-    const ask = prompt(
-      "Are you sure you want to Delete this Reqest, Type Yes to confirm, refresh browser to see changes "
-    );
-    if (ask === "YES") {
-      deleteRegion(selectedLoan);
-    }
   };
 
   return (
     <>
-      {terminate ? (
+      {loan ? (
         <div>
-          {terminate.length < 1 ? (
+          {loan.length < 1 ? (
             <>
               <img src="/nothing.svg" className="nothing" alt="" />
-              <strong className="note">Nothing Here</strong>
+              <Link
+                to={"/dashboard/request"}
+                className="m-3 p-2 d-flex justify-content-center align-align-items-center  w-100 "
+              >
+                <Button>Request a new Loan</Button>
+              </Link>
             </>
           ) : (
             <>
               <div className="dashboardInfo w-100 text-center">
-                Are you Sure you want to Delete ?
+                Approved Loans
               </div>
               <Table hover bordered striped>
                 <thead>
                   <tr>
-                    <th>Delete</th>
+                    <th></th>
                     <th>Type</th>
+                    <th>Duration</th>
                     <th>Amount</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {terminate.map((loan, index) => (
-                    <tr
-                      key={index}
-                      onClick={() => {
-                        handleOpenModal(loan);
-                        setMapIndex(index);
-                      }}
-                    >
+                  {loan.map((loan, index) => (
+                    <tr key={index} onClick={() => handleOpenModal(loan)}>
                       <td className="text-truncate">
                         {" "}
                         <FontAwesomeIcon
-                          icon={faDeleteLeft}
-                          style={{ color: "red" }}
+                          icon={faInfoCircle}
+                          style={{ color: "green" }}
                         />
                       </td>
-                      <td className="text-truncate">{loan.type}</td>
-                      <td className="text-truncate">
-                        <strong className="text-success">{loan.amount}</strong>
+                      <td className="text-truncate">{loan.reason}</td>
+                      <td className="text-truncate text-success">
+                        {loan.duration}
+                      </td>
+                      <td className="text-truncate text-success">
+                        {loan.amount}
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </Table>
+              <Link to={"/dashboard/request"} className="m-3 p-2 ">
+                <Button>Request a new Loan</Button>
+              </Link>
             </>
           )}
 
@@ -90,9 +88,6 @@ const Terminate = ({ terminate }) => {
               )}
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="danger" onClick={handleDelete}>
-                Delete
-              </Button>
               <Button variant="secondary" onClick={handleCloseModal}>
                 Close
               </Button>
@@ -106,4 +101,4 @@ const Terminate = ({ terminate }) => {
   );
 };
 
-export default Terminate;
+export default ActiveLoan;

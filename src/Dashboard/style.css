@@ -28,3 +28,51 @@
     min-width: 390px;
   }
 }
+
+.background-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Ensure the video stays behind other content */
+}
+
+.background-video video {
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+}
+
+.dashboardInfo {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: larger;
+  background: linear-gradient(45deg, rgba(34, 164, 116, 1) 0%, #292f8f 100%);
+}
+
+.nothing {
+  width: 400px;
+  height: fit-content;
+}
+
+.note {
+  position: inherit;
+}
+
+.attachmentBG {
+  background-image: url("/public/folder.svg");
+  background-position: center;
+  background-size: cover;
+  height: 450px;
+}
+

@@ -111,13 +111,13 @@ function NavLanding({ color }) {
                   aria-label="choose perferred languague"
                   value={lang}
                   onChange={handleChange}
-                  className={color ? "text-light " : "text-black"}
+                  // className={color ? "text-light " : "text-black"}
                 >
                   {languages.map((item, index) => {
                     return (
                       <option
                         key={index}
-                        className={color ? "text-light " : "text-black"}
+                        // className={color ? "text-light " : "text-black"}
                         value={item.value}
                       >
                         {item.text}
