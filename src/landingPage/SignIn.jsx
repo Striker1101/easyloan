@@ -5,6 +5,7 @@ import "../Components/Styles/Landing/SignIn.css";
 import Email from "../Components/LandingPages/SignIn/Email";
 import Password from "../Components/LandingPages/SignIn/Password";
 import { Link } from "react-router-dom";
+import { loginUser } from "../Firebase/Functions";
 
 const SignIn = ({ setNavColor, setOnDash }) => {
   //set pros for on dash board and landing nav color
@@ -42,8 +43,10 @@ const SignIn = ({ setNavColor, setOnDash }) => {
     }));
   };
 
-  function handleSubmitPassword() {
-    console.log("submited");
+  async function handleSubmitPassword() {
+    const result = await loginUser(formData.email, formData.password);
+
+    alert(result.message);
   }
 
   return (
@@ -73,7 +76,7 @@ const SignIn = ({ setNavColor, setOnDash }) => {
             </Link>
           </div>
           <div>
-            Forgotten your Password <Link to={"/reset_password"}>Retrive</Link>
+            Forgotten your Password <Link to={"/reset"}>Retrive</Link>
           </div>
         </div>
       </div>

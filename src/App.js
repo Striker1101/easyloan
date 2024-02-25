@@ -59,7 +59,7 @@ function App() {
           element={<SignIn setOnDash={setOnDash} setNavColor={setNavColor} />}
         />
         <Route
-          path="/reset_password"
+          path="/reset"
           element={
             <ResetPassword setOnDash={setOnDash} setNavColor={setNavColor} />
           }

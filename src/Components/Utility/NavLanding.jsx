@@ -66,11 +66,18 @@ function NavLanding({ color }) {
         }}
       >
         <Container>
-          <Navbar.Brand
-            href="/"
-            className={color ? "text-light mr-auto" : " mr-auto text-black "}
-          >
-            {process.env.REACT_APP_NAME}
+          <Navbar.Brand href="/" className="d-flex align-items-center gap-3">
+            <img src="./loanlogo.jpg" alt="logo" width={50} />
+            <p
+              className={color ? "text-light mr-auto" : " mr-auto text-black "}
+              style={{
+                fontFamily: "Arial",
+                fontWeight: "bold",
+                fontSize: "24px",
+              }}
+            >
+              {process.env.REACT_APP_NAME}
+            </p>
           </Navbar.Brand>
           <Navbar.Toggle
             aria-controls="basic-navbar-nav "

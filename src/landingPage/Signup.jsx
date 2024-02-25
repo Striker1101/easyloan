@@ -8,6 +8,7 @@ import Email from "../Components/LandingPages/Signup.jsx/Email";
 import VerificaionCode from "../Components/LandingPages/Signup.jsx/VerificationCode";
 import Password from "../Components/LandingPages/Signup.jsx/Password";
 import { Link } from "react-router-dom";
+import { handleSendCode, createUser } from "../Firebase/Functions";
 
 const Signup = ({ setNavColor, setOnDash }) => {
   //set pros for on dash board and landing nav color
@@ -15,10 +16,8 @@ const Signup = ({ setNavColor, setOnDash }) => {
   setNavColor(false);
 
   const [email, setEmail] = useState({
-    address: "",
-    code: "",
+    email: "",
     showEmail: true,
-    showCode: false,
   });
 
   function handleChangeEmail(e) {
@@ -29,32 +28,23 @@ const Signup = ({ setNavColor, setOnDash }) => {
     }));
   }
 
-  const handleSendVerificationCode = () => {
+  const handleSendVerificationCode = async () => {
     // Logic to send verification code
     // Assuming verification code is received and validated
     setEmail((prev) => ({
       ...prev,
       showEmail: false,
-      showCode: true,
-    })); // Show PIN step after successful verification
-  };
-
-  const handleCodeSave = () => {
-    // Logic to create account and save details to database
-    setEmail((prev) => ({
-      ...prev,
-      showCode: false,
     }));
 
     setPassword((prev) => ({
       ...prev,
       display: true,
     }));
-  };
 
-  function sendCode() {
-    console.log("send");
-  }
+    const result = await handleSendCode(email.email);
+
+    alert(result.message);
+  };
 
   const [password, setPassword] = useState({
     key: "",
@@ -69,6 +59,7 @@ const Signup = ({ setNavColor, setOnDash }) => {
       showPassword: !prev.showPassword,
     }));
   };
+
   function handleChangePassword(e) {
     const { name, value } = e.target;
     setPassword((prev) => ({
@@ -77,8 +68,17 @@ const Signup = ({ setNavColor, setOnDash }) => {
     }));
   }
 
-  function handleSubmitPassword() {
-    console.log("submited");
+  async function handleSubmitPassword() {
+    if (password.confirmKey !== password.key) {
+      return alert("password do nor match");
+    }
+    const result = await createUser(email.email, password.key);
+
+    alert(result.message);
+
+    if (result.status) {
+      window.location.href = "/signin";
+    }
   }
 
   return (
@@ -94,16 +94,9 @@ const Signup = ({ setNavColor, setOnDash }) => {
             handleSendVerificationCode={handleSendVerificationCode}
           />
 
-          {/* verification Step */}
-          <VerificaionCode
-            email={email}
-            handleChangeEmail={handleChangeEmail}
-            handleCodeSave={handleCodeSave}
-            sendCode={sendCode}
-          />
-
           {/* set password */}
           <Password
+            email={email.email}
             password={password}
             handleChangePassword={handleChangePassword}
             togglePasswordVisibility={togglePasswordVisibility}

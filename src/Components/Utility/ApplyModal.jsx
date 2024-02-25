@@ -30,7 +30,9 @@ const ApplyModal = ({ show, handleClose }) => {
             <p style={{ fontSize: "1rem" }}>{t("first_timer")}</p>
             <hr />
             <Link to={"/signup"}>
-              <Button variant="primary">{t("apply_for_loan")}</Button>
+              <Button onClick={handleClose} variant="primary">
+                {t("apply_for_loan")}
+              </Button>
             </Link>
           </div>
           <div className="shadow-lg  d-flex p-4  flex-column justify-content-center align-items-center nav_apply_section">
@@ -42,7 +44,9 @@ const ApplyModal = ({ show, handleClose }) => {
             <p style={{ fontSize: "1rem" }}>{t("old_user")}</p>
             <hr />
             <Link to={"/signin"}>
-              <Button variant="primary">{t("apply_for_loan")}</Button>
+              <Button onClick={handleClose} variant="primary">
+                {t("apply_for_loan")}
+              </Button>
             </Link>
           </div>
         </div>

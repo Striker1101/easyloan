@@ -8,11 +8,16 @@ export default function Password({
   handleChangePassword,
   togglePasswordVisibility,
   handleSubmitPassword,
+  email,
 }) {
   return (
     <div>
       {password.display && (
         <Form className={`signup-form ${password.display ? "slide-in" : ""}`}>
+          <Form.Group controlId="formVerificationCode">
+            <Form.Label>Email</Form.Label>
+            <Form.Control type="text" defaultValue={email} disabled />
+          </Form.Group>
           <Form.Group controlId="formPassword">
             <Form.Label>Password</Form.Label>
             <div className="input-group">

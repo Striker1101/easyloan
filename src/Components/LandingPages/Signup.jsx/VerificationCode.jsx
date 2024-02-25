@@ -11,16 +11,7 @@ export default function VerificaionCode({
     <div>
       {email.showCode && (
         <Form className={`signup-form ${email.showCode ? "slide-in" : ""}`}>
-          <Form.Group controlId="formVerificationCode">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Email Address"
-              defaultValue={email.address}
-              onChange={handleChangeEmail}
-              disabled
-            />
-          </Form.Group>
+          
           <Form.Group controlId="formCode">
             <Form.Label>Code</Form.Label>
             <Form.Control

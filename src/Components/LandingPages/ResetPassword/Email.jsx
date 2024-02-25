@@ -1,7 +1,19 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
+import { handleSendCode, resetPassword } from "../../../Firebase/Functions";
 
-export default function Email({ formData, handleFormData, handleSubmitEmail }) {
+export default function Email({ formData, handleFormData }) {
+  async function handleRetrive() {
+    const result = await resetPassword(formData.email);
+    console.log(result);
+    if (result) {
+      alert(result.message);
+    }
+  }
+  async function handleVerify() {
+    const result = await handleSendCode(formData.email);
+    alert(result.message);
+  }
   return (
     <div>
       {formData.show && (
@@ -16,8 +28,11 @@ export default function Email({ formData, handleFormData, handleSubmitEmail }) {
               onChange={(e) => handleFormData(e)}
             />
           </Form.Group>
-          <Button className="m-3" variant="primary" onClick={handleSubmitEmail}>
+          <Button className="m-3" variant="primary" onClick={handleRetrive}>
             Retrive
+          </Button>
+          <Button className="m-3" variant="success" onClick={handleVerify}>
+            Email Verification
           </Button>
         </Form>
       )}

@@ -15,15 +15,16 @@ export default function Email({
             <Form.Control
               type="email"
               placeholder="Enter email"
-              defaultValue={email.address}
-              name="address"
+              defaultValue={email.email}
+              name="email"
+              required
               onChange={(e) => handleChangeEmail(e)}
             />
           </Form.Group>
           <Button
+            onClick={handleSendVerificationCode}
             className="m-3"
             variant="primary"
-            onClick={handleSendVerificationCode}
           >
             Send Verification Code
           </Button>

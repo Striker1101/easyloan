@@ -17,10 +17,10 @@ export default function Password({
             <Form.Label>Password</Form.Label>
             <div className="input-group">
               <Form.Control
-                type={!formData.showPassword ? "text" : "password"}
+                type={formData.showPassword ? "text" : "password"}
                 placeholder="Enter password"
                 defaultValue={formData.password}
-                name="key"
+                name="password"
                 onChange={handleFormData}
               />
               <div className="input-group-append">

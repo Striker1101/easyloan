@@ -255,3 +255,73 @@ export function logout() {
       return { message: error.message, status: false };
     });
 }
+
+export const handleSendCode = async (email) => {
+  try {
+    await firebase.auth().sendSignInLinkToEmail(email, {
+      handleCodeInApp: true,
+      url: "http://localhost:3000/signin/", // URL to navigate after verification
+    });
+    return {
+      status: true,
+      message: "Verification code sent to email.",
+    };
+  } catch (error) {
+    return {
+      status: false,
+      message: error.message,
+    };
+  }
+};
+
+export const createUser = async (email, password) => {
+  try {
+    // Create user with email and password
+    await firebase.auth().createUserWithEmailAndPassword(email, password);
+    return { success: true, message: "User created successfully." };
+  } catch (error) {
+    return { success: false, message: removeFirebasePrefix(error.message) };
+  }
+};
+
+export const loginUser = async (email, password) => {
+  try {
+    const userCredential = await firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password);
+    const user = userCredential.user;
+    return { success: true, user, message: "Login Successfull" };
+  } catch (error) {
+    return { success: false, message: removeFirebasePrefix(error.message) };
+  }
+};
+
+const removeFirebasePrefix = (str) => {
+  return str.replace("Firebase: ", "");
+};
+
+// Function to reset password
+export const resetPassword = (email) => {
+  // Check if email is provided
+  if (!email) {
+    return Promise.reject({
+      status: false,
+      message: "Email is required for password reset."
+    });
+  }
+
+  // Send password reset email
+  return firebase.auth().sendPasswordResetEmail(email)
+    .then(() => {
+      return {
+        status: true,
+        message: "Password reset email sent successfully."
+      };
+    })
+    .catch((error) => {
+      return {
+        status: false,
+        message: error.message
+      };
+    });
+};
