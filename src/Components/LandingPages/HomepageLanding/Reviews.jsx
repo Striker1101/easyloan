@@ -10,32 +10,44 @@ import {
 const Reviews = () => {
   const [cards, setCards] = useState([
     {
-      name: "Patrical",
-      message: "this is the best",
+      name: "Patricia Cowley",
+      message:
+        "I found that the people are very helpful and understanding, I would definitely recommend them.",
     },
     {
-      name: "Patrical",
-      message: "this is the best",
+      name: "Bernard Knoll",
+      message:
+        "She showed me respect as if I was getting a million dollar loan or a $10 loan she made me feel extremely comfortable ",
     },
     {
-      name: "Patrical",
-      message: "this is the best",
+      name: "Tanya Morgan",
+      message:
+        "Absolutely on point and followed up promptly with emails and phone calls as email is my preferred method of contact. Prompt, courteous and explained everything.",
     },
     {
-      name: "Patrical",
-      message: "this is the best",
+      name: "Steve",
+      message:
+        "I would recommend dealing with them to help you get back on stable financial ground. Thanks for all your help.",
     },
     {
-      name: "Patrical",
-      message: "this is the best",
+      name: "Brooke",
+      message:
+        "easyfinancial makes building credit back up literally so easy. Joel was extremely helpful and made it all so simple and straight forward to set up my loan, very happy! Thanks again!",
     },
     {
-      name: "Patrical",
-      message: "this is the best",
+      name: "Jenevy Hughes",
+      message:
+        "Jolyn the financial advisor here at Grande Praire is very helpful. She knows what she is doing. Witty, friendly and approachable person. Keep up the good work!",
     },
     {
-      name: "Patrical",
-      message: "this is the best",
+      name: "Oluoha Fidelis",
+      message:
+        "EasyLoan is a company with class. I have been dealing with these guys for years and I must confess that there is no better place to loan money than with EasyLoan. Tested, Trusted and Reliable.",
+    },
+    {
+      name: "Aderowo Emmanuel",
+      message:
+        "At EasyLoan, loans are easily and quickly disbursed. What impressed me was the ease with which money was loaned out to me to meet my pressing need",
     },
   ]);
   const containerRef = useRef(null);
