@@ -15,26 +15,26 @@ export default function FooterLanding() {
     <div className="footerLanding">
       <div className="d-flex flex-column flex-lg-row justify-content-between ">
         <div>
-          {process.env.REACT_APP_NAME}
+          <h3 className="text-primary"> {process.env.REACT_APP_NAME}</h3>
           <p>{t("Footer:owner_and_manager")}</p>
         </div>
 
         <div className="m-4">
-          <h3>
+          <p>
             <FontAwesomeIcon
               icon={faEnvelope}
               style={{ fontSize: "2rem", color: "grey" }}
             />
             {process.env.REACT_APP_MAIL}
-          </h3>
+          </p>
 
-          <h3>
+          <p>
             <FontAwesomeIcon
               icon={faPhone}
               style={{ fontSize: "2rem", color: "grey" }}
             />
             {process.env.REACT_APP_NUM}
-          </h3>
+          </p>
 
           <hr />
 
@@ -77,7 +77,7 @@ export default function FooterLanding() {
         </div>
 
         <div className="m-4">
-          <h2>{t("Footer:office")}</h2>
+          <h2 className="text-primary">{t("Footer:office")}</h2>
           <p>{t("Footer:address")}</p>
         </div>
       </div>
