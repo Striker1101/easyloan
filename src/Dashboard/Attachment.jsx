@@ -1,10 +1,19 @@
 import { FormatPaintOutlined, Tune } from "@material-ui/icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import AlertUser from "../Components/DashboardPages/AlertUser";
 import { submitFile } from "../Firebase/Functions";
+import { useReview } from "./App";
 
 export default function Attachment({ id }) {
+  const { review, setReview } = useReview();
+  useEffect(() => {
+    setReview((prev) => ({
+      ...prev,
+      header: "Upload Needed documents ",
+      body: "Select required documents to proceed to Loan",
+    }));
+  }, []);
   const [selectedDocument, setSelectedDocument] = useState("");
   const [file, setFile] = useState(null);
   const [front, setFront] = useState(null);

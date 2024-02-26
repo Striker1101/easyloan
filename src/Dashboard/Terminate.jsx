@@ -1,11 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDeleteLeft, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import Loader from "../Components/DashboardPages/Loader";
 import { Table } from "react-bootstrap";
 import { deleteRegion } from "../Firebase/Functions";
+import { useReview } from "./App";
 const Terminate = ({ terminate }) => {
+  const { review, setReview } = useReview();
+  useEffect(() => {
+    setReview((prev) => ({
+      ...prev,
+      header: "Terminate Loan Contact",
+      body: "Requested Loans can be terminate here",
+    }));
+  }, []);
   const [showModal, setShowModal] = useState(false);
   const [selectedLoan, setSelectedLoan] = useState(null);
   const [mapIndex, setMapIndex] = useState(0);

@@ -1,10 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import Loader from "../Components/DashboardPages/Loader";
 import { Table } from "react-bootstrap";
+import { useReview } from "./App";
 const Summary = ({ summary }) => {
+  const { review, setReview } = useReview();
+  useEffect(() => {
+    setReview((prev) => ({
+      ...prev,
+      header: "Review on Summary",
+      body: "Check in here for a Compiled summary of all requested loans",
+    }));
+  }, []);
+
   const [showModal, setShowModal] = useState(false);
   const [selectedLoan, setSelectedLoan] = useState(null);
 

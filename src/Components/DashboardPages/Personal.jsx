@@ -203,7 +203,12 @@ export default function Personal({ status, handleSubmit, setInfo }) {
             </Form.Group>
 
             {/* Add more form fields as needed */}
-            <Button variant="primary" type="submit" disabled={isLoading}>
+            <Button
+              variant="primary"
+              type="submit"
+              disabled={isLoading}
+              className="m-2"
+            >
               {isLoading ? (
                 <>
                   <Spinner

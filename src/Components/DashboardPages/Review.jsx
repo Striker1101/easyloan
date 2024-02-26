@@ -1,18 +1,26 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import { Card } from "react-bootstrap";
 
-const Review = () => {
+const Review = ({ review }) => {
   return (
-    <div className="review d-none d-md-block">
-      <div className="card border-primary mt-5" style={{ maxWidth: '18rem' }}>
-        <div className="card-header bg-primary text-white">Reviews</div>
-        <ul className="list-group list-group-flush">
-          <li className="list-group-item">Review 1</li>
-          <li className="list-group-item">Review 2</li>
-          <li className="list-group-item">Review 3</li>
-          {/* Add more reviews here */}
-        </ul>
-      </div>
+    <div className="d-flex">
+      <div className="message-icon"></div>
+      <Card className="review d-none d-md-block" style={{ width: "200px" }}>
+        <Card.Header style={{ color: " rgb(67, 150, 153)" }}>
+          {review.header}
+        </Card.Header>
+        <Card.Body className="d-flex flex-column align-align-items-center  justify-content-center ">
+          {" "}
+          <FontAwesomeIcon
+            icon={faCircleInfo}
+            style={{ fontSize: "50", color: "lightblue" }}
+          />
+          <p className="fs-6 fw-bold ">{review.body}</p>
+        </Card.Body>
+      </Card>
     </div>
   );
 };

@@ -55,13 +55,6 @@ const NavDash = () => {
                 Personal Information
               </Link>
               <Link
-                to="/dashboard/profile/address_info"
-                className="dropdown-item"
-                onClick={handleNavItemClick}
-              >
-                Address Information
-              </Link>
-              <Link
                 to="/dashboard/profile/work_info"
                 className="dropdown-item"
                 onClick={handleNavItemClick}

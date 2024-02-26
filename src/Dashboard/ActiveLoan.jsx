@@ -1,12 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import Loader from "../Components/DashboardPages/Loader";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useReview } from "./App";
 const ActiveLoan = ({ loan }) => {
-  console.log(loan);
+  const { review, setReview } = useReview();
+  useEffect(() => {
+    setReview((prev) => ({
+      ...prev,
+      header: "See all succesfully approvaed loan",
+      body: "Find all actively successfully approved loans ",
+    }));
+  }, []);
   const [showModal, setShowModal] = useState(false);
   const [selectedLoan, setSelectedLoan] = useState(null);
 

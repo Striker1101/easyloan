@@ -1,6 +1,6 @@
 // login user directly from Here
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import SelectLoan from "../Components/DashboardPages/Request/SelectLoan";
 import Product from "../Components/DashboardPages/Request/Product";
@@ -11,8 +11,17 @@ import Reason from "../Components/DashboardPages/Request/Reason";
 import Personal from "../Components/DashboardPages/Personal";
 import Statement from "../Components/DashboardPages/Request/Statement";
 import UploadDataAndRedirect from "../Components/DashboardPages/Request/UploadDataAndRedirect";
-import ApplicationReview from "../Components/DashboardPages/Request/ApplicationReview";
+import Application_Review from "../Components/DashboardPages/Request/ApplicationReview";
+import { useReview } from "./App";
 const Request = () => {
+  const { review, setReview } = useReview();
+  useEffect(() => {
+    setReview((prev) => ({
+      ...prev,
+      header: "Request a Loan Now",
+      body: "Apply for a active loan offer, 24h ours deliver rate ",
+    }));
+  }, []);
   const datas = [
     {
       name: "SALAD(salary Advance loan)",
@@ -70,7 +79,7 @@ const Request = () => {
 
   const [statement, setStatement] = useState(false);
 
-  const [review, setReview] = useState(false);
+  const [_review, set_Review] = useState(false);
 
   const [loan, setLoan] = useState(false);
 
@@ -146,14 +155,14 @@ const Request = () => {
 
     setInfo({
       ...info,
-      details: "Review your application.",
+      details: "_Review your application.",
     });
 
-    setReview(true);
+    set_Review(true);
   };
 
-  const handleReviewSubmit = () => {
-    setReview(false);
+  const handle_ReviewSubmit = () => {
+    set_Review(false);
 
     setInfo({
       ...info,
@@ -170,7 +179,7 @@ const Request = () => {
     info.details = "Select your Loan Product";
     setPersonal(false);
     setStatement(false);
-    setReview(false);
+    set_Review(false);
     setLoan(false);
   };
 
@@ -242,9 +251,9 @@ const Request = () => {
       return setPersonal(true);
     }
 
-    if (review) {
+    if (_review) {
       info.details = "Attach all required documents.";
-      setReview(false);
+      set_Review(false);
       return setStatement(true);
     }
   }
@@ -309,9 +318,9 @@ const Request = () => {
             handleSubmit={handleStatementSubmit}
           />
 
-          <ApplicationReview
-            status={review}
-            handleSubmit={handleReviewSubmit}
+          <Application_Review
+            status={_review}
+            handleSubmit={handle_ReviewSubmit}
             amount={product.data.amount}
             duration={product.data.duration}
             reason={reason.reason}
