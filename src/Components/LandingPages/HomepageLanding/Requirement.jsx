@@ -24,77 +24,77 @@ const Requirement = ({ show, handleClose }) => {
           overview of what you’ll need to provide in-person at your branch or
           submit electronically.
         </p>
-        <div class="container w-100">
-          <div class=" w-100 row gap-2 ">
-            <div class=" col-5"> </div>
-            <div class=" fs-6  col require">Loan</div>
-            <div class="fs-6 col require">Type</div>
+        <div className="container w-100">
+          <div className=" w-100 row gap-2 ">
+            <div className=" col-5"> </div>
+            <div className=" fs-6  col require">Loan</div>
+            <div className="fs-6 col require">Type</div>
           </div>
 
-          <div class=" w-100 row gap-2 ">
-            <div class=" col-5"> </div>
-            <div class="fs-6  col">Personal Loan</div>
-            <div class="fs-6  col ">Home Equity</div>
+          <div className=" w-100 row gap-2 ">
+            <div className=" col-5"> </div>
+            <div className="fs-6  col">Personal Loan</div>
+            <div className="fs-6  col ">Home Equity</div>
           </div>
 
-          <div class=" w-100 row gap-2 ">
-            <div class=" col-5 fs-6 ">Valid Government issued photo ID </div>
-            <div class=" col">
+          <div className=" w-100 row gap-2 ">
+            <div className=" col-5 fs-6 ">Valid Government issued photo ID </div>
+            <div className=" col">
               <FontAwesomeIcon icon={faCheck} style={{ color: "green" }} />
             </div>
-            <div class=" col ">
-              <FontAwesomeIcon icon={faCheck} style={{ color: "green" }} />
-            </div>
-          </div>
-
-          <div class=" w-100 row gap-2 ">
-            <div class=" col-5 fs-6 ">Proof of income</div>
-            <div class=" col">
-              <FontAwesomeIcon icon={faCheck} style={{ color: "green" }} />
-            </div>
-            <div class=" col ">
+            <div className=" col ">
               <FontAwesomeIcon icon={faCheck} style={{ color: "green" }} />
             </div>
           </div>
 
-          <div class=" w-100 row gap-2 ">
-            <div class=" col-5 fs-6 ">
+          <div className=" w-100 row gap-2 ">
+            <div className=" col-5 fs-6 ">Proof of income</div>
+            <div className=" col">
+              <FontAwesomeIcon icon={faCheck} style={{ color: "green" }} />
+            </div>
+            <div className=" col ">
+              <FontAwesomeIcon icon={faCheck} style={{ color: "green" }} />
+            </div>
+          </div>
+
+          <div className=" w-100 row gap-2 ">
+            <div className=" col-5 fs-6 ">
               Void cheque or pre-authorized debit form
             </div>
-            <div class=" col">
+            <div className=" col">
               <FontAwesomeIcon icon={faCheck} style={{ color: "green" }} />
             </div>
-            <div class=" col ">
-              <FontAwesomeIcon icon={faCheck} style={{ color: "green" }} />
-            </div>
-          </div>
-
-          <div class=" w-100 row gap-2 ">
-            <div class=" col-5 fs-6 ">Proof of address</div>
-            <div class=" col">
-              <FontAwesomeIcon icon={faCheck} style={{ color: "green" }} />
-            </div>
-            <div class=" col ">
+            <div className=" col ">
               <FontAwesomeIcon icon={faCheck} style={{ color: "green" }} />
             </div>
           </div>
 
-          <div class=" w-100 row gap-2 ">
-            <div class=" col-5 fs-6 ">Annual mortgage statement</div>
-            <div class=" col">
+          <div className=" w-100 row gap-2 ">
+            <div className=" col-5 fs-6 ">Proof of address</div>
+            <div className=" col">
+              <FontAwesomeIcon icon={faCheck} style={{ color: "green" }} />
+            </div>
+            <div className=" col ">
+              <FontAwesomeIcon icon={faCheck} style={{ color: "green" }} />
+            </div>
+          </div>
+
+          <div className=" w-100 row gap-2 ">
+            <div className=" col-5 fs-6 ">Annual mortgage statement</div>
+            <div className=" col">
               <FontAwesomeIcon icon={faClose} style={{ color: "red" }} />
             </div>
-            <div class=" col ">
+            <div className=" col ">
               <FontAwesomeIcon icon={faCheck} style={{ color: "green" }} />
             </div>
           </div>
 
-          <div class=" w-100 row gap-2 ">
-            <div class=" col-5 fs-6 ">Annual property tax statement</div>
-            <div class=" col">
+          <div className=" w-100 row gap-2 ">
+            <div className=" col-5 fs-6 ">Annual property tax statement</div>
+            <div className=" col">
               <FontAwesomeIcon icon={faClose} style={{ color: "red" }} />
             </div>
-            <div class=" col ">
+            <div className=" col ">
               <FontAwesomeIcon icon={faCheck} style={{ color: "green" }} />
             </div>
           </div>

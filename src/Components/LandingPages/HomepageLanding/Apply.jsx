@@ -35,7 +35,7 @@ function Apply() {
             <h2> Get your money as soon as today</h2>
           </div>
           <Link to={"/firebase_auth"}>
-            <Button className="px-4 py-2 m-3" fw-semibold variant="primary">
+            <Button className="px-4 py-2 m-3 fw-semibold" variant="primary">
               {" "}
               Apply Now
             </Button>

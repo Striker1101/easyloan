@@ -3,9 +3,9 @@ import getCountry from "../../../international/GetCountry";
 export default function Advert() {
   return (
     <div className="dub_advert advert pt-4">
-      <div class="container ">
-        <div class="row">
-          <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+      <div className="container ">
+        <div className="row">
+          <div className="col-12 col-sm-6 col-md-6 col-lg-6">
             <div className=" ">
               <h2>
                 Putting {getCountry()}ns on a path to a better financial future
@@ -32,7 +32,7 @@ export default function Advert() {
               </div>
             </div>
           </div>
-          <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+          <div className="col-12 col-sm-6 col-md-6 col-lg-6">
             <div className=" circle_holder   position-relative w-100 ">
               <div className="advert_circle circle_one">
                 <h1>60%</h1>
