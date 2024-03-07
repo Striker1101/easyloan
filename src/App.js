@@ -45,6 +45,19 @@ function App() {
 
   return (
     <div>
+      {/* <Helmet>
+        
+  <script type="text/javascript">
+    (function (d, t) {
+      var g = d.createElement(t),
+        s = d.getElementsByTagName(t)[0];
+      g.src =
+        "https://cdn.pushalert.co/integrate_d8dc148d717e5de3b601c568738d6021.js";
+      s.parentNode.insertBefore(g, s);
+    })(document, "script");
+  </script>
+ 
+      </Helmet> */}
       {/* auth.user for NavDashboard else NavLanding */}
       <AuthCard auth={userDetails.status} />
       {onDash ? "" : <NavLanding color={navcolor} />}
