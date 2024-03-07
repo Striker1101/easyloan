@@ -9,6 +9,7 @@ import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import getCountry, { getState } from "../../international/GetCountry";
 export default function FooterLanding() {
   const { t } = useTranslation();
   return (
@@ -16,7 +17,11 @@ export default function FooterLanding() {
       <div className="d-flex flex-column flex-lg-row justify-content-between ">
         <div>
           <h3 className="text-primary"> {process.env.REACT_APP_NAME}</h3>
-          <p>{t("Footer:owner_and_manager")}</p>
+          {/* <p>{t("Footer:owner_and_manager")}</p> */}
+          Owned and managed by: Casafina Credit Limited a licensed credit
+          provider incorporated by the corporate affairs commission of{" "}
+          {getCountry()} and operating under money lending License granted by{" "}
+          {getState()} state government.
         </div>
 
         <div className="m-4">

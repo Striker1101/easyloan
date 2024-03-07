@@ -3,6 +3,7 @@ import { Container, Form, Button, Col, Row } from "react-bootstrap";
 import "../Components/Styles/Landing/CustomerCare.css"; // Import your CSS file for styling
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faComments } from "@fortawesome/free-solid-svg-icons";
+import { Helmet } from "react-helmet";
 
 const CustomerCare = ({ setNavColor, setOnDash }) => {
   //set pros for on dash board and landing nav color
@@ -28,6 +29,8 @@ const CustomerCare = ({ setNavColor, setOnDash }) => {
     // Add logic to handle form submission (e.g., send data to server)
     console.log(formData);
   };
+
+  const [tidio, setTidio] = useState(false);
 
   return (
     <div className="customer-support-page pt-5 text-bg-light ">
@@ -87,20 +90,19 @@ const CustomerCare = ({ setNavColor, setOnDash }) => {
                   We're here to help! Click below to start a live chat with one
                   of our support agents.
                 </p>
-                <Button
-                  variant="info"
-                  href="https://www.tidio.com/"
-                  target="_blank"
-                  className="m-3 "
-                  rel="noopener noreferrer"
-                >
-                  <FontAwesomeIcon icon={faComments} /> Chat with Us
-                </Button>
               </div>
             </Col>
           </Row>
         </Container>
       </div>
+      {
+        <Helmet>
+          <script
+            src="//code.tidio.co/wn5hr06micakwmfounqd5wxrpc9zszjn.js"
+            async
+          ></script>
+        </Helmet>
+      }
     </div>
   );
 };
