@@ -16,8 +16,8 @@ export default function IndexHow() {
         <p>A FEW STEPS AND YOUR LOAN IS DISBURSED</p>
       </div>
 
-      <Container className="p-5 ">
-        <div className="bg-light p-3 shadow m-2 ">
+      <div className="pt-5">
+        <div className="bg-light shadow m-2 ">
           <div className=" d-flex justify-content-between  align-items-center ">
             <h3> 1.Register</h3>
             <FontAwesomeIcon
@@ -93,7 +93,7 @@ export default function IndexHow() {
             your choice of payment channel.
           </p>
         </div>
-      </Container>
+      </div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -23,7 +23,6 @@ function NavLanding({ color }) {
   const handleChange = (e) => {
     setLang(e.target.value);
     let loc = process.env.REACT_APP_URL;
-    console.log(loc);
     window.location.replace(loc + "?lng=" + e.target.value);
   };
 
@@ -50,6 +49,52 @@ function NavLanding({ color }) {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  function togglePadding() {
+    const homepageCalculator = document.querySelector(".homepageCalculator");
+
+    if (homepageCalculator) {
+      homepageCalculator.classList.toggle("expandedPadding");
+    }
+
+    const howHolder = document.querySelector(".howHolder");
+
+    if (howHolder) {
+      howHolder.classList.toggle("expandedPadding");
+    }
+
+    const customer_support_page = document.querySelector(
+      ".customer-support-page"
+    );
+
+    if (customer_support_page) {
+      customer_support_page.classList.toggle("expandedPadding");
+    }
+
+    const FAQHolder = document.querySelector(".FAQHolder");
+
+    if (FAQHolder) {
+      FAQHolder.classList.toggle("expandedPadding");
+    }
+
+    const LoginInMenu = document.querySelector(".LoginInMenu");
+
+    if (LoginInMenu) {
+      LoginInMenu.classList.toggle("LoginInMenu");
+    }
+
+    const FirebaseLoginInMenu = document.querySelector(".FirebaseLoginInMenu");
+
+    if (FirebaseLoginInMenu) {
+      FirebaseLoginInMenu.classList.toggle("FirebaseLoginInMenu");
+    }
+
+    const PaddingSpace = document.querySelector(".PaddingSpace");
+
+    if (PaddingSpace) {
+      PaddingSpace.classList.toggle("PaddingSpace");
+    }
+  }
 
   return (
     <>
@@ -81,11 +126,12 @@ function NavLanding({ color }) {
           </Navbar.Brand>
           <Navbar.Toggle
             aria-controls="basic-navbar-nav "
-            className="text-bg-light"
+            className="text-bg-light menuButton"
+            onClick={togglePadding}
           />
           <Navbar.Collapse
             id="basic-navbar-nav"
-            className="justify-content-end"
+            className="justify-content-end "
           >
             <Nav>
               <Nav.Link

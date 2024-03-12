@@ -21,11 +21,13 @@ export default function Homepage({ setOnDash, setNavColor }) {
 
   return (
     <div>
+      
       <Helmet>
         <title>{title} Homepage</title>
         <meta name="description" content="" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="twitter:title" content="Homepage" />
+        <meta name="title" content="Homepage" />
         <meta
           name="twitter:description"
           content="Join us and enjoy free and active loan "

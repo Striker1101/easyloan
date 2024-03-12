@@ -29,6 +29,9 @@ const Signup = ({ setNavColor, setOnDash }) => {
   }
 
   const handleSendVerificationCode = async () => {
+    if (email.email === "") {
+      return alert("Input your email");
+    }
     // Logic to send verification code
     // Assuming verification code is received and validated
     setEmail((prev) => ({
@@ -72,17 +75,18 @@ const Signup = ({ setNavColor, setOnDash }) => {
     if (password.confirmKey !== password.key) {
       return alert("password do nor match");
     }
+
     const result = await createUser(email.email, password.key);
 
     alert(result.message);
 
     if (result.status) {
-      window.location.href = "/signin";
+      window.location.href = "/dashboard";
     }
   }
 
   return (
-    <Container className="p-3 ">
+    <Container className="p-3 PaddingSpace ">
       <h2 className="pt-5 mt-5 text-primary">REGISTER WITH US TODAY </h2>
       <div className="pt-3 mt-3">
         <div className="d-flex flex-column  align-items-center justify-content-center gap-4 ">

@@ -101,8 +101,8 @@ export default function IndexFAQ() {
   };
 
   return (
-    <div className="pt-5 ">
-      <div className="header pt-5 d-flex justify-content-center flex-column align-items-center ">
+    <div className="pt-5 FAQHolder">
+      <div className="header  pt-5 d-flex justify-content-center flex-column align-items-center ">
         <h1>FAQ</h1>
         <p>FREQUENTLY ASKED QUESTIONS</p>
       </div>

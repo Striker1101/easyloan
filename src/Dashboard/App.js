@@ -19,7 +19,8 @@ import ActiveLoan from "./ActiveLoan";
 import Attachment from "./Attachment";
 import "./style.css";
 import Request from "./Request";
-import { getLiveDocument } from "../Firebase/Functions";
+import { checkAuth, getLiveDocument } from "../Firebase/Functions";
+import { useNavigate } from "react-router-dom";
 
 const ReviewContext = createContext();
 
@@ -33,6 +34,13 @@ export default function DashboardApp({ setOnDash, user }) {
     header: "",
     body: "",
   });
+
+  let navigate = useNavigate();
+  useEffect(() => {
+    if (checkAuth == false) {
+      navigate("/signin");
+    }
+  }, []);
 
   function filterByStatusTrue(data) {
     return data.filter((item) => item.status === true);
@@ -65,7 +73,7 @@ export default function DashboardApp({ setOnDash, user }) {
             <NavDash user={user} />
             <ReviewContext.Provider value={{ review, setReview }}>
               <Routes>
-                <Route path="/" element={<Summary summary={loan} />} />
+                <Route path="/" element={<PersonalInfo />} />
                 {/* profile routes */}
                 <Route
                   path="/profile/personal_info"

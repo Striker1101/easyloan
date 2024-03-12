@@ -1,3 +1,9 @@
+
+
+.howHolder.expandedPadding {
+    padding-top: 180px;
+}
+
 .header {
   background-image: url("/public/landing/Homepage/background_home_how.png");
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);

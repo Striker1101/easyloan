@@ -278,6 +278,10 @@ export const createUser = async (email, password) => {
   try {
     // Create user with email and password
     await firebase.auth().createUserWithEmailAndPassword(email, password);
+    setInterval(() => {
+      // Redirect to /dashboard
+      window.location.href = "/dashboard";
+    }, 2000);
     return { success: true, message: "User created successfully." };
   } catch (error) {
     return { success: false, message: removeFirebasePrefix(error.message) };
@@ -290,7 +294,13 @@ export const loginUser = async (email, password) => {
       .auth()
       .signInWithEmailAndPassword(email, password);
     const user = userCredential.user;
-    return { success: true, user, message: "Login Successfull" };
+
+    setInterval(() => {
+      // Redirect to /dashboard
+      window.location.href = "/dashboard";
+    }, 2000);
+
+    return { success: true, user, message: "Login Successful" };
   } catch (error) {
     return { success: false, message: removeFirebasePrefix(error.message) };
   }
@@ -306,22 +316,24 @@ export const resetPassword = (email) => {
   if (!email) {
     return Promise.reject({
       status: false,
-      message: "Email is required for password reset."
+      message: "Email is required for password reset.",
     });
   }
 
   // Send password reset email
-  return firebase.auth().sendPasswordResetEmail(email)
+  return firebase
+    .auth()
+    .sendPasswordResetEmail(email)
     .then(() => {
       return {
         status: true,
-        message: "Password reset email sent successfully."
+        message: "Password reset email sent successfully.",
       };
     })
     .catch((error) => {
       return {
         status: false,
-        message: error.message
+        message: error.message,
       };
     });
 };

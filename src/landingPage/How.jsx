@@ -2,6 +2,7 @@ import React from "react";
 import { Helmet } from "react-helmet";
 import IndexHow from "../Components/LandingPages/How/IndexHow";
 import "../Components/Styles/Landing/How.css";
+import { Container } from "react-bootstrap";
 export default function How({ setNavColor, setOnDash }) {
   const title = process.env.REACT_APP_NAME || "Default Title"; // Use the value from .env or a default value
   //set pros for on dash board and landing nav color
@@ -9,7 +10,7 @@ export default function How({ setNavColor, setOnDash }) {
   setNavColor(false);
 
   return (
-    <div>
+    <div className="howHolder">
       <Helmet>
         <title>{title} How to use our platform</title>
         <meta
@@ -29,8 +30,9 @@ export default function How({ setNavColor, setOnDash }) {
         <meta name="twitter:card" content="summary_large_image" />
         {/* Add more metadata tags as needed */}
       </Helmet>
-
-      <IndexHow />
+      <Container>
+        <IndexHow />
+      </Container>
     </div>
   );
 }

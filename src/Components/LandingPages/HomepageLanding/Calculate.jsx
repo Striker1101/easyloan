@@ -52,8 +52,10 @@ export default function Calculate() {
   const { t } = useTranslation();
   return (
     <>
+      
       <div className="homepageCalculator w-100 h-100 px-4  ">
         <div className=" d-flex flex-column justify-content-center  ">
+          
           <div className=" w-75 text-light  mt-5  pt-5 mt-lg-4 pt-lg-4 d-flex flex-column  justify-content-center  ">
             <h3 className="fs-1">{t("Homepage:need")}</h3>
             <p className="fw-bold fs-5 ">{t("Homepage:urgent_need")}</p>

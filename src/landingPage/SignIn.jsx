@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 
 import "../Components/Styles/Landing/SignIn.css";
 import Email from "../Components/LandingPages/SignIn/Email";
 import Password from "../Components/LandingPages/SignIn/Password";
 import { Link } from "react-router-dom";
-import { loginUser } from "../Firebase/Functions";
+import { checkAuth, loginUser } from "../Firebase/Functions";
+import { useNavigate, Redirect, Route } from "react-router-dom";
 
 const SignIn = ({ setNavColor, setOnDash }) => {
   //set pros for on dash board and landing nav color
   setOnDash(false);
   setNavColor(false);
+
+  // let navigate = useNavigate();
+  // useEffect(() => {
+  //   if (checkAuth) {
+  //     navigate("/dashboard");
+  //   }
+  // }, []);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -28,6 +36,9 @@ const SignIn = ({ setNavColor, setOnDash }) => {
   }
 
   const handleSubmitEmail = () => {
+    if (formData.email === "") {
+      return;
+    }
     // Logic to send verification code
     // Assuming verification code is received and validated
     setFormData((prev) => ({
@@ -50,7 +61,7 @@ const SignIn = ({ setNavColor, setOnDash }) => {
   }
 
   return (
-    <Container className="p-3 ">
+    <Container className="p-3  PaddingSpace">
       <h2 className="pt-5 mt-5 text-primary">LOGIN YOUR ACCOUNT </h2>
       <div className="pt-3 mt-3">
         <div className="d-flex flex-column  align-items-center justify-content-center gap-4 ">

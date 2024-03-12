@@ -33,7 +33,8 @@ const CustomerCare = ({ setNavColor, setOnDash }) => {
   const [tidio, setTidio] = useState(false);
 
   return (
-    <div className="customer-support-page pt-5 text-bg-light ">
+    <div className="customer-support-page pt-5  text-bg-light ">
+      <div className="m-1 p-1"></div>
       <Container className="w-100 pt-5">
         <Row className="justify-content-center align-items-center w-100 pt-5  ">
           <Col md={8} className="pt-5">

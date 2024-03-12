@@ -23,9 +23,11 @@ const AuthCard = ({ auth }) => {
 
   const isDashboardPage = location.pathname.startsWith("/dashboard");
 
+  const isFAQPage = location.pathname.startsWith("/faq");
+
   return (
     <>
-      {!isDashboardPage && isVisible && auth && (
+      {!isDashboardPage && isFAQPage && isVisible && auth && (
         <div
           className="position-fixed top-50  end-0 m-3 p-3"
           style={{ animation: "slide-in 1s forwards" }}

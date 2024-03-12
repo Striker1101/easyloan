@@ -3,12 +3,17 @@
   min-height: 140vh;
   background-position: center;
   background-size: cover;
+ 
+}
+
+.homepageCalculator.expandedPadding {
+    padding-top: 180px;
 }
 
 .homepageInfo {
   background-image: url("/public/landing/Homepage/background_home_how.png");
   min-height: 80vh;
-  background-position: center;
+  background-position: center; 
   background-size: cover;
   background-position-x: right;
   background-position-y: center;
@@ -167,3 +172,5 @@
   min-width: 200px !important;
   padding: 3px;
 }
+
+
