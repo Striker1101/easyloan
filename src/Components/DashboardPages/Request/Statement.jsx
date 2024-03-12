@@ -46,6 +46,7 @@ const Statement = ({ status, handleSubmit, setImgURL, setInfo }) => {
     <div>
       {status && (
         <Form>
+          <h2>Include a Recent Bank Statement</h2>
           <Form.Group controlId="file">
             <Form.Label>Select File:</Form.Label>
             <Form.Control type="file" onChange={handleFileChange} />
