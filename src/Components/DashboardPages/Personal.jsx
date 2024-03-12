@@ -14,8 +14,9 @@ export default function Personal({ status, handleSubmit, setInfo }) {
     dob: "",
     gender: "",
     marital_status: "",
+    nin: "",
     nationality: country,
-    region,
+    region: region,
   });
 
   const [errorMessage, setErrorMessage] = useState(null);
@@ -119,7 +120,7 @@ export default function Personal({ status, handleSubmit, setInfo }) {
             <Form.Group controlId="phone">
               <Form.Label>Phone:</Form.Label>
               <Form.Control
-                type="text"
+                type="number"
                 name="phone"
                 value={personal.phone}
                 required
@@ -179,11 +180,23 @@ export default function Personal({ status, handleSubmit, setInfo }) {
               </Form.Control>
             </Form.Group>
 
+            <Form.Group controlId="nin">
+              <Form.Label>National Identity Number:</Form.Label>
+              <Form.Control
+                type="text"
+                name="nin"
+                value={personal.nin}
+                required
+                onChange={handleChange}
+                placeholder="Input Your national identification number, ssn, sin, nin etc"
+              />
+            </Form.Group>
+
             <Form.Group controlId="nationality">
               <Form.Label>Nationality:</Form.Label>
               <CountryDropdown
                 id="country"
-                value={country}
+                value={personal.nationality}
                 required
                 onChange={handleCountryChange}
                 className="form-control"
@@ -194,9 +207,9 @@ export default function Personal({ status, handleSubmit, setInfo }) {
               <Form.Label>Region:</Form.Label>
               <RegionDropdown
                 id="region"
-                country={country}
+                country={personal.nationality}
                 required
-                value={region}
+                value={personal.region}
                 className="form-control"
                 onChange={handleRegionChange}
               />
