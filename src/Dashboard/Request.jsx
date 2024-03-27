@@ -216,7 +216,7 @@ const Request = () => {
   const calculateRepay = (amount, duration) => {
     // Assuming a simple calculation for repay based on amount and duration
     // You can replace this with your actual calculation logic
-    return amount * duration * 0.05; // This is just an example calculation
+    return amount * duration * 0.005; // This is just an example calculation
   };
 
   function prev() {

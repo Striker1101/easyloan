@@ -39,7 +39,7 @@ export default function Calculate() {
 
   const calculateInterest = (amount, duration) => {
     // Implement your interest calculation logic here
-    let interest = amount * duration * 0.05; // Example calculation
+    let interest = amount * duration * 0.005; // Example calculation
     return interest.toFixed(2); // Round off to two decimal places
   };
 
