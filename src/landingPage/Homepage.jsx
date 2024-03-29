@@ -13,6 +13,8 @@ import "../Components/Styles/Landing/Homepage.css";
 import Reviews from "../Components/LandingPages/HomepageLanding/Reviews";
 import Advert from "../Components/LandingPages/HomepageLanding/Advert";
 import Intro from "../Components/LandingPages/HomepageLanding/Intro";
+import CustomerCareButton from "../Components/LandingPages/CustomerCareButton";
+import { Container } from "react-bootstrap";
 export default function Homepage({ setOnDash, setNavColor }) {
   //set pros for on dash board and landing nav color
   setOnDash(false);
@@ -47,6 +49,9 @@ export default function Homepage({ setOnDash, setNavColor }) {
       <Apply></Apply>
       <Advert></Advert>
       <Reviews />
+     <Container>
+     <CustomerCareButton />
+     </Container>
     </div>
   );
 }

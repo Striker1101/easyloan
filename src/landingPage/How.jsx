@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import IndexHow from "../Components/LandingPages/How/IndexHow";
 import "../Components/Styles/Landing/How.css";
 import { Container } from "react-bootstrap";
+import CustomerCareButton from "../Components/LandingPages/CustomerCareButton";
 export default function How({ setNavColor, setOnDash }) {
   const title = process.env.REACT_APP_NAME || "Default Title"; // Use the value from .env or a default value
   //set pros for on dash board and landing nav color
@@ -32,6 +33,7 @@ export default function How({ setNavColor, setOnDash }) {
       </Helmet>
       <Container>
         <IndexHow />
+        <CustomerCareButton />
       </Container>
     </div>
   );
