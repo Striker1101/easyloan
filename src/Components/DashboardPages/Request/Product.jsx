@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
+import CurrencyDisplay from "../../../international/CurrencyDisplay";
 
 export default function Product({
   product,
@@ -21,7 +22,9 @@ export default function Product({
       {product.status && (
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formAmount">
-            <Form.Label>Amount ($)</Form.Label>
+            <Form.Label>
+              Amount (<CurrencyDisplay status={false} />)
+            </Form.Label>
             <Form.Control
               type="number"
               name="amount"
@@ -47,7 +50,9 @@ export default function Product({
           </Form.Group>
 
           <Form.Group controlId="formRepay">
-            <Form.Label>Repay ($)</Form.Label>
+            <Form.Label>
+              Repay (<CurrencyDisplay status={false} />)
+            </Form.Label>
             <Form.Control
               type="text"
               name="repay"

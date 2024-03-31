@@ -21,6 +21,7 @@ import "./style.css";
 import Request from "./Request";
 import { checkAuth, getLiveDocument } from "../Firebase/Functions";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const ReviewContext = createContext();
 
@@ -109,6 +110,16 @@ export default function DashboardApp({ setOnDash, user }) {
         <div className="review d-none d-md-block">
           {/* Review component goes here */}
           <Review review={review} />
+        </div>
+        <div>
+          {
+            <Helmet>
+              <script
+                src="//code.tidio.co/wn5hr06micakwmfounqd5wxrpc9zszjn.js"
+                async
+              ></script>
+            </Helmet>
+          }
         </div>
       </div>
     </div>
