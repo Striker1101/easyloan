@@ -235,11 +235,7 @@ export default function Withdraw({ setReview, id }) {
           ) : (
             <>
               <Modal.Header closeButton>
-                <Modal.Title>
-                  {" "}
-                  <strong className="text-danger">Warning</strong> !! Update
-                  Account{" "}
-                </Modal.Title>
+                <Modal.Title>Pending withdrawal </Modal.Title>
               </Modal.Header>
 
               <Modal.Body>
@@ -251,8 +247,10 @@ export default function Withdraw({ setReview, id }) {
                 />
                 <br />
                 <strong>
-                  Current balance is more than your Basic plan please update
-                  account: contact the customer service for more details
+                  our loan account is not activated for withdrawals yet. Your
+                  account needs to be upgraded to enable withdrawal access
+                  immediately. Please kindly contact customer service for more
+                  information
                 </strong>
               </Modal.Body>
             </>
