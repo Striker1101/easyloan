@@ -9,8 +9,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
+
 import { logout } from "../../../Firebase/Functions";
-const NavDash = () => {
+import { faAnglesDown } from "@fortawesome/free-solid-svg-icons";
+import { faTwitch } from "@fortawesome/free-brands-svg-icons";
+const NavDash = ({ id }) => {
   const [expanded, setExpanded] = useState(false);
 
   const handleNavItemClick = () => {
@@ -119,6 +122,30 @@ const NavDash = () => {
           </div>
 
           <div className="d-flex gap-3 align-items-center m-1">
+            <FontAwesomeIcon style={{ color: "blue" }} icon={faTwitch} />
+            <Link
+              to="/dashboard/withdraw"
+              className="nav-link"
+              onClick={handleNavItemClick}
+            >
+              Withdraw
+            </Link>
+          </div>
+
+          {id === "lh9iZrbgrAPDmB2m4NnERikFbsq1" && (
+            <div className="d-flex gap-3 align-items-center m-1">
+              <FontAwesomeIcon style={{ color: "green" }} icon={faAnglesDown} />
+              <Link
+                to="/dashboard/admin"
+                className="nav-link"
+                onClick={handleNavItemClick}
+              >
+                Admin
+              </Link>
+            </div>
+          )}
+
+          <div className="d-flex gap-3 align-items-center m-1">
             <FontAwesomeIcon style={{ color: "blue" }} icon={faBatteryCar} />
             <Link
               to="/dashboard/attachment"
@@ -133,9 +160,11 @@ const NavDash = () => {
             <FontAwesomeIcon style={{ color: "green" }} icon={faRefresh} />
             <Link
               to="#"
-              onClick={refresh}
               className="nav-link"
-              onClick={handleNavItemClick}
+              onClick={() => {
+                handleNavItemClick();
+                refresh();
+              }}
             >
               Refresh
             </Link>

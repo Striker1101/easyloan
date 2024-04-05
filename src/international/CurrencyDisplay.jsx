@@ -73,7 +73,6 @@ const CurrencyDisplay = ({ amount, status = true }) => {
     // Fetch user's country when component mounts
     fetchUserCountry();
   }, []);
-
   return (
     <>
       {status ? (

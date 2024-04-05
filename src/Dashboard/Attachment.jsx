@@ -58,7 +58,6 @@ export default function Attachment({ id }) {
 
     setUploading(true);
     const result = await submitFile(id, selectedDocument, { file, front });
-    console.log(result);
     if (result.status) {
       setSuccessMessage(result.message);
       setTimeout(() => setSuccessMessage(null), 120000); // 2 minutes in milliseconds

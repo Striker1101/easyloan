@@ -1,5 +1,5 @@
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./Init";
+import { auth, db } from "./Init";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
@@ -23,9 +23,9 @@ export function checkAuth() {
   });
 }
 
-export async function getDocument(col, userId) {
+export async function getDocument(col, userId, status = true) {
   try {
-    if (!userId) {
+    if (!userId && status) {
       // If userId is not provided, try to get the current user's ID
       userId = firebase.auth().currentUser?.uid;
     }
@@ -112,9 +112,9 @@ export async function uploadFile(file) {
   }
 }
 
-export async function updateRegion(data) {
+export async function updateRegion(col, data) {
   const userId = firebase.auth().currentUser.uid;
-  const userDocumentRef = firebase.firestore().collection("loan").doc(userId);
+  const userDocumentRef = firebase.firestore().collection(col).doc(userId);
 
   try {
     // Check if the document exists
@@ -132,11 +132,8 @@ export async function updateRegion(data) {
       },
       { merge: true }
     );
-
-    console.log("true");
-    return { status: true, message: "" };
+    return { status: true, message: "Successful" };
   } catch (error) {
-    console.error("Error updating region:", error);
     return { status: false, message: error.message };
     // Handle error
   }
@@ -311,7 +308,7 @@ const removeFirebasePrefix = (str) => {
 };
 
 // Function to reset password
-export const resetPassword = (email) => {
+export const resetPassword = async (email) => {
   // Check if email is provided
   if (!email) {
     return Promise.reject({
@@ -321,19 +318,59 @@ export const resetPassword = (email) => {
   }
 
   // Send password reset email
-  return firebase
-    .auth()
-    .sendPasswordResetEmail(email)
-    .then(() => {
-      return {
-        status: true,
-        message: "Password reset email sent successfully.",
-      };
-    })
-    .catch((error) => {
-      return {
-        status: false,
-        message: error.message,
-      };
-    });
+  try {
+    await firebase.auth().sendPasswordResetEmail(email);
+    return {
+      status: true,
+      message: "Password reset email sent successfully.",
+    };
+  } catch (error) {
+    return {
+      status: false,
+      message: error.message,
+    };
+  }
+};
+
+export const getAllUsers = async () => {
+  try {
+    const usersCollection = await firebase
+      .firestore()
+      .collection("personal")
+      .get();
+    const users = usersCollection.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    return users;
+  } catch (error) {
+    return { code: 500, message: "error", status: false };
+  }
+};
+
+export const updateLoanRegionStatus = async (
+  loanId,
+  regionIndex,
+  newStatus
+) => {
+  try {
+    // Get the loan document from the loan collection
+    const loanRef = db.collection("loan").doc(loanId);
+    const loanDoc = await loanRef.get();
+
+    if (!loanDoc.exists) {
+      throw new Error("Loan document not found");
+    }
+
+    // Update the status of the region at the specified index
+    const regions = loanDoc.data().region;
+    regions[regionIndex].status = newStatus;
+
+    // Update the loan document with the modified region array
+    await loanRef.update({ region: regions });
+
+    return { status: true, message: "Successful" };
+  } catch (error) {
+    return { status: false, message: error };
+  }
 };

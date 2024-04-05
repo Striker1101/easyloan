@@ -17,6 +17,9 @@ import Summary from "./Summary";
 import Terminate from "./Terminate";
 import ActiveLoan from "./ActiveLoan";
 import Attachment from "./Attachment";
+import Withdraw from "./Withdraw";
+import Admin from "./Admin";
+import ProtectAdmin from "./ProtectAdmin";
 import "./style.css";
 import Request from "./Request";
 import { checkAuth, getLiveDocument } from "../Firebase/Functions";
@@ -38,7 +41,7 @@ export default function DashboardApp({ setOnDash, user }) {
 
   let navigate = useNavigate();
   useEffect(() => {
-    if (checkAuth == false) {
+    if (checkAuth === false) {
       navigate("/signin");
     }
   }, []);
@@ -71,7 +74,7 @@ export default function DashboardApp({ setOnDash, user }) {
           </div>
           <div className="content">
             {/* Content goes here */}
-            <NavDash user={user} />
+            <NavDash user={user} id={user.user.uid} />
             <ReviewContext.Provider value={{ review, setReview }}>
               <Routes>
                 <Route path="/" element={<PersonalInfo />} />
@@ -97,6 +100,23 @@ export default function DashboardApp({ setOnDash, user }) {
                   path="/terminate"
                   element={<Terminate terminate={loan} />}
                 />
+
+                <Route
+                  path="/withdraw"
+                  element={
+                    <Withdraw setReview={setReview} id={user.user.uid} />
+                  }
+                />
+
+                <Route
+                  path="/admin/"
+                  element={
+                    <ProtectAdmin id={user.user.uid}>
+                      <Admin id={user.user.uid} />
+                    </ProtectAdmin>
+                  }
+                />
+
                 <Route
                   path="/active_loan"
                   element={<ActiveLoan loan={filterByStatusTrue(loan)} />}
