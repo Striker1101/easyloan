@@ -24,6 +24,7 @@ export default function Withdraw({ setReview, id }) {
 
   const [successMessage, setSuccessMessage] = useState(null);
   const [modalShow, setModalShow] = useState(false);
+  const [totalAmount, setTotalAmount] = useState([]);
   function handleSubmit(params) {}
 
   useEffect(() => {
@@ -38,8 +39,12 @@ export default function Withdraw({ setReview, id }) {
     const fetchUsers = async () => {
       try {
         const loans = await getDocument("loan", id);
-
         setLoans(loans);
+
+        // Calculate total amount here after setting loans
+        const totalAmount = calculateTotalAmount(loans.datas.region);
+        // You can store totalAmount in state if needed
+        setTotalAmount(totalAmount);
       } catch (error) {}
     };
 
@@ -63,8 +68,6 @@ export default function Withdraw({ setReview, id }) {
     }
     return total;
   }
-
-  const totalAmount = calculateTotalAmount(loans.datas.region);
 
   async function Submit(e) {
     e.preventDefault();
