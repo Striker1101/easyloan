@@ -247,9 +247,10 @@ export default function Withdraw({ setReview, id }) {
                 />
                 <br />
                 <strong>
-                  our loan account is not activated for withdrawals yet. Your
+                  Your loan account is not activated for withdrawals yet. Your
                   account needs to be upgraded to enable withdrawal access
-                  immediately. Please kindly contact customer service for more
+                  immediately.
+                  <br /> Please kindly contact customer service for more
                   information
                 </strong>
               </Modal.Body>
