@@ -52,24 +52,15 @@ function Admin() {
     } catch (error) {}
   };
 
-  const handleLoanStatusChange = (e) => {
-    setLoanStatus(e.target.checked);
-  };
   /**
    *
    * @param {take in index of the loans array o} index
    */
-  const handleSubmit = async (index) => {
+  const handleSubmit = async (e, index) => {
     try {
-      const loan = selectedUserLoan.datas.region[index];
-      loan.status = loanStatus;
+      const status = e.currentTarget.checked;
 
-      const update = await updateRegionStatus(
-        "loan",
-        modalUser,
-        index,
-        loanStatus
-      );
+      const update = await updateRegionStatus("loan", modalUser, index, status);
 
       alert(update.message);
     } catch (error) {
@@ -138,8 +129,8 @@ function Admin() {
                             type="checkbox"
                             label="Loan Status"
                             defaultChecked={loan.status}
-                            onChange={(e) => {
-                              handleLoanStatusChange(e);
+                            onClick={(e) => {
+                              handleSubmit(e, index);
                             }}
                           />
                         </Form.Group>
@@ -163,16 +154,7 @@ function Admin() {
                       </div>
                     </Form>
                   </Modal.Body>
-                  <Modal.Footer>
-                    <Button
-                      variant="primary"
-                      onClick={(e) => {
-                        handleSubmit(index);
-                      }}
-                    >
-                      Save Changes
-                    </Button>
-                  </Modal.Footer>
+                  <Modal.Footer></Modal.Footer>
                 </div>
               );
             })
@@ -204,7 +186,7 @@ function Admin() {
                 </tr>
               </thead>
               <tbody>
-                {selectedUserWithdraw.status ? (
+                {selectedUserWithdraw.status &&
                   selectedUserWithdraw.datas.region.map((withdraw, index) => {
                     return (
                       <tr key={index}>
@@ -227,18 +209,7 @@ function Admin() {
                         </td>
                       </tr>
                     );
-                  })
-                ) : (
-                  <div style={{ padding: "10px" }}>
-                    <h3>This user has no requested withdraw</h3>
-                    <Button
-                      variant="secondary"
-                      onClick={() => setModalShow(false)}
-                    >
-                      Close
-                    </Button>
-                  </div>
-                )}
+                  })}
               </tbody>
             </table>
           </Modal.Body>
