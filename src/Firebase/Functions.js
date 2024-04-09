@@ -115,6 +115,12 @@ export async function uploadFile(file) {
 export async function updateRegion(col, data) {
   const userId = firebase.auth().currentUser.uid;
   const userDocumentRef = firebase.firestore().collection(col).doc(userId);
+  const createdAt = new Date();
+  const formData = {
+    createdAt: createdAt,
+    lastUpdatedAt: createdAt, // Set last updated at to created at initially
+    ...data,
+  };
 
   try {
     // Check if the document exists
@@ -128,7 +134,7 @@ export async function updateRegion(col, data) {
     // Update Firestore document with provided data under the 'region' field
     await userDocumentRef.set(
       {
-        region: firebase.firestore.FieldValue.arrayUnion(data),
+        region: firebase.firestore.FieldValue.arrayUnion(formData),
       },
       { merge: true }
     );
@@ -348,23 +354,27 @@ export const getAllUsers = async () => {
   }
 };
 
-export const updateLoanRegionStatus = async (
+export const updateRegionStatus = async (
+  col,
   loanId,
   regionIndex,
   newStatus
 ) => {
   try {
     // Get the loan document from the loan collection
-    const loanRef = db.collection("loan").doc(loanId);
+    const loanRef = db.collection(col).doc(loanId);
     const loanDoc = await loanRef.get();
 
     if (!loanDoc.exists) {
       throw new Error("Loan document not found");
     }
-
+    const updatedAt = new Date();
     // Update the status of the region at the specified index
     const regions = loanDoc.data().region;
     regions[regionIndex].status = newStatus;
+
+    // update the last update data
+    regions[regionIndex].lastUpdatedAt = updatedAt;
 
     // Update the loan document with the modified region array
     await loanRef.update({ region: regions });

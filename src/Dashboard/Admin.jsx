@@ -3,7 +3,7 @@ import { useReview } from "./App";
 import {
   getAllUsers,
   getDocument,
-  updateLoanRegionStatus,
+  updateRegionStatus,
 } from "../Firebase/Functions"; // Assuming you have a function to update user loan status
 import { Form, Button, Spinner, Modal } from "react-bootstrap";
 
@@ -19,6 +19,7 @@ function Admin() {
 
   const [users, setUsers] = useState([]);
   const [selectedUserLoan, setSelectedUserLoan] = useState([]);
+  const [selectedUserWithdraw, setSelectedUserWithdraw] = useState([]);
   const [modalShow, setModalShow] = useState(false);
   const [loanStatus, setLoanStatus] = useState(false);
   const [modalUser, setModalUser] = useState("");
@@ -43,6 +44,12 @@ function Admin() {
       setModalUser(user.id);
       setSelectedUserLoan(loans);
     } catch (error) {}
+
+    try {
+      const withdraw = await getDocument("withdraw", user.id, false);
+      setModalUser(user.id);
+      setSelectedUserWithdraw(withdraw);
+    } catch (error) {}
   };
 
   const handleLoanStatusChange = (e) => {
@@ -57,14 +64,32 @@ function Admin() {
       const loan = selectedUserLoan.datas.region[index];
       loan.status = loanStatus;
 
-      const update = await updateLoanRegionStatus(modalUser, index, loanStatus);
+      const update = await updateRegionStatus(
+        "loan",
+        modalUser,
+        index,
+        loanStatus
+      );
 
       alert(update.message);
     } catch (error) {
       alert("Error updating user loan status:", error);
     }
   };
-
+  async function handleWithdaw(e, index) {
+    try {
+      const status = e.currentTarget.checked;
+      const update = await updateRegionStatus(
+        "withdraw",
+        modalUser,
+        index,
+        status
+      );
+      alert(update.message);
+    } catch (error) {
+      alert("Error updating user loan status:", error);
+    }
+  }
   return (
     <>
       <div>
@@ -159,6 +184,64 @@ function Admin() {
               </Button>
             </div>
           )}
+        </>
+
+        <>
+          <Modal.Header>
+            <Modal.Title>Edit Withdraw Status </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <table class="table  table-hover table-dark  table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">S/N</th>
+                  <th scope="col">Bank Name</th>
+                  <th scope="col">Account Name</th>
+                  <th scope="col">Account Number</th>
+                  <th scope="col">Payment Method</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {selectedUserWithdraw.status ? (
+                  selectedUserWithdraw.datas.region.map((withdraw, index) => {
+                    return (
+                      <tr key={index}>
+                        <th scope="row">{index}</th>
+                        <td>{withdraw.bankName}</td>
+                        <td>{withdraw.accName}</td>
+                        <td>{withdraw.accNum}</td>
+                        <td>{withdraw.paymentMethod}</td>
+                        <td>{withdraw.amount}</td>
+                        <td>
+                          <input
+                            type="checkbox"
+                            name="toggle"
+                            id="toggle"
+                            defaultChecked={withdraw.status}
+                            onClick={(e) => {
+                              handleWithdaw(e, index);
+                            }}
+                          />
+                        </td>
+                      </tr>
+                    );
+                  })
+                ) : (
+                  <div style={{ padding: "10px" }}>
+                    <h3>This user has no requested withdraw</h3>
+                    <Button
+                      variant="secondary"
+                      onClick={() => setModalShow(false)}
+                    >
+                      Close
+                    </Button>
+                  </div>
+                )}
+              </tbody>
+            </table>
+          </Modal.Body>
         </>
       </Modal>
     </>

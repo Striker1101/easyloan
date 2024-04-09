@@ -10,7 +10,7 @@ const UploadDataAndRedirect = ({ status, loan }) => {
     async function upload() {
       if (status) {
         setLoading(false);
-        const result = await updateRegion(loan);
+        const result = await updateRegion("loan", loan);
         if (result.status) {
           setLoading(true);
           window.location.href = "/dashboard/summary";

@@ -18,12 +18,16 @@ export default function Withdraw({ setReview, id }) {
     country: "",
     status: false,
   });
+  const [previousWithraw, setPreviousWithdraw] = useState({
+    status: false,
+  });
   const [loans, setLoans] = useState([]);
 
   const [errorMessage, setErrorMessage] = useState(null);
 
   const [successMessage, setSuccessMessage] = useState(null);
   const [modalShow, setModalShow] = useState(false);
+  const [withdrawlShow, setWithdrawalShow] = useState(false);
   const [totalAmount, setTotalAmount] = useState([]);
   function handleSubmit(params) {}
 
@@ -48,7 +52,15 @@ export default function Withdraw({ setReview, id }) {
       } catch (error) {}
     };
 
+    const fetchWithdraws = async () => {
+      try {
+        const withdraw = await getDocument("withdraw", id);
+        setPreviousWithdraw(withdraw);
+      } catch (error) {}
+    };
+
     fetchUsers();
+    fetchWithdraws();
   }, []);
 
   const handleChange = (e) => {
@@ -74,6 +86,12 @@ export default function Withdraw({ setReview, id }) {
     setIsLoading(true);
     setModalShow(true);
 
+    if (withdraw.amount > totalAmount) {
+      setIsLoading(false);
+      setErrorMessage("Withdraw was not completed, try again later ");
+      return;
+    }
+
     const result = await updateRegion("withdraw", withdraw);
     if (result.status) {
       setSuccessMessage(result.message);
@@ -92,10 +110,23 @@ export default function Withdraw({ setReview, id }) {
       country: val,
     }));
   };
-
+  console.log(previousWithraw);
   return (
     <div>
       <AlertUser errorMessage={errorMessage} successMessage={successMessage} />
+      {previousWithraw.status && (
+        <span
+          style={{ display: "flex", justifyContent: "flex-end", margin: "5px" }}
+        >
+          <Button
+            onClick={() => {
+              setWithdrawalShow(true);
+            }}
+          >
+            Withdraw History
+          </Button>
+        </span>
+      )}
 
       <Form onSubmit={Submit} style={{ margin: "5px" }}>
         <Form.Group controlId="Amount">
@@ -256,6 +287,52 @@ export default function Withdraw({ setReview, id }) {
               </Modal.Body>
             </>
           )}
+        </>
+      </Modal>
+
+      <Modal show={withdrawlShow} onHide={() => setWithdrawalShow(false)}>
+        <>
+          <Modal.Header closeButton>
+            <Modal.Title>Withdrawal Details </Modal.Title>
+          </Modal.Header>
+
+          <Modal.Body>
+            <table class="table  table-hover table-dark  table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">S/N</th>
+                  <th scope="col">Bank Name</th>
+                  <th scope="col">Account Name</th>
+                  <th scope="col">Account Number</th>
+                  <th scope="col">Payment Method</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {previousWithraw.status &&
+                  previousWithraw.datas.region.map((withdraw, index) => {
+                    return (
+                      <tr>
+                        <th scope="row">{index}</th>
+                        <td>{withdraw.bankName}</td>
+                        <td>{withdraw.accName}</td>
+                        <td>{withdraw.accNum}</td>
+                        <td>{withdraw.paymentMethod}</td>
+                        <td>{withdraw.amount}</td>
+                        <td>
+                          {withdraw.status ? (
+                            <strong style={{ color: "green" }}>Approved</strong>
+                          ) : (
+                            <strong style={{ color: "red" }}>Pending</strong>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </table>
+          </Modal.Body>
         </>
       </Modal>
     </div>
