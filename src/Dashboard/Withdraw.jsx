@@ -154,6 +154,7 @@ export default function Withdraw({ setReview, id }) {
             <option value="">Select Your payment method</option>
             <option value="paypal">PayPal</option>
             <option value="flutter">Flutter</option>
+            <option value="bank_transfer">Bank Transfer</option>
           </Form.Control>
         </Form.Group>
 
