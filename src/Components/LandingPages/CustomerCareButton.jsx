@@ -14,7 +14,7 @@ export default function CustomerCareButton() {
           {" "}
           <a
             className="fs-5 fw-3"
-            href={"mailto:" + process.env.REACT_APP_MAIL}
+            href={"mailto:" + process.env._REACT_APP_MAIL}
           >
             Company mail
           </a>

@@ -9,7 +9,10 @@ import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import getCountry, { getState } from "../../international/GetCountry";
+import getCountry, {
+  getState,
+  getCompany,
+} from "../../international/GetCountry";
 export default function FooterLanding() {
   const { t } = useTranslation();
   return (
@@ -18,10 +21,9 @@ export default function FooterLanding() {
         <div>
           <h3 className="text-primary"> {process.env.REACT_APP_NAME}</h3>
           {/* <p>{t("Footer:owner_and_manager")}</p> */}
-          Owned and managed by: Casafina Credit Limited a licensed credit
-          provider incorporated by the corporate affairs commission of{" "}
-          {getCountry()} and operating under money lending License granted by{" "}
-          {getState()} state government.
+          Owned and managed by: {getCompany()} provider incorporated by the
+          corporate affairs commission of {getCountry()} and operating under
+          money lending License granted by {getState()} state government.
         </div>
 
         <div className="m-4">
@@ -90,7 +92,8 @@ export default function FooterLanding() {
         <hr className="w-100 " />
         <div className="d-flex justify-content-between ">
           <p>
-            2024 © {process.env.REACT_APP_NAME}™. {t("Footer:rights")}
+            2024 © {process.env.REACT_APP_NAME}™. All Rights Reserved | A{" "}
+            {getCompany()} Company.
           </p>
           <Link to={"/policy"}>
             <strong>{t("Footer:policy")}</strong>

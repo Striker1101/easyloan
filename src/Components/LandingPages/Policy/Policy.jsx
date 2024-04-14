@@ -2,6 +2,7 @@ import React from "react";
 import { Container } from "react-bootstrap";
 import { faRing } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { getCompany } from "../../../international/GetCountry";
 
 export default function IndexHow() {
   return (
@@ -25,8 +26,8 @@ export default function IndexHow() {
           <hr className="w-100 " />
 
           <p>
-            {process.env.REACT_APP_NAME}® is a registered trademark of Casafina
-            Credit Limited). We are committed to protecting and respecting your
+            {process.env.REACT_APP_NAME}® is a registered trademark of{" "}
+            {getCompany()}. We are committed to protecting and respecting your
             privacy. This policy sets out the basis on which any personal data
             we collect from you, or that you provide to us, will be processed by
             us. Please read the following carefully to understand our views and
@@ -214,13 +215,13 @@ export default function IndexHow() {
           <p>
             You have the right to ask us not to process your personal data for
             marketing purposes. You can also exercise the right at any time by
-            contacting us via email at helpdesk@easyloan.ng. Our site may, from
-            time to time, contain links to and from the websites of our partner
-            networks, advertisers and affiliates. If you follow a link to any of
-            these websites, please note that these websites have their own
-            privacy policies and that we do not accept any responsibility or
-            liability for these policies. Please check these policies before you
-            submit any personal data to these websites.
+            contacting us via email at {process.env.REACT_APP_MAIL}. Our site
+            may, from time to time, contain links to and from the websites of
+            our partner networks, advertisers and affiliates. If you follow a
+            link to any of these websites, please note that these websites have
+            their own privacy policies and that we do not accept any
+            responsibility or liability for these policies. Please check these
+            policies before you submit any personal data to these websites.
           </p>
         </div>
 

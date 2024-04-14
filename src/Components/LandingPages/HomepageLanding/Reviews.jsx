@@ -32,7 +32,7 @@ const Reviews = () => {
     {
       name: "Brooke",
       message:
-        "easyfinancial makes building credit back up literally so easy. Joel was extremely helpful and made it all so simple and straight forward to set up my loan, very happy! Thanks again!",
+        "loan swift makes building credit back up literally so easy. Joel was extremely helpful and made it all so simple and straight forward to set up my loan, very happy! Thanks again!",
     },
     {
       name: "Jenevy Hughes",
@@ -42,12 +42,12 @@ const Reviews = () => {
     {
       name: "Oluoha Fidelis",
       message:
-        "EasyLoan is a company with class. I have been dealing with these guys for years and I must confess that there is no better place to loan money than with EasyLoan. Tested, Trusted and Reliable.",
+        "Loan Swift is a company with class. I have been dealing with these guys for years and I must confess that there is no better place to loan money than with Loan Swift. Tested, Trusted and Reliable.",
     },
     {
       name: "Aderowo Emmanuel",
       message:
-        "At EasyLoan, loans are easily and quickly disbursed. What impressed me was the ease with which money was loaned out to me to meet my pressing need",
+        "At Loan Swift, loans are easily and quickly disbursed. What impressed me was the ease with which money was loaned out to me to meet my pressing need",
     },
   ]);
   const containerRef = useRef(null);

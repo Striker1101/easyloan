@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CurrencyDisplay from "../../../international/CurrencyDisplay";
 import { Button } from "react-bootstrap";
+import { getCompany } from "../../../international/GetCountry";
 export default function ApplicationReview({
   status,
   handleSubmit,
@@ -34,15 +35,15 @@ export default function ApplicationReview({
           {toggle ? (
             <div>
               <p>
-                By clicking the 'Agree' button, I consent to Casafina Credit
-                Limited ({process.env.REACT_APP_NAME}) Limited obtaining
-                information from relevant third parties as may be necessary, on
-                my employment details, salary payment, loans and other related
-                data, to make a decision on my loan application. I also consent
-                to the loan amounts being deducted from my salary at source
-                before credit to my account and any outstanding loans being
-                recovered automatically from any other accounts linked to me in
-                the case of default. <span>Learn More</span>
+                By clicking the 'Agree' button, I consent to {getCompany()} (
+                {process.env.REACT_APP_NAME}) Limited obtaining information from
+                relevant third parties as may be necessary, on my employment
+                details, salary payment, loans and other related data, to make a
+                decision on my loan application. I also consent to the loan
+                amounts being deducted from my salary at source before credit to
+                my account and any outstanding loans being recovered
+                automatically from any other accounts linked to me in the case
+                of default. <span>Learn More</span>
               </p>
               <div>
                 <Button
