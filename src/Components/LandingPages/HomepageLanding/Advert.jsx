@@ -8,7 +8,7 @@ export default function Advert() {
           <div className="col-12 col-sm-6 col-md-6 col-lg-6">
             <div className=" ">
               <h2>
-                Putting {getCountry()}ns on a path to a better financial future
+                Putting {getCountry()} on a path to a better financial future
               </h2>
               <p>
                 When banks aren’t an option, we can help you get approved for

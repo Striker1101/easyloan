@@ -11,8 +11,6 @@ import { firebaseConfig } from "./Init";
 import { Container } from "react-bootstrap";
 
 const FirebaseAuth = ({ setNavColor, setOnDash }) => {
-  console.log(firebase.apps);
-
   //set pros for on dash board and landing nav color
   setOnDash(false);
   setNavColor(true);

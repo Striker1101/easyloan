@@ -18,7 +18,7 @@ i18next
 
     supportedLngs: ["en", "fr"],
 
-    debug: true,
+    debug: false,
 
     backend: {
       loadPath: loadPath,

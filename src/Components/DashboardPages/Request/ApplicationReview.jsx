@@ -68,9 +68,9 @@ export default function ApplicationReview({
             <div>
               <div>
                 <strong className="text-primary">Principal</strong>
-                <p>
+                <span>
                   <CurrencyDisplay amount={amount} />
-                </p>
+                </span>
               </div>
 
               <div>

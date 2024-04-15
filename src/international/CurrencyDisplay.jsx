@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import countryCurrencyMap from "country-currency-map";
 
 const CurrencyDisplay = ({ amount, status = true }) => {
   const [userCurrency, setUserCurrency] = useState("");
@@ -10,8 +9,9 @@ const CurrencyDisplay = ({ amount, status = true }) => {
       try {
         const response = await fetch("https://ipapi.co/json/");
         const data = await response.json();
-        const countryCode = data.country_code;
-        setUserCurrency(getCurrencySymbol(countryCode));
+        // const countryCode = data.country_code;
+        // setUserCurrency(getCurrencySymbol(countryCode));
+        setUserCurrency(data.currency);
       } catch (error) {
         console.error("Error fetching user country:", error);
         // Set a default currency in case of failure
