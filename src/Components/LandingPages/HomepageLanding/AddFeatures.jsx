@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import getCountry from "../../../international/GetCountry";
 
 export default function AddFeatures() {
   return (
@@ -19,9 +20,9 @@ export default function AddFeatures() {
               <h2 className="text-primary">Point Of Sale Financing</h2>
             </div>
             <p className="fs-6">
-              Buy now and pay later at over 3000 merchants across Canada. Spread
-              your purchase into easy monthly payments and pay over time at your
-              favorite retailers online or in-store.
+              Buy now and pay later at over 3000 merchants across {getCountry()}
+              . Spread your purchase into easy monthly payments and pay over
+              time at your favorite retailers online or in-store.
             </p>
           </div>
 
