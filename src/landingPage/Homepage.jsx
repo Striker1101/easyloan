@@ -23,7 +23,6 @@ export default function Homepage({ setOnDash, setNavColor }) {
 
   return (
     <div>
-      
       <Helmet>
         <title>{title} Homepage</title>
         <meta name="description" content="" />
@@ -49,9 +48,9 @@ export default function Homepage({ setOnDash, setNavColor }) {
       <Apply></Apply>
       <Advert></Advert>
       <Reviews />
-     <Container>
-     <CustomerCareButton />
-     </Container>
+      <Container>
+        <CustomerCareButton />
+      </Container>
     </div>
   );
 }
