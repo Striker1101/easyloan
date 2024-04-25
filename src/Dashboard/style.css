@@ -105,3 +105,41 @@
   width: 30px;
   height: 220px;
 }
+
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  list-style: none;
+  padding: 0;
+}
+
+.pagination li {
+  display: inline-block;
+  margin: 0 4px;
+}
+
+.pagination a {
+  text-decoration: none;
+  color: #333;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.pagination a:hover {
+  background-color: #f0f0f0;
+}
+
+.pagination .active a {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+.pagination .disabled a {
+  pointer-events: none;
+  color: #ccc;
+}

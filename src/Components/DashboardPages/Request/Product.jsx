@@ -42,7 +42,6 @@ export default function Product({
               type="number"
               name="duration"
               min="1"
-              max="24"
               value={product.data.duration}
               onChange={handleChange}
               required

@@ -5,14 +5,15 @@ import {
   getDocument,
   updateRegionStatus,
 } from "../Firebase/Functions"; // Assuming you have a function to update user loan status
-import { Form, Button, Spinner, Modal } from "react-bootstrap";
+import { Form, Button, Modal } from "react-bootstrap";
+import ReactPaginate from "react-paginate";
 
 function Admin() {
   const { review, setReview } = useReview();
   useEffect(() => {
     setReview((prev) => ({
       ...prev,
-      header: " Admin Panel ",
+      header: "Admin Panel",
       body: "You Can Approve loans on this Page",
     }));
   }, []);
@@ -23,6 +24,21 @@ function Admin() {
   const [modalShow, setModalShow] = useState(false);
   const [loanStatus, setLoanStatus] = useState(false);
   const [modalUser, setModalUser] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const [currentPage, setCurrentPage] = useState(0);
+  const usersPerPage = 10;
+  const offset = currentPage * usersPerPage;
+
+  const [pagedUsers, setPagedUsers] = useState([]);
+
+  useEffect(() => {
+    setPagedUsers(users.slice(offset, offset + usersPerPage));
+  }, [currentPage, users]);
+
+  const handlePageClick = ({ selected }) => {
+    setCurrentPage(selected);
+  };
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -36,6 +52,16 @@ function Admin() {
 
     fetchUsers();
   }, []);
+
+  // Function to handle search
+  const handleSearch = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+    const filtered = users.filter((user) =>
+      user.email.toLowerCase().includes(query.toLowerCase())
+    );
+    setPagedUsers(filtered.slice(offset, offset + usersPerPage));
+  };
 
   const handleCardClick = async (user) => {
     setModalShow(true);
@@ -67,6 +93,7 @@ function Admin() {
       alert("Error updating user loan status:", error);
     }
   };
+
   async function handleWithdaw(e, index) {
     try {
       const status = e.currentTarget.checked;
@@ -81,27 +108,47 @@ function Admin() {
       alert("Error updating user loan status:", error);
     }
   }
+
   return (
     <>
-      <div>
-        {users.map((user) => {
-          return (
-            <div
-              className="card"
-              key={user.id}
-              onClick={() => handleCardClick(user)}
-            >
-              <h4>{user.email}</h4>
-              <h6>{user.fullName}</h6>
-            </div>
-          );
-        })}
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Search by email..."
+          value={searchQuery}
+          onChange={handleSearch}
+          className="form-control"
+        />
       </div>
+
+      <div className="user-list">
+        {pagedUsers.map((user) => (
+          <div
+            className="card"
+            key={user.id}
+            onClick={() => handleCardClick(user)}
+          >
+            <h4>{user.email}</h4>
+            <h6>{user.fullName}</h6>
+          </div>
+        ))}
+      </div>
+
+      <ReactPaginate
+        pageCount={Math.ceil(users.length / usersPerPage)}
+        pageRangeDisplayed={5}
+        marginPagesDisplayed={2}
+        onPageChange={handlePageClick}
+        containerClassName="pagination"
+        activeClassName="active"
+        previousLabel="Previous"
+        nextLabel="Next"
+      />
 
       <Modal show={modalShow} onHide={() => setModalShow(false)}>
         <>
           <Modal.Header closeButton>
-            <Modal.Title>Edit Loan Status </Modal.Title>
+            <Modal.Title>Edit Loan Status</Modal.Title>
           </Modal.Header>
 
           {selectedUserLoan.status ? (
@@ -145,7 +192,6 @@ function Admin() {
                         <br />
                         <label htmlFor="repay">
                           <h5>
-                            {" "}
                             <em>Repay:</em> <span>{loan.repay}</span>{" "}
                             <em>for</em> <span>{loan.duration}</span>
                             <em> Months</em>
@@ -170,10 +216,10 @@ function Admin() {
 
         <>
           <Modal.Header>
-            <Modal.Title>Edit Withdraw Status </Modal.Title>
+            <Modal.Title>Edit Withdraw Status</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <table class="table  table-hover table-dark  table-striped">
+            <table className="table table-hover table-dark table-striped">
               <thead>
                 <tr>
                   <th scope="col">S/N</th>
