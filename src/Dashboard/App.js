@@ -25,6 +25,7 @@ import Request from "./Request";
 import { checkAuth, getLiveDocument } from "../Firebase/Functions";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import Chat from "../Chat";
 
 const ReviewContext = createContext();
 
@@ -49,30 +50,18 @@ export default function DashboardApp({ setOnDash, user }) {
   useEffect(() => {
     // Function to inject Tawk.to script dynamically
     const injectTawkToScript = () => {
-      var Tawk_API = Tawk_API || {},
-        Tawk_LoadStart = new Date();
-      (function () {
-        var s1 = document.createElement("script"),
-          s0 = document.getElementsByTagName("script")[0];
-        s1.async = true;
-        s1.src = "https://embed.tawk.to/6620cdaba0c6737bd12d6da9/1hro35jf3";
-        s1.charset = "UTF-8";
-        s1.setAttribute("crossorigin", "*");
-        s0.parentNode.insertBefore(s1, s0);
-      })();
+      var s1 = document.createElement("script");
+      var s0 = document.getElementsByTagName("script")[0];
+      s1.async = true;
+      s1.src = "https://embed.tawk.to/6629d9ee1ec1082f04e697c6/1hs9nmjt8";
+      s1.charset = "UTF-8";
+      s1.setAttribute("crossorigin", "*");
+      s0.parentNode.insertBefore(s1, s0);
     };
 
-    // Call the function to inject the script when component mounts
+    // Call the function to inject the script
     injectTawkToScript();
-
-    // Clean up the script when component unmounts
-    return () => {
-      const script = document.getElementById("tawkToScript");
-      if (script) {
-        script.parentNode.removeChild(script);
-      }
-    };
-  }, []); // Run only once when component mounts
+  }, []);
 
   function filterByStatusTrue(data) {
     return data.filter((item) => item.status === true);
@@ -91,6 +80,7 @@ export default function DashboardApp({ setOnDash, user }) {
 
   return (
     <div style={{ position: "relative" }}>
+      <Chat />
       <div className="container_D position-relative   d-flex  justify-content-center align-items-center vh-120 vw-100">
         <div className="dashboard_D  bg-light overflow-hidden">
           <div className="background-video">

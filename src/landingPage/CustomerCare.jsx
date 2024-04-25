@@ -4,39 +4,11 @@ import "../Components/Styles/Landing/CustomerCare.css"; // Import your CSS file 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faComments } from "@fortawesome/free-solid-svg-icons";
 import { Helmet } from "react-helmet";
-
+import Chat from "../Chat";
 const CustomerCare = ({ setNavColor, setOnDash }) => {
   //set pros for on dash board and landing nav color
   setOnDash(false);
   setNavColor(false);
-
-  useEffect(() => {
-    // Function to inject Tawk.to script dynamically
-    const injectTawkToScript = () => {
-      var Tawk_API = Tawk_API || {},
-        Tawk_LoadStart = new Date();
-      (function () {
-        var s1 = document.createElement("script"),
-          s0 = document.getElementsByTagName("script")[0];
-        s1.async = true;
-        s1.src = "https://embed.tawk.to/6620cdaba0c6737bd12d6da9/1hro35jf3";
-        s1.charset = "UTF-8";
-        s1.setAttribute("crossorigin", "*");
-        s0.parentNode.insertBefore(s1, s0);
-      })();
-    };
-
-    // Call the function to inject the script when component mounts
-    injectTawkToScript();
-
-    // Clean up the script when component unmounts
-    return () => {
-      const script = document.getElementById("tawkToScript");
-      if (script) {
-        script.parentNode.removeChild(script);
-      }
-    };
-  }, []); // Run only once when component mounts
 
   const [formData, setFormData] = useState({
     name: "",
@@ -58,10 +30,9 @@ const CustomerCare = ({ setNavColor, setOnDash }) => {
     console.log(formData);
   };
 
-  const [tidio, setTidio] = useState(false);
-
   return (
     <div className="customer-support-page pt-5  text-bg-light ">
+      <Chat />
       <div className="m-1 p-1"></div>
       <Container className="w-100 pt-5">
         <Row className="justify-content-center align-items-center w-100 pt-5  ">
