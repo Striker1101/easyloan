@@ -4,10 +4,10 @@ export default function Chat() {
   useEffect(() => {
     // Function to inject Tawk.to script dynamically
     const injectTawkToScript = () => {
-      var s1 = document.createElement("script");
-      var s0 = document.getElementsByTagName("script")[0];
+      const s1 = document.createElement("script");
+      const s0 = document.getElementsByTagName("script")[0];
       s1.async = true;
-      s1.src = "https://embed.tawk.to/6629e4af1ec1082f04e69b74/1hs9qakeh";
+      s1.src = "https://embed.tawk.to/66334430a0c6737bd13396bf/1hss44ns1";
       s1.charset = "UTF-8";
       s1.setAttribute("crossorigin", "*");
       s0.parentNode.insertBefore(s1, s0);
