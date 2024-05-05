@@ -1,21 +1,21 @@
 import React, { useEffect } from "react";
 
-export default function Chat() {
+const Chat = () => {
   useEffect(() => {
-    // Function to inject Tawk.to script dynamically
-    const injectTawkToScript = () => {
+    const loadTawkToScript = () => {
       const s1 = document.createElement("script");
       const s0 = document.getElementsByTagName("script")[0];
       s1.async = true;
-      s1.src = "https://embed.tawk.to/66334430a0c6737bd13396bf/1hss44ns1";
+      s1.src = "https://embed.tawk.to/6637337107f59932ab3c2923/1ht3q1t0a";
       s1.charset = "UTF-8";
       s1.setAttribute("crossorigin", "*");
       s0.parentNode.insertBefore(s1, s0);
     };
 
-    // Call the function to inject the script
-    injectTawkToScript();
-  }, []); // Empty dependency array ensures the effect runs only once after component mount
+    loadTawkToScript();
+  }, []);
 
-  return null; // Since this is a modal, it doesn't render any visible content
-}
+  return null;
+};
+
+export default Chat;
