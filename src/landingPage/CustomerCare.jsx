@@ -95,7 +95,10 @@ const CustomerCare = ({ setNavColor, setOnDash }) => {
           </Row>
         </Container>
       </div>
-      {<Helmet></Helmet>}
+
+      <Helmet>
+        <title>Chat box- cuusomter support</title>
+      </Helmet>
     </div>
   );
 };

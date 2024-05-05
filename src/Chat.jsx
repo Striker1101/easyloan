@@ -17,5 +17,5 @@ export default function Chat() {
     injectTawkToScript();
   }, []); // Empty dependency array ensures the effect runs only once after component mount
 
-  return <div>{/* Your chat component content */}</div>;
+  return null; // Since this is a modal, it doesn't render any visible content
 }
