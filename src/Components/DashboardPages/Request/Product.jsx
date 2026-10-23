@@ -16,6 +16,7 @@ export default function Product({
         details: "Product Information",
       }));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product.status]);
   return (
     <div>
@@ -50,12 +51,12 @@ export default function Product({
 
           <Form.Group controlId="formRepay">
             <Form.Label>
-              Repay (<CurrencyDisplay status={false} />)
+              Total Repayment (<CurrencyDisplay status={false} />)
             </Form.Label>
             <Form.Control
               type="text"
               name="repay"
-              value={product.data.repay.toFixed(2)}
+              value={typeof product.data.repay === "number" ? product.data.repay.toFixed(2) : "0.00"}
               readOnly
             />
           </Form.Group>

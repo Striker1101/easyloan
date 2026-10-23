@@ -12,7 +12,7 @@ export default function IndexHow() {
         <p>BARING IT ALL</p>
       </div>
 
-      <Container className="p-5 shadow-lg m-3">
+      <Container className="py-4 px-3 px-md-5 my-4 bg-white rounded-4 shadow-sm border">
         <div className="d-flex justify-content-center m-3  flex-column   align-items-center ">
           <div className="d-flex justify-content-between w-100  align-items-center">
             <h2>Terms & Conditions</h2>

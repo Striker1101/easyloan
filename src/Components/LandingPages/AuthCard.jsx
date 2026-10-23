@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import "../Styles/Landing/Auth.css";
 const AuthCard = ({ auth }) => {
   const [isVisible, setIsVisible] = useState(true); // Initially visible

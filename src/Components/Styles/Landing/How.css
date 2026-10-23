@@ -1,25 +1,52 @@
-
-
-.howHolder.expandedPadding {
-    padding-top: 180px;
+/* How It Works Page Styling */
+.how-header-banner {
+  background: linear-gradient(135deg, #0b1329 0%, #172554 60%, #1e3a8a 100%),
+              url("../../../assets/landing/Homepage/background_home_how.png");
+  background-size: cover;
+  background-position: center;
+  color: #ffffff;
+  padding: 4rem 1rem 3.5rem 1rem;
+  text-align: center;
 }
 
-.header {
-  background-image: url("/public/landing/Homepage/background_home_how.png");
-  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+.timeline-step-card {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.one {
-  background-color: rgb(181, 181, 226);
-  color: whitesmoke;
+.timeline-step-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(37, 99, 235, 0.3);
 }
 
-.two {
-  background-color: rgb(90, 90, 155);
-  color: whitesmoke;
+.step-number-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--primary-light);
+  color: var(--primary-color);
+  font-weight: 700;
+  font-size: 0.9rem;
 }
 
-.three {
-  background-color: rgb(29, 29, 95);
-  color: whitesmoke;
+.step-icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  background: rgba(37, 99, 235, 0.08);
+  color: var(--primary-color);
+  font-size: 1.35rem;
 }

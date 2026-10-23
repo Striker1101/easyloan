@@ -1,23 +1,32 @@
-import { onAuthStateChanged } from "firebase/auth";
-import { auth, db } from "./Init";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import "firebase/compat/storage";
+import { db } from "./Init";
 
-let uid = "";
+export let uid = "";
+
+export function subscribeAuth(callback) {
+  return firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      uid = user.uid;
+      callback({ status: true, user });
+    } else {
+      uid = "";
+      callback({ status: false, user: null });
+    }
+  });
+}
+
 export function checkAuth() {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        // User is signed in
         uid = user.uid;
         resolve({ status: true, user });
       } else {
-        // User is signed out
         resolve({ status: false, user: null });
       }
-      // Cleanup function
       unsubscribe();
     });
   });
@@ -145,94 +154,153 @@ export async function updateRegion(col, data) {
   }
 }
 
-export function getLiveDocument(col, id) {
-  return new Promise((resolve, reject) => {
-    let userId = firebase.auth().currentUser?.uid;
-    if (!userId) {
-      userId = id;
-    }
+export function getLiveDocument(col, id, callback) {
+  let userId = firebase.auth().currentUser?.uid || id;
 
+  if (typeof callback === "function") {
+    if (!userId) {
+      callback({ status: false, data: [] });
+      return () => {};
+    }
     const userRef = firebase.firestore().collection(col).doc(userId);
-    const unsubscribe = userRef.onSnapshot(
+    return userRef.onSnapshot(
       (doc) => {
-        if (doc.exists) {
-          const userData = doc.data().region; // Adjust this based on your data structure
-          resolve({ status: true, data: userData });
+        if (doc && doc.exists) {
+          const userData = doc.data().region || [];
+          callback({ status: true, data: userData });
         } else {
-          resolve({
-            status: false,
-            data: "No such document! Please fill this form.",
-          });
+          callback({ status: false, data: [] });
         }
       },
       (error) => {
-        reject(error);
+        console.error(`Error in getLiveDocument (${col}):`, error);
+        callback({ status: false, message: error.message, data: [] });
       }
     );
+  }
 
-    // Return the unsubscribe function to cleanup on component unmount
-    return unsubscribe;
+  return new Promise((resolve) => {
+    if (!userId) {
+      return resolve({ status: false, data: [] });
+    }
+    const userRef = firebase.firestore().collection(col).doc(userId);
+    const unsubscribe = userRef.onSnapshot(
+      (doc) => {
+        unsubscribe();
+        if (doc && doc.exists) {
+          resolve({ status: true, data: doc.data().region || [] });
+        } else {
+          resolve({ status: false, data: [] });
+        }
+      },
+      (error) => {
+        unsubscribe();
+        resolve({ status: false, message: error.message, data: [] });
+      }
+    );
   });
 }
 
-export async function deleteRegion(index) {
-  const userId = firebase.auth().currentUser.uid;
-  const userDocumentRef = firebase.firestore().collection("loan").doc(userId);
-
+export async function deleteRegion(loanItemOrIndex) {
   try {
-    // Update Firestore document to remove element at specified index from 'region' field
-    await userDocumentRef.update({
-      region: firebase.firestore.FieldValue.arrayRemove(index),
-    });
-    console.log("true");
-    return { status: true, message: "" };
+    const userId = firebase.auth().currentUser?.uid;
+    if (!userId) {
+      return { status: false, message: "User not authenticated." };
+    }
+    const userDocumentRef = firebase.firestore().collection("loan").doc(userId);
+    const doc = await userDocumentRef.get();
+    if (!doc.exists) {
+      return { status: false, message: "No active loan record found." };
+    }
+
+    const currentRegion = doc.data().region || [];
+    let updatedRegion = [];
+
+    if (typeof loanItemOrIndex === "number") {
+      updatedRegion = currentRegion.filter((_, idx) => idx !== loanItemOrIndex);
+    } else if (typeof loanItemOrIndex === "object" && loanItemOrIndex !== null) {
+      updatedRegion = currentRegion.filter((item) => {
+        if (loanItemOrIndex.refId && item.refId) {
+          return item.refId !== loanItemOrIndex.refId;
+        }
+        return !(
+          Number(item.amount) === Number(loanItemOrIndex.amount) &&
+          Number(item.duration) === Number(loanItemOrIndex.duration) &&
+          item.reason === loanItemOrIndex.reason
+        );
+      });
+    } else {
+      await userDocumentRef.update({
+        region: firebase.firestore.FieldValue.arrayRemove(loanItemOrIndex),
+      });
+      return { status: true, message: "Loan cancelled successfully." };
+    }
+
+    await userDocumentRef.update({ region: updatedRegion });
+    return { status: true, message: "Loan cancelled successfully." };
   } catch (error) {
     console.error("Error deleting region:", error);
     return { status: false, message: error.message };
-    // Handle error
   }
 }
 
-export async function submitFile(id, documentType, file) {
+export async function submitFile(id, documentType, fileData) {
   let userId = firebase.auth().currentUser?.uid;
   if (!userId) {
     userId = id;
   }
   try {
-    // Storage reference for uploading files
     const storageRef = firebase.storage().ref();
+    const isId =
+      documentType.toLowerCase().includes("id") ||
+      documentType.toLowerCase().includes("passport");
 
-    // If document type includes "ID", user must upload two files (front and back view)
-    const frontFileRef = storageRef.child(`files/${userId}/${file.name}_front`);
-    const backFileRef = storageRef.child(`files/${userId}/${file.name}_back`);
+    let frontUrl = "";
+    let backUrl = "";
+    const timestamp = Date.now();
 
-    // Upload front and back view files to Firebase Storage
-    await frontFileRef.put(file.front);
-    await backFileRef.put(file.file);
+    if (isId && fileData.front && fileData.file) {
+      const frontName = `${timestamp}_front_${fileData.front.name}`;
+      const backName = `${timestamp}_back_${fileData.file.name}`;
+      const frontFileRef = storageRef.child(`files/${userId}/${frontName}`);
+      const backFileRef = storageRef.child(`files/${userId}/${backName}`);
 
-    // Get the download URLs for the uploaded front and back view files
-    const frontUrl = await frontFileRef.getDownloadURL();
-    const backUrl = await backFileRef.getDownloadURL();
+      await frontFileRef.put(fileData.front);
+      await backFileRef.put(fileData.file);
+
+      frontUrl = await frontFileRef.getDownloadURL();
+      backUrl = await backFileRef.getDownloadURL();
+    } else {
+      const targetFile = fileData.file || fileData.front;
+      if (!targetFile) {
+        return { status: false, message: "No file selected for upload." };
+      }
+      const fileName = `${timestamp}_${targetFile.name}`;
+      const singleFileRef = storageRef.child(`files/${userId}/${fileName}`);
+      await singleFileRef.put(targetFile);
+
+      backUrl = await singleFileRef.getDownloadURL();
+      frontUrl = backUrl;
+    }
 
     const filesDocumentRef = firebase
       .firestore()
       .collection("files")
       .doc(userId);
 
-    // Check if the document exists
     const docSnapshot = await filesDocumentRef.get();
 
     if (!docSnapshot.exists) {
-      // If the document doesn't exist, create it with the 'region' field as an empty map
-      await filesDocumentRef.set({ region: {} });
+      await filesDocumentRef.set({ region: [] });
     }
-    // Update Firestore document with provided data under the 'region' field
+
     await filesDocumentRef.set(
       {
         region: firebase.firestore.FieldValue.arrayUnion({
           frontUrl,
           backUrl,
           documentType,
+          uploadedAt: new Date().toISOString(),
         }),
       },
       { merge: true }
@@ -261,33 +329,85 @@ export function logout() {
 
 export const handleSendCode = async (email) => {
   try {
+    const origin =
+      typeof window !== "undefined" ? window.location.origin : "http://localhost:3007";
     await firebase.auth().sendSignInLinkToEmail(email, {
       handleCodeInApp: true,
-      url: "http://localhost:3000/signin/", // URL to navigate after verification
+      url: `${origin}/signin`,
     });
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("emailForSignIn", email);
+    }
     return {
       status: true,
-      message: "Verification code sent to email.",
+      message: "Verification link sent to email.",
     };
   } catch (error) {
     return {
       status: false,
-      message: error.message,
+      message: removeFirebasePrefix(error.message),
+    };
+  }
+};
+
+export const isEmailSignInLink = (url) => {
+  if (typeof window === "undefined") return false;
+  return firebase.auth().isSignInWithEmailLink(url || window.location.href);
+};
+
+export const completeEmailLinkSignIn = async (emailInput, url) => {
+  try {
+    const currentUrl = url || (typeof window !== "undefined" ? window.location.href : "");
+    if (!firebase.auth().isSignInWithEmailLink(currentUrl)) {
+      return { status: false, message: "Invalid or expired sign-in link." };
+    }
+    let email = emailInput;
+    if (!email && typeof window !== "undefined") {
+      email = window.localStorage.getItem("emailForSignIn");
+    }
+    if (!email) {
+      return {
+        status: false,
+        requiresEmail: true,
+        message: "Please enter your email to complete verification.",
+      };
+    }
+    const result = await firebase.auth().signInWithEmailLink(email, currentUrl);
+    if (typeof window !== "undefined") {
+      window.localStorage.removeItem("emailForSignIn");
+    }
+    return {
+      status: true,
+      success: true,
+      user: result.user,
+      message: "Successfully signed in via email link!",
+    };
+  } catch (error) {
+    return {
+      status: false,
+      success: false,
+      message: removeFirebasePrefix(error.message),
     };
   }
 };
 
 export const createUser = async (email, password) => {
   try {
-    // Create user with email and password
-    await firebase.auth().createUserWithEmailAndPassword(email, password);
-    setInterval(() => {
-      // Redirect to /dashboard
-      window.location.href = "/dashboard";
-    }, 2000);
-    return { success: true, message: "User created successfully." };
+    const userCredential = await firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password);
+    return {
+      status: true,
+      success: true,
+      user: userCredential.user,
+      message: "User created successfully.",
+    };
   } catch (error) {
-    return { success: false, message: removeFirebasePrefix(error.message) };
+    return {
+      status: false,
+      success: false,
+      message: removeFirebasePrefix(error.message),
+    };
   }
 };
 
@@ -296,16 +416,18 @@ export const loginUser = async (email, password) => {
     const userCredential = await firebase
       .auth()
       .signInWithEmailAndPassword(email, password);
-    const user = userCredential.user;
-
-    setInterval(() => {
-      // Redirect to /dashboard
-      window.location.href = "/dashboard";
-    }, 2000);
-
-    return { success: true, user, message: "Login Successful" };
+    return {
+      status: true,
+      success: true,
+      user: userCredential.user,
+      message: "Login Successful",
+    };
   } catch (error) {
-    return { success: false, message: removeFirebasePrefix(error.message) };
+    return {
+      status: false,
+      success: false,
+      message: removeFirebasePrefix(error.message),
+    };
   }
 };
 

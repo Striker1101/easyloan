@@ -1,61 +1,63 @@
-.FAQHolder.expandedPadding {
-    padding-top: 180px;
+/* Modern FAQ Styling */
+.faq-header-banner {
+  background: linear-gradient(135deg, #0b1329 0%, #172554 60%, #1e3a8a 100%);
+  color: #ffffff;
+  padding: 4rem 1rem 3.5rem 1rem;
+  text-align: center;
 }
 
-
-.contents {
-  list-style: none;
-  padding-left: 0;
+.faq-accordion-item {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  margin-bottom: 0.75rem;
   overflow: hidden;
+  transition: all 0.2s ease;
 }
 
-.contents li {
-  margin-bottom: 10px;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
+.faq-accordion-item:hover {
+  border-color: rgba(37, 99, 235, 0.4);
 }
 
-.slide-in {
-  animation: slideIn 0.5s ease-in-out forwards;
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(50%);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.contents li.even {
-  animation-delay: 0.1s;
-}
-
-.contents li.odd {
-  animation-delay: 0.2s;
-}
-
-.header {
+.faq-question-btn {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  background: none;
+  border: none;
+  text-align: left;
   cursor: pointer;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--text-main);
+  transition: color 0.2s ease;
 }
 
-.title {
-  color: green;
+.faq-question-btn:hover {
+  color: var(--primary-color);
 }
 
-.message {
-  color: black;
-  transition: max-height 0.3s ease-in-out;
-  max-height: 0;
-  padding: 20px;
-  display: none;
-  overflow: hidden;
+.faq-question-btn.open {
+  color: var(--primary-color);
+  background: #f8fafc;
 }
 
-.message.show {
-  max-height: max-content; /* Adjust this value as needed */
-  display: block;
+.faq-chevron {
+  transition: transform 0.25s ease;
+  color: var(--text-muted);
+}
+
+.faq-chevron.open {
+  transform: rotate(180deg);
+  color: var(--primary-color);
+}
+
+.faq-answer-content {
+  padding: 1.25rem 1.5rem;
+  color: #475569;
+  border-top: 1px solid #f1f5f9;
+  background: #ffffff;
+  line-height: 1.6;
 }

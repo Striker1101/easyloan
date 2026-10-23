@@ -1,51 +1,82 @@
 import React from "react";
+import { Container, Row, Col } from "react-bootstrap";
 import getCountry from "../../../international/GetCountry";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowTrendUp, faAward } from "@fortawesome/free-solid-svg-icons";
+
 export default function Advert() {
+  const country = getCountry();
+
   return (
-    <div className="dub_advert advert pt-4">
-      <div className="container ">
-        <div className="row">
-          <div className="col-12 col-sm-6 col-md-6 col-lg-6">
-            <div className=" ">
-              <h2>
-                Putting {getCountry()} on a path to a better financial future
-              </h2>
-              <p>
-                When banks aren’t an option, we can help you get approved for
-                the loan you need today.
-              </p>
-              <div className="d-flex p-2 ">
-                <div className="w-100 ">
+    <section className="advert">
+      <Container>
+        <Row className="align-items-center g-4">
+          <Col lg={6}>
+            <span className="badge-chip bg-info bg-opacity-25 text-info mb-3">
+              National Impact & Trust
+            </span>
+            <h2 className="display-6 fw-bold mb-3 text-white">
+              Putting {country} on a Path to a Better Financial Future
+            </h2>
+            <p className="text-white-50 fs-6 mb-4">
+              When traditional banks aren’t an option, we provide the financial lifeline and credit-building tools you need to move forward.
+            </p>
+
+            <Row className="g-3">
+              <Col xs={4}>
+                <div className="stat-box">
                   <h2>400+</h2>
-                  <p>location in {getCountry()}</p>
+                  <p>Locations in {country}</p>
                 </div>
-                <div className="circle_line"></div>
-                <div className="w-100 ">
-                  <h2>758k</h2>
-                  <p>customers served</p>
+              </Col>
+              <Col xs={4}>
+                <div className="stat-box">
+                  <h2>758k+</h2>
+                  <p>Customers Served</p>
                 </div>
-                <div className="circle_line"></div>
-                <div className="w-100 ">
+              </Col>
+              <Col xs={4}>
+                <div className="stat-box">
                   <h2>95%</h2>
-                  <p>satisfaction rate</p>
+                  <p>Satisfaction Rate</p>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-12 col-sm-6 col-md-6 col-lg-6">
-            <div className=" circle_holder   position-relative w-100 ">
-              <div className="advert_circle circle_one">
-                <h1>60%</h1>
-                <p>of customers improve their credit score</p>
-              </div>
-              <div className="advert_circle circle_two">
-                <h1>1 in 3</h1>
-                <p>customers graduate to prime rates</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+              </Col>
+            </Row>
+          </Col>
+
+          <Col lg={6}>
+            <Row className="g-3">
+              <Col sm={6} lg={12}>
+                <div className="advert_circle_card d-flex align-items-center gap-3">
+                  <div className="p-3 rounded-circle bg-info bg-opacity-20 text-info">
+                    <FontAwesomeIcon icon={faArrowTrendUp} size="2x" />
+                  </div>
+                  <div>
+                    <h3 className="display-6 fw-bold text-white mb-1">60%</h3>
+                    <p className="text-white-50 mb-0 small">
+                      Of our customers improve their credit score within 6 months of active repayment.
+                    </p>
+                  </div>
+                </div>
+              </Col>
+
+              <Col sm={6} lg={12}>
+                <div className="advert_circle_card d-flex align-items-center gap-3">
+                  <div className="p-3 rounded-circle bg-success bg-opacity-20 text-success">
+                    <FontAwesomeIcon icon={faAward} size="2x" />
+                  </div>
+                  <div>
+                    <h3 className="display-6 fw-bold text-white mb-1">1 in 3</h3>
+                    <p className="text-white-50 mb-0 small">
+                      Customers qualify and graduate to prime bank lending rates.
+                    </p>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </Container>
+    </section>
   );
 }

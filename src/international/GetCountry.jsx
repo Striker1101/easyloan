@@ -1,32 +1,31 @@
-let global = {
-  country_name: "",
-  city: "",
-  country_code: "",
-};
+import { getCurrencyData, detectUserCurrency } from "./currencyService";
 
-try {
-  const response = await fetch("https://ipapi.co/json/");
-  global = await response.json();
-} catch (error) {}
+// Kick off detection in the background
+detectUserCurrency();
 
 export default function getCountry() {
-  return global.country_name;
+  const data = getCurrencyData();
+  return data.country || "United States";
 }
 
 export function getState() {
-  return global.city;
+  const data = getCurrencyData();
+  return data.city || "New York";
 }
 
 export function getCompany() {
-  if (global.country_code === "AE") {
+  const data = getCurrencyData();
+  const code = (data.countryCode || "").toUpperCase();
+
+  if (code === "AE") {
     return "Personal Loans Dubai/UAE LLC";
-  } else if (global.country_code === "CA") {
+  } else if (code === "CA") {
     return "Transcanada Credit Union LTD";
-  } else if (global.country_code === "NG") {
+  } else if (code === "NG") {
     return "Casafina Credit Limited";
-  } else if (global.country_code === "Uk") {
+  } else if (code === "GB" || code === "UK") {
     return "Capital Credit Union Limited";
   } else {
-    return "Global Credit Union";
+    return "Global Credit Union LLC";
   }
 }

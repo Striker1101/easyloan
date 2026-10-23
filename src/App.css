@@ -1,15 +1,53 @@
-.FAQHolder.expandedPadding {
-    padding-top: 180px;
+/* App-wide Layout & Utilities */
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-.LoginMenu.expandedPadding {
-    padding-top: 180px;
+.page-content-wrapper {
+  flex: 1 0 auto;
 }
 
-.FirebaseLoginMenu.expandedPadding {
-    padding-top: 180px;
+.page-header-offset {
+  padding-top: 5rem;
 }
 
-.RegisterMenu.expandedPadding {
-    padding-top: 180px;
+@media (min-width: 992px) {
+  .page-header-offset {
+    padding-top: 6rem;
+  }
+}
+
+/* Auth Pages Styling */
+.auth-page-container {
+  min-height: calc(100vh - 120px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 1rem 3rem 1rem;
+  background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.08), transparent 40%),
+              radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.05), transparent 40%),
+              #f8fafc;
+}
+
+.auth-card-wrapper {
+  width: 100%;
+  max-width: 480px;
+  background: #ffffff;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-color);
+  padding: 2.25rem 2rem;
+}
+
+@media (max-width: 576px) {
+  .auth-card-wrapper {
+    padding: 1.75rem 1.25rem;
+  }
+}
+
+/* Fix old hack classes */
+.expandedPadding {
+  padding-top: 0 !important;
 }

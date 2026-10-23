@@ -1,184 +1,161 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import { Link, useLocation } from "react-router-dom";
 import ApplyModal from "./ApplyModal";
 import "./style.css";
-// Contains the value and text for the options
+
 const languages = [
   { value: "en", text: "English" },
-  { value: "fr", text: "French" },
+  { value: "fr", text: "Français" },
 ];
 
 function NavLanding({ color }) {
-  // It is a hook imported from 'react-i18next'
-  const { t } = useTranslation();
-
-  const [lang, setLang] = useState("en");
-
-  // This function put query that helps to
-  // change the language
-  const handleChange = (e) => {
-    setLang(e.target.value);
-    let loc = process.env.REACT_APP_URL;
-    window.location.replace(loc + "?lng=" + e.target.value);
-  };
-
-  const [navbarBackground, setNavbarBackground] = useState("transparent");
-
-  const handleScroll = () => {
-    const scrollPosition = window.scrollY;
-    if (scrollPosition > 0) {
-      setNavbarBackground("rgb(28, 35, 49, 0.5)"); // Brown background with opacity 0.5
-    } else {
-      setNavbarBackground("transparent"); // Transparent background
-    }
-  };
-
+  const { t, i18n } = useTranslation();
+  const [lang, setLang] = useState(i18n.language || "en");
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const location = useLocation();
 
-  const handleShowModal = () => setShowModal(true);
+  const handleShowModal = () => {
+    setShowModal(true);
+    setExpanded(false);
+  };
   const handleCloseModal = () => setShowModal(false);
 
-  // Add scroll event listener when component mounts
+  const handleLangChange = (e) => {
+    const selected = e.target.value;
+    setLang(selected);
+    if (i18n.changeLanguage) {
+      i18n.changeLanguage(selected);
+    }
+  };
+
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
     };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  function togglePadding() {
-    const homepageCalculator = document.querySelector(".homepageCalculator");
-
-    if (homepageCalculator) {
-      homepageCalculator.classList.toggle("expandedPadding");
-    }
-
-    const howHolder = document.querySelector(".howHolder");
-
-    if (howHolder) {
-      howHolder.classList.toggle("expandedPadding");
-    }
-
-    const customer_support_page = document.querySelector(
-      ".customer-support-page"
-    );
-
-    if (customer_support_page) {
-      customer_support_page.classList.toggle("expandedPadding");
-    }
-
-    const FAQHolder = document.querySelector(".FAQHolder");
-
-    if (FAQHolder) {
-      FAQHolder.classList.toggle("expandedPadding");
-    }
-
-    const LoginInMenu = document.querySelector(".LoginInMenu");
-
-    if (LoginInMenu) {
-      LoginInMenu.classList.toggle("LoginInMenu");
-    }
-
-    const FirebaseLoginInMenu = document.querySelector(".FirebaseLoginInMenu");
-
-    if (FirebaseLoginInMenu) {
-      FirebaseLoginInMenu.classList.toggle("FirebaseLoginInMenu");
-    }
-
-    const PaddingSpace = document.querySelector(".PaddingSpace");
-
-    if (PaddingSpace) {
-      PaddingSpace.classList.toggle("PaddingSpace");
-    }
-  }
+  const isLightText = color && !isScrolled && !expanded;
+  const appName = process.env.REACT_APP_NAME || "Loan Swift";
 
   return (
     <>
       <Navbar
         expand="lg"
-        className="navbar NavbarLanding p-3"
-        style={{
-          background: navbarBackground,
-          position: "fixed",
-          width: "100%",
-          zIndex: "100",
-          fontWeight: "500",
-          color: color ? "white" : "black",
-        }}
+        expanded={expanded}
+        onToggle={(isOpen) => setExpanded(isOpen)}
+        className={`main-navbar fixed-top transition-all ${
+          isScrolled || expanded || !color ? "navbar-solid" : "navbar-transparent"
+        }`}
       >
         <Container>
-          <Navbar.Brand href="/" className="d-flex align-items-center gap-3">
-            <img src="./loanlogo.jpg" alt="logo" width={50} />
-            <p
-              className={color ? "text-light mr-auto" : " mr-auto text-black "}
-              style={{
-                fontFamily: "Arial",
-                fontWeight: "bold",
-                fontSize: "24px",
-              }}
-            >
-              {process.env.REACT_APP_NAME}
-            </p>
-          </Navbar.Brand>
-          <Navbar.Toggle
-            aria-controls="basic-navbar-nav "
-            className="text-bg-light menuButton"
-            onClick={togglePadding}
-          />
-          <Navbar.Collapse
-            id="basic-navbar-nav"
-            className="justify-content-end "
+          <Navbar.Brand
+            as={Link}
+            to="/"
+            onClick={() => setExpanded(false)}
+            className="d-flex align-items-center gap-2"
           >
-            <Nav>
+            <img
+              src="/loanlogo.jpg"
+              alt="Loan Swift Logo"
+              width={38}
+              height={38}
+              className="rounded-circle shadow-sm"
+            />
+            <span
+              className={`brand-title fw-bold fs-4 ${
+                isLightText ? "text-white" : "text-dark"
+              }`}
+            >
+              {appName}
+            </span>
+          </Navbar.Brand>
+
+          <Navbar.Toggle
+            aria-controls="landing-navbar-nav"
+            className={`border-0 ${isLightText ? "navbar-dark" : "navbar-light"}`}
+          />
+
+          <Navbar.Collapse id="landing-navbar-nav">
+            <Nav className="ms-auto align-items-lg-center gap-lg-3 py-2 py-lg-0">
               <Nav.Link
-                className={color ? "text-light " : "text-black"}
-                href="/how"
+                as={Link}
+                to="/"
+                onClick={() => setExpanded(false)}
+                className={`nav-link-custom ${location.pathname === "/" ? "active" : ""} ${
+                  isLightText ? "text-white" : "text-dark"
+                }`}
               >
-                {t("how_it_works")}
+                Home
               </Nav.Link>
+
               <Nav.Link
-                className={
-                  color
-                    ? "text-light text-bg-primary"
-                    : "text-dark text-bg-primary"
-                }
-                href="#"
-                onClick={handleShowModal}
-                type="button"
+                as={Link}
+                to="/how"
+                onClick={() => setExpanded(false)}
+                className={`nav-link-custom ${location.pathname === "/how" ? "active" : ""} ${
+                  isLightText ? "text-white" : "text-dark"
+                }`}
               >
-                {t("apply")}
+                {t("how_it_works") || "How It Works"}
               </Nav.Link>
+
               <Nav.Link
-                className={color ? "text-light " : "text-black"}
-                href="/faq"
+                as={Link}
+                to="/faq"
+                onClick={() => setExpanded(false)}
+                className={`nav-link-custom ${location.pathname === "/faq" ? "active" : ""} ${
+                  isLightText ? "text-white" : "text-dark"
+                }`}
               >
-                {t("faq")}
+                {t("faq") || "FAQ"}
               </Nav.Link>
-              <label>
-                {t("choose")}
+
+              <Nav.Link
+                as={Link}
+                to="/signin"
+                onClick={() => setExpanded(false)}
+                className={`nav-link-custom ${location.pathname === "/signin" ? "active" : ""} ${
+                  isLightText ? "text-white" : "text-dark"
+                }`}
+              >
+                Sign In
+              </Nav.Link>
+
+              {/* Language Selector */}
+              <div className="d-flex align-items-center my-2 my-lg-0">
                 <Form.Select
-                  aria-label="choose perferred languague"
+                  size="sm"
+                  aria-label="Choose language"
                   value={lang}
-                  onChange={handleChange}
-                  // className={color ? "text-light " : "text-black"}
+                  onChange={handleLangChange}
+                  className="lang-select"
                 >
-                  {languages.map((item, index) => {
-                    return (
-                      <option
-                        key={index}
-                        // className={color ? "text-light " : "text-black"}
-                        value={item.value}
-                      >
-                        {item.text}
-                      </option>
-                    );
-                  })}
+                  {languages.map((item) => (
+                    <option key={item.value} value={item.value}>
+                      {item.text}
+                    </option>
+                  ))}
                 </Form.Select>
-              </label>
+              </div>
+
+              {/* Apply CTA Button */}
+              <Button
+                variant="primary"
+                onClick={handleShowModal}
+                className="btn-apply-nav px-3 py-2 fw-semibold"
+              >
+                {t("apply") || "Apply Now"}
+              </Button>
             </Nav>
           </Navbar.Collapse>
         </Container>

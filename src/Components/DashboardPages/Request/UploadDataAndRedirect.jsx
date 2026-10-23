@@ -2,18 +2,17 @@ import React, { useState, useEffect } from "react";
 import Loader from "../Loader.jsx";
 import { updateRegion } from "../../../Firebase/Functions";
 import { Alert } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const UploadDataAndRedirect = ({ status, loan }) => {
-  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState(null);
   useEffect(() => {
     async function upload() {
       if (status) {
-        setLoading(false);
         const result = await updateRegion("loan", loan);
         if (result.status) {
-          setLoading(true);
-          window.location.href = "/dashboard/summary";
+          navigate("/dashboard/summary");
         } else {
           setErrorMessage(result.message);
           setTimeout(() => setErrorMessage(null), 120000);
@@ -22,7 +21,7 @@ const UploadDataAndRedirect = ({ status, loan }) => {
     }
 
     upload();
-  }, [status, loan]);
+  }, [status, loan, navigate]);
 
   return (
     <div>

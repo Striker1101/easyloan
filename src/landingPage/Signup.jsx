@@ -1,60 +1,62 @@
-// login user directly from Here
-
 import React, { useState } from "react";
-import { Container } from "react-bootstrap";
-
 import "../Components/Styles/Landing/Signup.css";
 import Email from "../Components/LandingPages/Signup.jsx/Email";
-import VerificaionCode from "../Components/LandingPages/Signup.jsx/VerificationCode";
 import Password from "../Components/LandingPages/Signup.jsx/Password";
-import { Link } from "react-router-dom";
-import { handleSendCode, createUser } from "../Firebase/Functions";
+import { Link, useNavigate } from "react-router-dom";
+import { createUser } from "../Firebase/Functions";
+import { Alert } from "react-bootstrap";
 
-const Signup = ({ setNavColor, setOnDash }) => {
-  //set pros for on dash board and landing nav color
-  setOnDash(false);
-  setNavColor(false);
-
-  const [email, setEmail] = useState({
-    email: "",
-    showEmail: true,
-  });
-
-  function handleChangeEmail(e) {
-    const { name, value } = e.target;
-    setEmail((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  }
-
-  const handleSendVerificationCode = async () => {
-    if (email.email === "") {
-      return alert("Input your email");
-    }
-    // Logic to send verification code
-    // Assuming verification code is received and validated
-    setEmail((prev) => ({
-      ...prev,
-      showEmail: false,
-    }));
-
-    setPassword((prev) => ({
-      ...prev,
-      display: true,
-    }));
-
-    const result = await handleSendCode(email.email);
-
-    alert(result.message);
-  };
+const Signup = () => {
+  const navigate = useNavigate();
+  const [step, setStep] = useState(1);
+  const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [statusMsg, setStatusMsg] = useState(null);
 
   const [password, setPassword] = useState({
     key: "",
     confirmKey: "",
     showPassword: false,
-    display: false,
+    showConfirmPassword: false,
   });
+
+  const handleChangeEmail = (e) => {
+    setEmail(e.target.value);
+    if (statusMsg) setStatusMsg(null);
+  };
+
+  const handleContinue = () => {
+    const trimmed = email.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!trimmed) {
+      setStatusMsg({ type: "danger", text: "Please enter your email address." });
+      return;
+    }
+    if (!emailRegex.test(trimmed)) {
+      setStatusMsg({
+        type: "danger",
+        text: "Please enter a valid email address (e.g. name@example.com).",
+      });
+      return;
+    }
+
+    setStatusMsg(null);
+    setStep(2);
+  };
+
+  const handleEditEmail = () => {
+    setStatusMsg(null);
+    setStep(1);
+  };
+
+  const handleChangePassword = (e) => {
+    const { name, value } = e.target;
+    setPassword((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    if (statusMsg) setStatusMsg(null);
+  };
 
   const togglePasswordVisibility = () => {
     setPassword((prev) => ({
@@ -63,58 +65,113 @@ const Signup = ({ setNavColor, setOnDash }) => {
     }));
   };
 
-  function handleChangePassword(e) {
-    const { name, value } = e.target;
+  const toggleConfirmPasswordVisibility = () => {
     setPassword((prev) => ({
       ...prev,
-      [name]: value,
+      showConfirmPassword: !prev.showConfirmPassword,
     }));
-  }
+  };
 
-  async function handleSubmitPassword() {
-    if (password.confirmKey !== password.key) {
-      return alert("password do nor match");
+  const handleSubmitPassword = async () => {
+    if (!password.key || password.key.length < 6) {
+      setStatusMsg({
+        type: "danger",
+        text: "Password must be at least 6 characters.",
+      });
+      return;
     }
 
-    const result = await createUser(email.email, password.key);
+    if (password.key !== password.confirmKey) {
+      setStatusMsg({
+        type: "danger",
+        text: "Passwords do not match. Please verify and retry.",
+      });
+      return;
+    }
 
-    alert(result.message);
+    setIsLoading(true);
+    setStatusMsg(null);
 
+    const result = await createUser(email.trim(), password.key);
     if (result.status) {
-      window.location.href = "/dashboard";
+      setStatusMsg({
+        type: "success",
+        text: "Account created successfully! Redirecting to your dashboard...",
+      });
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 800);
+    } else {
+      setIsLoading(false);
+      setStatusMsg({
+        type: "danger",
+        text: result.message || "Failed to create account. Please try again.",
+      });
     }
-  }
+  };
 
   return (
-    <Container className="p-3 PaddingSpace ">
-      <h2 className="pt-5 mt-5 text-primary">REGISTER WITH US TODAY </h2>
-      <div className="pt-3 mt-3">
-        <div className="d-flex flex-column  align-items-center justify-content-center gap-4 ">
-          <img src="./loanlogo.jpg" alt="loanlogo" />
-          {/* Email Verification Step */}
+    <div className="auth-page-container">
+      <div className="auth-card-wrapper shadow-sm">
+        <div className="text-center mb-4">
+          <Link to="/" className="d-inline-block mb-3">
+            <img
+              src="/loanlogo.jpg"
+              alt="Loan Swift Logo"
+              width={56}
+              height={56}
+              className="rounded-circle shadow-sm"
+            />
+          </Link>
+          <h2 className="fs-4 fw-bold text-dark mb-1">Create an Account</h2>
+          <p className="text-muted small mb-0">
+            Join thousands of borrowers and get pre-approved today
+          </p>
+        </div>
+
+        {statusMsg && (
+          <Alert
+            variant={statusMsg.type}
+            onClose={() => setStatusMsg(null)}
+            dismissible
+            className="small mb-3"
+          >
+            {statusMsg.text}
+          </Alert>
+        )}
+
+        {/* Step 1: Email */}
+        {step === 1 && (
           <Email
             email={email}
             handleChangeEmail={handleChangeEmail}
-            handleSendVerificationCode={handleSendVerificationCode}
+            handleContinue={handleContinue}
+            isLoading={isLoading}
           />
+        )}
 
-          {/* set password */}
+        {/* Step 2: Password */}
+        {step === 2 && (
           <Password
-            email={email.email}
+            email={email}
+            handleEditEmail={handleEditEmail}
             password={password}
             handleChangePassword={handleChangePassword}
             togglePasswordVisibility={togglePasswordVisibility}
+            toggleConfirmPasswordVisibility={toggleConfirmPasswordVisibility}
             handleSubmitPassword={handleSubmitPassword}
+            isLoading={isLoading}
           />
-          <div>
-            ALready a Customer?{" "}
-            <Link to={"/signin"} aria-label="login">
-              Login
-            </Link>
-          </div>
+        )}
+
+        <div className="mt-4 pt-3 border-top text-center small text-muted">
+          Already have an account?{" "}
+          <Link to="/signin" className="fw-semibold text-primary text-decoration-none">
+            Sign In here
+          </Link>
         </div>
       </div>
-    </Container>
+    </div>
   );
 };
 

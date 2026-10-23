@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Container, Form, Button, Col, Row } from "react-bootstrap";
-import "../Components/Styles/Landing/CustomerCare.css"; // Import your CSS file for styling
+import React, { useState } from "react";
+import { Container, Form, Button, Col, Row, Alert } from "react-bootstrap";
+import "../Components/Styles/Landing/CustomerCare.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faComments } from "@fortawesome/free-solid-svg-icons";
+import { faHeadset, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { Helmet } from "react-helmet";
 import Chat from "../Chat";
-const CustomerCare = ({ setNavColor, setOnDash }) => {
-  //set pros for on dash board and landing nav color
-  setOnDash(false);
-  setNavColor(false);
 
+const CustomerCare = () => {
+  const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -26,79 +24,96 @@ const CustomerCare = ({ setNavColor, setOnDash }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add logic to handle form submission (e.g., send data to server)
-    console.log(formData);
+    if (!formData.name || !formData.email || !formData.message) return;
+    setSubmitted(true);
+    setFormData({ name: "", email: "", message: "" });
   };
 
+  const appName = process.env.REACT_APP_NAME || "Loan Swift";
+
   return (
-    <div className="customer-support-page pt-5  text-bg-light ">
+    <div className="page-header-offset py-5 bg-light">
       <Chat />
-      <div className="m-1 p-1"></div>
-      <Container className="w-100 pt-5">
-        <Row className="justify-content-center align-items-center w-100 pt-5  ">
-          <Col md={8} className="pt-5">
-            <div className="support-form">
-              <h2>Contact Customer Support (Open Ticket)</h2>
+      <Helmet>
+        <title>{appName} — Customer Support & Help Desk</title>
+        <meta
+          name="description"
+          content="Get in touch with customer care for support, loan inquiries, or assistance."
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Helmet>
+
+      <Container className="py-4">
+        <Row className="justify-content-center">
+          <Col md={8} lg={6}>
+            <div className="bg-white p-4 p-md-5 rounded-4 shadow-sm border">
+              <div className="text-center mb-4">
+                <div className="d-inline-flex p-3 rounded-circle bg-primary bg-opacity-10 text-primary mb-3">
+                  <FontAwesomeIcon icon={faHeadset} size="2x" />
+                </div>
+                <h1 className="fs-3 fw-bold text-dark mb-1">Customer Support</h1>
+                <p className="text-muted small">
+                  Have questions or need assistance? Open a support ticket below.
+                </p>
+              </div>
+
+              {submitted && (
+                <Alert
+                  variant="success"
+                  onClose={() => setSubmitted(false)}
+                  dismissible
+                >
+                  Thank you! Your ticket has been submitted. A support representative will get back to you within 24 hours.
+                </Alert>
+              )}
+
               <Form onSubmit={handleSubmit}>
-                <Form.Group controlId="formName">
-                  <Form.Label>Your Name:</Form.Label>
+                <Form.Group className="mb-3" controlId="formName">
+                  <Form.Label className="fw-semibold small">Full Name</Form.Label>
                   <Form.Control
                     type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="Enter your name"
+                    placeholder="Enter your full name"
+                    required
                   />
                 </Form.Group>
-                <Form.Group controlId="formEmail">
-                  <Form.Label>Your Email:</Form.Label>
+
+                <Form.Group className="mb-3" controlId="formEmail">
+                  <Form.Label className="fw-semibold small">Email Address</Form.Label>
                   <Form.Control
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="Enter your email"
+                    placeholder="name@example.com"
+                    required
                   />
                 </Form.Group>
-                <Form.Group controlId="formMessage">
-                  <Form.Label>Message:</Form.Label>
+
+                <Form.Group className="mb-4" controlId="formMessage">
+                  <Form.Label className="fw-semibold small">Message / Inquiry</Form.Label>
                   <Form.Control
                     as="textarea"
                     rows={4}
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="Enter your message"
+                    placeholder="Describe how we can help..."
+                    required
                   />
                 </Form.Group>
-                <Button variant="primary" type="submit" className="m-3 ">
-                  <FontAwesomeIcon icon={faEnvelope} /> Send Message
+
+                <Button variant="primary" type="submit" size="lg" className="w-100 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                  <FontAwesomeIcon icon={faPaperPlane} />
+                  <span>Send Message</span>
                 </Button>
               </Form>
             </div>
           </Col>
         </Row>
       </Container>
-
-      <div className="chat-widget">
-        <Container>
-          <Row className="justify-content-center">
-            <Col md={8}>
-              <div className="chat-box">
-                <h2>Live Chat Support</h2>
-                <p>
-                  We're here to help! Click below to start a live chat with one
-                  of our support agents.
-                </p>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </div>
-
-      <Helmet>
-        <title>Chat box- cuusomter support</title>
-      </Helmet>
     </div>
   );
 };

@@ -1,145 +1,451 @@
-.container_D {
-  max-height: auto;
+/* ==========================================================================
+   LoanSwift Fintech Dashboard Styling
+   ========================================================================== */
+
+.dash-shell {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  color: #1e293b;
 }
 
-.dashboard_D {
-  min-width: 500px;
-  min-height: 98vh;
+.dash-main-container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem 1.25rem;
+  flex: 1 0 auto;
+}
+
+@media (max-width: 768px) {
+  .dash-main-container {
+    padding: 1.25rem 0.75rem 3rem 0.75rem;
+  }
+}
+
+/* Dashboard Header & Navigation */
+.dash-navbar {
+  background: #0b1329;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.3);
+}
+
+.dash-nav-link {
+  color: #94a3b8 !important;
+  font-weight: 500;
+  font-size: 0.92rem;
+  padding: 0.5rem 0.85rem !important;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.dash-nav-link:hover {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.dash-nav-link.active {
+  color: #ffffff !important;
+  background: rgba(37, 99, 235, 0.25);
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  font-weight: 600;
+}
+
+.dash-user-pill {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.85rem;
+  color: #e2e8f0;
+}
+
+.dash-avatar-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2563eb, #38bdf8);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.75rem;
+}
+
+/* Page Headers */
+.dash-page-header {
+  margin-bottom: 1.75rem;
+}
+
+.dash-page-title {
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.25rem;
+}
+
+.dash-page-subtitle {
+  color: #64748b;
+  font-size: 0.95rem;
+  margin-bottom: 0;
+}
+
+/* Stat Cards / KPI Quad */
+.dash-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.dash-stat-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1.35rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s ease;
+  position: relative;
   overflow: hidden;
 }
 
-@media only screen and (max-width: 600px) {
-  /*Big smartphones [426px -> 600px]*/
-  .dashboard_D {
-    min-width: 500px;
-  }
+.dash-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  border-color: #cbd5e1;
 }
 
-@media only screen and (min-width: 425px) {
-  /*Small smartphones [325px -> 425px]*/
-  .dashboard_D {
-    min-width: 400px;
-  }
+.dash-stat-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
 }
 
-@media only screen and (min-width: 325px) {
-  /*Small smartphones [325px -> 425px]*/
-  .dashboard_D {
-    min-width: 390px;
-  }
+.dash-stat-icon.blue {
+  background: #eff6ff;
+  color: #2563eb;
 }
 
-.background-video {
-  position: fixed;
-  top: 0;
-  left: 0;
+.dash-stat-icon.emerald {
+  background: #ecfdf5;
+  color: #10b981;
+}
+
+.dash-stat-icon.amber {
+  background: #fffbeb;
+  color: #f59e0b;
+}
+
+.dash-stat-icon.purple {
+  background: #faf5ff;
+  color: #8b5cf6;
+}
+
+.dash-stat-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.35rem;
+}
+
+.dash-stat-value {
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.25rem;
+  line-height: 1.2;
+}
+
+.dash-stat-hint {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* Standard Fintech Cards */
+.dash-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.02);
+  margin-bottom: 1.5rem;
+}
+
+.dash-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.dash-card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 0;
+}
+
+/* Status Badges */
+.dash-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.dash-badge.approved,
+.dash-badge.completed,
+.dash-badge.success {
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.dash-badge.pending,
+.dash-badge.in-review,
+.dash-badge.warning {
+  background: #fffbeb;
+  color: #d97706;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.dash-badge.declined,
+.dash-badge.rejected,
+.dash-badge.danger {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.dash-badge.neutral,
+.dash-badge.info {
+  background: #f0fdf4;
+  color: #0284c7;
+  border: 1px solid rgba(2, 132, 199, 0.25);
+}
+
+/* Modern Fintech Table */
+.dash-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dash-table {
   width: 100%;
-  height: 100%;
-  z-index: -1; /* Ensure the video stays behind other content */
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
-.background-video video {
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  object-fit: cover;
+.dash-table th {
+  background: #f8fafc;
+  color: #64748b;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  white-space: nowrap;
 }
 
-.dashboardInfo {
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: larger;
-  background: linear-gradient(45deg, rgba(34, 164, 116, 1) 0%, #292f8f 100%);
+.dash-table th:first-child {
+  border-top-left-radius: 10px;
 }
 
-.nothing {
-  width: 400px;
-  height: fit-content;
+.dash-table th:last-child {
+  border-top-right-radius: 10px;
 }
 
-.note {
-  position: inherit;
+.dash-table td {
+  padding: 1rem;
+  font-size: 0.92rem;
+  color: #334155;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
 }
 
-.attachmentBG {
-  background-image: url("/public/folder.svg");
-  background-position: center;
-  background-size: cover;
-  height: 450px;
+.dash-table tr:hover td {
+  background-color: #f8fafc;
 }
 
-.personalInfo {
-  background-image: conic-gradient(
-    rgb(211, 46, 46),
-    rgb(182, 182, 41),
-    rgb(6, 87, 6)
-  );
-  height: 50px;
-  display: flex;
-  align-items: center;
-  font-size: larger;
-  justify-content: center;
+.dash-table tr.clickable {
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+/* Clean Empty State */
+.dash-empty-state {
   text-align: center;
-  color: white;
+  padding: 3rem 1.5rem;
 }
 
-.message-icon {
-  clip-path: polygon(
-    0 48%,
-    49% 0,
-    100% 0,
-    100% 100%,
-    75% 100%,
-    49% 100%,
-    0 49%
-  );
-  background-color: rgb(238, 230, 230);
-  width: 30px;
-  height: 220px;
+.dash-empty-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #94a3b8;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
 }
 
+.dash-empty-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
 
-.pagination {
+.dash-empty-text {
+  font-size: 0.9rem;
+  color: #64748b;
+  max-width: 400px;
+  margin: 0 auto 1.5rem auto;
+}
+
+/* Profile Hub Tabs */
+.profile-tab-bar {
+  display: flex;
+  overflow-x: auto;
+  gap: 0.5rem;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.profile-tab-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #64748b;
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 0.55rem 1.15rem;
+  border-radius: 10px;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.profile-tab-btn:hover {
+  color: #1e293b;
+  background: #f1f5f9;
+}
+
+.profile-tab-btn.active {
+  color: #2563eb;
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  font-weight: 600;
+}
+
+/* Quick Action Banner */
+.dash-action-banner {
+  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+  border-radius: 16px;
+  color: #ffffff;
+  padding: 1.75rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.35);
+}
+
+.dash-action-banner h3 {
+  font-weight: 700;
+  font-size: 1.35rem;
+  margin-bottom: 0.25rem;
+}
+
+.dash-action-banner p {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.92rem;
+  margin-bottom: 0;
+}
+
+/* Responsive Table Wrapper backward-compat */
+.table-responsive-custom {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Pagination Styling */
+.dash-pagination {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 10px;
+  align-items: center;
+  gap: 0.35rem;
   list-style: none;
-  padding: 0;
+  padding: 0.5rem 0;
+  margin: 0;
 }
 
-.pagination li {
-  display: inline-block;
-  margin: 0 4px;
-}
-
-.pagination a {
+.dash-pagination li a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  color: #475569;
   text-decoration: none;
-  color: #333;
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
 }
 
-.pagination a:hover {
-  background-color: #f0f0f0;
+.dash-pagination li a:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  color: #0f172a;
 }
 
-.pagination .active a {
-  background-color: #007bff;
-  color: #fff;
-  border-color: #007bff;
+.dash-pagination li.active a {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+  font-weight: 700;
 }
 
-.pagination .disabled a {
-  pointer-events: none;
-  color: #ccc;
+.dash-pagination li.disabled a {
+  color: #94a3b8;
+  border-color: #e2e8f0;
+  cursor: not-allowed;
+  background: #f8fafc;
+  opacity: 0.6;
 }

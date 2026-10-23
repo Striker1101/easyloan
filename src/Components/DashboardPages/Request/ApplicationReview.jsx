@@ -7,6 +7,7 @@ export default function ApplicationReview({
   handleSubmit,
   amount,
   duration,
+  repay,
   reason,
   handleReset,
   setInfo,
@@ -26,6 +27,7 @@ export default function ApplicationReview({
       details: "Review Your Application",
       status: true,
     }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
   return (
@@ -66,12 +68,21 @@ export default function ApplicationReview({
             </div>
           ) : (
             <div>
-              <div>
-                <strong className="text-primary">Principal</strong>
+              <div className="mb-2">
+                <strong className="text-primary me-2">Principal:</strong>
                 <span>
                   <CurrencyDisplay amount={amount} />
                 </span>
               </div>
+
+              {repay > 0 && (
+                <div className="mb-2">
+                  <strong className="text-primary me-2">Total Repayment:</strong>
+                  <span>
+                    <CurrencyDisplay amount={repay} />
+                  </span>
+                </div>
+              )}
 
               <div>
                 <strong className="text-primary">Duration</strong>

@@ -1,18 +1,13 @@
 import React, {
   useState,
   useEffect,
-  reateContext,
   useContext,
   createContext,
 } from "react";
-import { Routes, Route } from "react-router-dom";
-import Review from "../Components/DashboardPages/Review";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import NavDash from "../Components/Utility/Dashboard/NavDash";
-import PersonalInfo from "./Profile/PersonalInfo";
-import EducationInfo from "./Profile/EducationInfo";
-import WorkInfo from "./Profile/WorkInfo";
-import Expenses from "./Profile/Expenses";
-import NextOfKin from "./Profile/NextOfKin";
+import OverView from "./OverView";
+import ProfileHub from "./Profile/ProfileHub";
 import Summary from "./Summary";
 import Terminate from "./Terminate";
 import ActiveLoan from "./ActiveLoan";
@@ -22,8 +17,7 @@ import Admin from "./Admin";
 import ProtectAdmin from "./ProtectAdmin";
 import "./style.css";
 import Request from "./Request";
-import { checkAuth, getLiveDocument } from "../Firebase/Functions";
-import { useNavigate } from "react-router-dom";
+import { getLiveDocument } from "../Firebase/Functions";
 import { Helmet } from "react-helmet";
 import Chat from "../Chat";
 
@@ -31,126 +25,77 @@ const ReviewContext = createContext();
 
 export const useReview = () => useContext(ReviewContext);
 
-export default function DashboardApp({ setOnDash, user }) {
-  setOnDash(true);
-
+export default function DashboardApp({ user }) {
   const [loan, setLoan] = useState([]);
   const [review, setReview] = useState({
     header: "",
     body: "",
   });
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+
   useEffect(() => {
-    if (checkAuth === false) {
+    if (!user || !user.status) {
       navigate("/signin");
     }
-  }, []);
-
-  useEffect(() => {
-    // Function to inject Tawk.to script dynamically
-    const injectTawkToScript = () => {
-      var s1 = document.createElement("script");
-      var s0 = document.getElementsByTagName("script")[0];
-      s1.async = true;
-      s1.src = "https://embed.tawk.to/6629d9ee1ec1082f04e697c6/1hs9nmjt8";
-      s1.charset = "UTF-8";
-      s1.setAttribute("crossorigin", "*");
-      s0.parentNode.insertBefore(s1, s0);
-    };
-
-    // Call the function to inject the script
-    injectTawkToScript();
-  }, []);
+  }, [user, navigate]);
 
   function filterByStatusTrue(data) {
+    if (!Array.isArray(data)) return [];
     return data.filter((item) => item.status === true);
   }
 
-  const UID = user.user._delegate.uid;
+  const UID = user?.user?.uid || user?.uid || "";
+
   useEffect(() => {
-    async function getLoan() {
-      const result = await getLiveDocument("loan", UID);
-      if (result.status) {
-        setLoan(result.data);
+    if (!UID) return;
+    const unsubscribe = getLiveDocument("loan", UID, (result) => {
+      if (result && result.status) {
+        setLoan(result.data || []);
+      } else {
+        setLoan([]);
       }
-    }
-    getLoan();
-  }, []);
+    });
+
+    return () => {
+      if (typeof unsubscribe === "function") unsubscribe();
+    };
+  }, [UID]);
 
   return (
-    <div style={{ position: "relative" }}>
+    <div className="dash-shell">
       <Chat />
-      <div className="container_D position-relative   d-flex  justify-content-center align-items-center vh-120 vw-100">
-        <div className="dashboard_D  bg-light overflow-hidden">
-          <div className="background-video">
-            <video autoPlay loop muted>
-              <source src="/background.mp4" type="video/mp4" />
-              {/* Add additional <source> elements for other video formats if needed */}
-              Your browser does not support the video tag.
-            </video>
-          </div>
-          <div className="content">
-            {/* Content goes here */}
-            <NavDash user={user} id={user.user.uid} />
-            <ReviewContext.Provider value={{ review, setReview }}>
-              <Routes>
-                <Route path="/" element={<PersonalInfo />} />
-                {/* profile routes */}
-                <Route
-                  path="/profile/personal_info"
-                  element={<PersonalInfo />}
-                />
-                <Route
-                  path="/profile/education_info"
-                  element={<EducationInfo />}
-                />
-                <Route path="/profile/work_info" element={<WorkInfo />} />
-                <Route path="/profile/next_kin" element={<NextOfKin />} />
-                <Route path="/profile/expenses" element={<Expenses />} />
-                {/* others */}
-                <Route
-                  path="/summary"
-                  index
-                  element={<Summary summary={loan} />}
-                />
-                <Route
-                  path="/terminate"
-                  element={<Terminate terminate={loan} />}
-                />
+      <NavDash user={user} id={UID} />
 
-                <Route
-                  path="/withdraw"
-                  element={
-                    <Withdraw setReview={setReview} id={user.user.uid} />
-                  }
-                />
+      <main className="dash-main-container">
+        <ReviewContext.Provider value={{ review, setReview }}>
+          <Routes>
+            <Route path="/" index element={<OverView summary={loan} user={user} />} />
+            <Route path="/summary" element={<Summary summary={loan} />} />
+            <Route
+              path="/active_loan"
+              element={<ActiveLoan loan={filterByStatusTrue(loan)} />}
+            />
+            <Route path="/request" element={<Request />} />
+            <Route path="/withdraw" element={<Withdraw setReview={setReview} id={UID} />} />
+            <Route path="/attachment" element={<Attachment id={UID} />} />
+            <Route path="/terminate" element={<Terminate terminate={loan} />} />
+            <Route path="/profile/*" element={<ProfileHub />} />
+            <Route
+              path="/admin/*"
+              element={
+                <ProtectAdmin id={UID}>
+                  <Admin id={UID} />
+                </ProtectAdmin>
+              }
+            />
+          </Routes>
+        </ReviewContext.Provider>
+      </main>
 
-                <Route
-                  path="/admin/"
-                  element={
-                    <ProtectAdmin id={user.user.uid}>
-                      <Admin id={user.user.uid} />
-                    </ProtectAdmin>
-                  }
-                />
-
-                <Route
-                  path="/active_loan"
-                  element={<ActiveLoan loan={filterByStatusTrue(loan)} />}
-                />
-                <Route path="/attachment" element={<Attachment id={UID} />} />
-                <Route path="/request" element={<Request />} />
-              </Routes>
-            </ReviewContext.Provider>
-          </div>
-        </div>
-        <div className="review d-none d-md-block">
-          {/* Review component goes here */}
-          <Review review={review} />
-        </div>
-        <div>{<Helmet></Helmet>}</div>
-      </div>
+      <Helmet>
+        <title>Dashboard — Loan Swift</title>
+      </Helmet>
     </div>
   );
 }

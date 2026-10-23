@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Homepage from "./landingPage/Homepage";
 import SignIn from "./landingPage/SignIn";
 import Signup from "./landingPage/Signup";
@@ -15,110 +15,54 @@ import { useEffect, useState } from "react";
 import CustomerCare from "./landingPage/CustomerCare";
 import FirebaseAuth from "./Firebase/FirebaseAuth";
 import AuthCard from "./Components/LandingPages/AuthCard";
-import { checkAuth } from "./Firebase/Functions";
+import { subscribeAuth } from "./Firebase/Functions";
 
 function App() {
+  const [authLoading, setAuthLoading] = useState(true);
   const [userDetails, setUserDetails] = useState({
     status: false,
-    user: "",
+    user: null,
   });
 
-  const [navcolor, setNavColor] = useState(true);
-  const [onDash, setOnDash] = useState(false);
+  const location = useLocation();
+  const onDash = location.pathname.startsWith("/dashboard");
+  const isHeroLanding = location.pathname === "/";
 
   useEffect(() => {
-    const checkStatus = async () => {
-      try {
-        const { status, user } = await checkAuth();
-        if (status) {
-          setUserDetails({ user, status });
-        } else {
-          setUserDetails({ user: "", status: false });
-        }
-      } catch (error) {
-        console.error("Error checking user status:", error.message);
-      }
-    };
+    const unsubscribe = subscribeAuth(({ status, user }) => {
+      setUserDetails({ user: user || null, status });
+      setAuthLoading(false);
+    });
 
-    checkStatus();
+    return () => unsubscribe();
   }, []);
 
   return (
-    <div>
-      {/* <Helmet>
-        
-  <script type="text/javascript">
-    (function (d, t) {
-      var g = d.createElement(t),
-        s = d.getElementsByTagName(t)[0];
-      g.src =
-        "https://cdn.pushalert.co/integrate_d8dc148d717e5de3b601c568738d6021.js";
-      s.parentNode.insertBefore(g, s);
-    })(document, "script");
-  </script>
- 
-      </Helmet> */}
-      {/* auth.user for NavDashboard else NavLanding */}
+    <div className="app-container">
       <AuthCard auth={userDetails.status} />
-      {onDash ? "" : <NavLanding color={navcolor} />}
-      <Routes>
-        <Route
-          path="/"
-          index
-          element={<Homepage setOnDash={setOnDash} setNavColor={setNavColor} />}
-        />
-        <Route
-          path="/signin"
-          element={<SignIn setOnDash={setOnDash} setNavColor={setNavColor} />}
-        />
-        <Route
-          path="/reset"
-          element={
-            <ResetPassword setOnDash={setOnDash} setNavColor={setNavColor} />
-          }
-        />
-        <Route
-          path="/signup"
-          element={<Signup setOnDash={setOnDash} setNavColor={setNavColor} />}
-        />
-        <Route
-          path="/policy"
-          element={<Policy setOnDash={setOnDash} setNavColor={setNavColor} />}
-        />
-        <Route
-          path="/how"
-          element={<How setOnDash={setOnDash} setNavColor={setNavColor} />}
-        />
-        <Route
-          path="/faq"
-          element={<FAQ setOnDash={setOnDash} setNavColor={setNavColor} />}
-        />
-        <Route
-          path="/firebase_auth"
-          element={
-            <FirebaseAuth setOnDash={setOnDash} setNavColor={setNavColor} />
-          }
-        />
-        <Route
-          path="/customer_care"
-          element={
-            <CustomerCare setOnDash={setOnDash} setNavColor={setNavColor} />
-          }
-        />
-        <Route
-          path="/dashboard/*"
-          element={
-            //check if user is logged in
-            <Protected isLoggedIn={userDetails.status}>
-              {userDetails.status && (
-                <DashboardApp setOnDash={setOnDash} user={userDetails} />
-              )}
-            </Protected>
-          }
-        />
-      </Routes>
-      {/* auth.user for FooterDashboard else FooterLanding */}
-      {onDash ? "" : <FooterLanding />}
+      {!onDash && <NavLanding color={isHeroLanding} />}
+      <main className="page-content-wrapper">
+        <Routes>
+          <Route path="/" index element={<Homepage />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/reset" element={<ResetPassword />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/policy" element={<Policy />} />
+          <Route path="/how" element={<How />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/firebase_auth" element={<FirebaseAuth />} />
+          <Route path="/customer_care" element={<CustomerCare />} />
+          <Route
+            path="/dashboard/*"
+            element={
+              <Protected isLoggedIn={userDetails.status} loading={authLoading}>
+                <DashboardApp user={userDetails} />
+              </Protected>
+            }
+          />
+        </Routes>
+      </main>
+      {!onDash && <FooterLanding />}
     </div>
   );
 }

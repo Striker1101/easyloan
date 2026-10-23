@@ -1,17 +1,88 @@
+/* Modern Auth Form Styles for Signup & Signin */
 .signup-form {
-    opacity: 1;
-    transition: opacity 0.5s ease-in-out;
-  }
-  
-  .signup-form.slide-in {
-    opacity: 0;
-    transform: translateX(100%);
-  }
-  
-  .signup-form.slide-in {
-    opacity: 1;
-    transform: translateX(0%);
-  }
-  
-  /* Add any additional styling as needed */
-  
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.auth-identity-badge {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 0.65rem 1rem;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.auth-identity-badge:hover {
+  background-color: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.auth-input-group {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+.auth-input-group .form-control {
+  border-radius: 10px !important;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.95rem;
+  border: 1px solid #cbd5e1;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.auth-input-group .form-control:focus {
+  border-color: var(--primary-color, #2563eb);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.auth-input-group.has-toggle .form-control {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+.auth-input-group .auth-toggle-btn {
+  border-top-right-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
+  border: 1px solid #cbd5e1;
+  border-left: none;
+  background-color: #f8fafc;
+  color: #64748b;
+  padding: 0.7rem 1rem;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.auth-input-group .auth-toggle-btn:hover {
+  background-color: #e2e8f0;
+  color: #334155;
+}
+
+.auth-input-group .auth-toggle-btn:focus {
+  box-shadow: none;
+}
+
+.auth-submit-btn {
+  border-radius: 10px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 0.75rem 1.25rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.auth-submit-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+.auth-helper-text {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.password-strength-pill {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 6px;
+}

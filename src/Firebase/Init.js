@@ -1,15 +1,10 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { initializeApp, getApps, getApp } from "firebase/app";
+import { getAnalytics, isSupported } from "firebase/analytics";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
-import 'firebase/compat/storage';
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import "firebase/compat/storage";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 export const firebaseConfig = {
   apiKey: "AIzaSyBNMdfifIZTghky_UOzpXhwu6dlJsJWOkk",
   authDomain: "loanswift-347e3.firebaseapp.com",
@@ -20,18 +15,27 @@ export const firebaseConfig = {
   measurementId: "G-QG4VJETM4F",
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Guarded Modular initialization
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 
-export default initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// Optional Analytics initialization
+let analytics = null;
+if (typeof window !== "undefined") {
+  isSupported().then((supported) => {
+    if (supported) {
+      analytics = getAnalytics(app);
+    }
+  }).catch(() => {});
+}
 
-// Use this to initialize the firebase App
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+// Guarded Compat initialization for existing compat SDK calls
+const firebaseApp = firebase.apps.length === 0
+  ? firebase.initializeApp(firebaseConfig)
+  : firebase.app();
 
-// Use these for db & auth
 const db = firebaseApp.firestore();
-const auth = firebase.auth();
-export const storage = firebase.storage();
+const auth = firebaseApp.auth();
+const storage = firebaseApp.storage();
 
-export { auth, db };
+export { app, auth, db, storage, analytics };
+export default app;
