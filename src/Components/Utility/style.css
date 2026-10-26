@@ -110,7 +110,7 @@
 /* Modern Dark Slate Footer */
 .footerLanding {
   background-color: #0b1329;
-  color: #94a3b8;
+  color: #cbd5e1;
   padding: 4rem 1rem 1.5rem 1rem;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -122,13 +122,35 @@
   font-weight: 700;
 }
 
+.footerLanding p,
+.footerLanding .footer-company-desc,
+.footerLanding .text-muted {
+  color: #94a3b8 !important;
+  line-height: 1.6;
+}
+
 .footerLanding a {
-  color: #94a3b8;
+  color: #cbd5e1 !important;
+  text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .footerLanding a:hover {
-  color: #38bdf8;
+  color: #38bdf8 !important;
+}
+
+.footerLanding span,
+.footerLanding div {
+  color: #cbd5e1;
+}
+
+.footerLanding .footer-bottom-bar,
+.footerLanding .footer-bottom-bar a {
+  color: #94a3b8 !important;
+}
+
+.footerLanding .footer-bottom-bar a:hover {
+  color: #ffffff !important;
 }
 
 .foooterLandingLinks {
@@ -141,11 +163,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.06);
-  color: #cbd5e1 !important;
+  background: rgba(255, 255, 255, 0.08);
+  color: #e2e8f0 !important;
   transition: all 0.2s ease;
 }
 

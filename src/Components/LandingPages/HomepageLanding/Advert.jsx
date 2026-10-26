@@ -1,11 +1,9 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import getCountry from "../../../international/GetCountry";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowTrendUp, faAward } from "@fortawesome/free-solid-svg-icons";
 
 export default function Advert() {
-  const country = getCountry();
 
   return (
     <section className="advert">
@@ -16,7 +14,7 @@ export default function Advert() {
               National Impact & Trust
             </span>
             <h2 className="display-6 fw-bold mb-3 text-white">
-              Putting {country} on a Path to a Better Financial Future
+              Putting Borrowers on a Path to a Better Financial Future
             </h2>
             <p className="text-white-50 fs-6 mb-4">
               When traditional banks aren’t an option, we provide the financial lifeline and credit-building tools you need to move forward.
@@ -25,19 +23,19 @@ export default function Advert() {
             <Row className="g-3">
               <Col xs={4}>
                 <div className="stat-box">
-                  <h2>400+</h2>
-                  <p>Locations in {country}</p>
+                  <h2>50k+</h2>
+                  <p>Borrowers Served</p>
                 </div>
               </Col>
               <Col xs={4}>
                 <div className="stat-box">
-                  <h2>758k+</h2>
-                  <p>Customers Served</p>
+                  <h2>$150M+</h2>
+                  <p>Capital Disbursed</p>
                 </div>
               </Col>
               <Col xs={4}>
                 <div className="stat-box">
-                  <h2>95%</h2>
+                  <h2>98%</h2>
                   <p>Satisfaction Rate</p>
                 </div>
               </Col>

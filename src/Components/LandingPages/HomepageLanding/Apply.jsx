@@ -31,10 +31,10 @@ export default function Apply() {
               <div className="apply-step-badge">1</div>
               <div>
                 <h3 className="fs-5 fw-bold text-dark mb-1">
-                  Apply Online in Minutes
+                  Calculate & Apply Online
                 </h3>
                 <p className="text-muted small mb-0">
-                  Fill in your details online on your phone or laptop in less than 5 minutes.
+                  Select your desired loan amount, customized term, and complete the digital application in minutes.
                 </p>
               </div>
             </div>
@@ -43,10 +43,10 @@ export default function Apply() {
               <div className="apply-step-badge">2</div>
               <div>
                 <h3 className="fs-5 fw-bold text-dark mb-1">
-                  Choose the Loan Right for You
+                  Rapid Digital Verification
                 </h3>
                 <p className="text-muted small mb-0">
-                  Select your desired loan amount and customized repayment schedule that fits your budget.
+                  Securely submit your basic verification documents through our encrypted borrower portal.
                 </p>
               </div>
             </div>
@@ -55,10 +55,10 @@ export default function Apply() {
               <div className="apply-step-badge">3</div>
               <div>
                 <h3 className="fs-5 fw-bold text-dark mb-1">
-                  Receive Funds Directly
+                  Same-Day Disbursement
                 </h3>
                 <p className="text-muted small mb-0">
-                  Get your money deposited directly to your bank account as soon as the same business day.
+                  Upon approval, funds are transferred directly into your designated bank account.
                 </p>
               </div>
             </div>

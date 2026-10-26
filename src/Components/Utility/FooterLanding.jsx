@@ -12,17 +12,37 @@ import {
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
-import getCountry, {
-  getState,
-  getCompany,
-} from "../../international/GetCountry";
+import { getCompany } from "../../international/GetCountry";
 
 export default function FooterLanding() {
   const { t } = useTranslation();
   const currentYear = new Date().getFullYear();
   const appName = process.env.REACT_APP_NAME || "Loan Swift";
-  const appEmail = process.env.REACT_APP_MAIL || "support@loanswift.com";
-  const appPhone = process.env.REACT_APP_NUM || "+1 234 567 8964";
+  
+  // Professional support email fallback
+  const appEmail =
+    process.env.REACT_APP_MAIL && !process.env.REACT_APP_MAIL.includes("hotmail")
+      ? process.env.REACT_APP_MAIL
+      : "support@loanswift.com";
+
+  // Formatted customer care phone
+  const rawPhone = process.env.REACT_APP_NUM || "+1 (564) 332-3980";
+  const formatPhone = (phone) => {
+    if (!phone) return "+1 (564) 332-3980";
+    if (phone.includes("(") || phone.includes("-") || phone.includes(" ")) return phone;
+    const digits = phone.replace(/\D/g, "");
+    if (digits.length === 10) {
+      return `+1 (${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+    }
+    if (digits.length === 11 && digits.startsWith("1")) {
+      return `+1 (${digits.slice(1, 4)}) ${digits.slice(4, 7)}-${digits.slice(7)}`;
+    }
+    if (digits.length === 10 && digits.startsWith("1")) {
+      return `+1 (${digits.slice(1, 4)}) ${digits.slice(4, 7)}-${digits.slice(7)}0`;
+    }
+    return phone;
+  };
+  const appPhone = formatPhone(rawPhone);
 
   return (
     <footer className="footerLanding">
@@ -35,12 +55,12 @@ export default function FooterLanding() {
                 alt="Logo"
                 width={36}
                 height={36}
-                className="rounded-circle"
+                className="rounded-circle shadow-sm"
               />
               <h3 className="fs-4 fw-bold mb-0 text-white">{appName}</h3>
             </div>
-            <p className="text-muted small pe-lg-3">
-              Owned and managed by {getCompany()}. A registered credit provider incorporated under the laws of {getCountry()} and operating under license granted by {getState()} state authorities.
+            <p className="footer-company-desc small pe-lg-3">
+              Owned and managed by {getCompany()}. A registered credit provider and licensed lending institution operating in compliance with applicable consumer credit laws and regulatory standards.
             </p>
           </Col>
 
@@ -82,7 +102,7 @@ export default function FooterLanding() {
               </div>
               <div className="d-flex align-items-center gap-2">
                 <FontAwesomeIcon icon={faLocationDot} className="text-primary" />
-                <span>{t("Footer:address") || "Headquarters Financial District"}</span>
+                <span>1718 Park Boulevard, Marshalltown, IA 50158</span>
               </div>
             </div>
 
@@ -106,14 +126,14 @@ export default function FooterLanding() {
           </Col>
         </Row>
 
-        <hr className="border-secondary border-opacity-25 my-4" />
+        <hr className="my-4" />
 
-        <div className="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2 text-muted small">
+        <div className="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2 footer-bottom-bar small">
           <div>
             © {currentYear} {appName}™. All Rights Reserved | A {getCompany()} Enterprise.
           </div>
           <div>
-            <Link to="/policy" className="text-muted hover:text-white">
+            <Link to="/policy">
               {t("Footer:policy") || "Privacy Policy & Terms"}
             </Link>
           </div>

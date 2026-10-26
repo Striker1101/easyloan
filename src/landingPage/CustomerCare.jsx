@@ -110,6 +110,28 @@ const CustomerCare = () => {
                   <span>Send Message</span>
                 </Button>
               </Form>
+
+              <div className="mt-4 pt-3 border-top">
+                <h5 className="fs-6 fw-bold text-dark mb-3">Direct Contact Channels</h5>
+                <div className="d-flex flex-column gap-2 small text-muted">
+                  <div className="d-flex align-items-center gap-2">
+                    <span className="fw-semibold text-dark">Email:</span>
+                    <a href={`mailto:${process.env.REACT_APP_MAIL && !process.env.REACT_APP_MAIL.includes("hotmail") ? process.env.REACT_APP_MAIL : "support@loanswift.com"}`} className="text-primary text-decoration-none">
+                      {process.env.REACT_APP_MAIL && !process.env.REACT_APP_MAIL.includes("hotmail") ? process.env.REACT_APP_MAIL : "support@loanswift.com"}
+                    </a>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <span className="fw-semibold text-dark">Phone:</span>
+                    <a href={`tel:${process.env.REACT_APP_NUM || "+1 (564) 332-3980"}`} className="text-primary text-decoration-none">
+                      {process.env.REACT_APP_NUM || "+1 (564) 332-3980"}
+                    </a>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <span className="fw-semibold text-dark">Office:</span>
+                    <span>1718 Park Boulevard, Marshalltown, IA 50158</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </Col>
         </Row>
